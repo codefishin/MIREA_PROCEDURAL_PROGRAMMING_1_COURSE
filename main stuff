@@ -1,0 +1,1537 @@
+/*
+* зачли: 1 (всё дз) 2 (всё дз) 3 (всё дз) 4 (1 2 4 5)... сдать 4 (3 6 7 8 9) сдать 5 (всё)
+*
+* для задания 5, сделай cos(x) и sin(x) [выбрать чтоб можно было], не обязательно
+*
+* для задания 7 (m,i,c) =  37 3 64  or  25173 13849 65537 ... S[i] + 1 = (m*S[i] + i) % c ... 2 цикла for ...
+*
+* для задания 9 написать 1 войд и 2 подпрограммы... подпрограммы делают перевод из x в 10 и из 10 в x
+*
+* todo 4_7 4_9; all 5 hw
+*/
+
+// UPDATE LIST: Добавлены bugfix для 3 и 6. Сделан 8 и 9 [дз 4]
+
+// для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
+
+// если нужно только дз: смотрите программы "void"
+
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <cstring>
+#include <fstream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <Windows.h>
+#include <stdlib.h>
+
+int script_e = 0; // это счётчик для выполненого кода. используется в script_executed()
+const double pi = 3.14159265358979323846; // это число пи, используется в математических заданиях
+
+// ВОООУУ МНОГО КОДА !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // а это для цвета консоли
+int cConsole = 14; // это ЖЁЛТЫЙ цвет для консоли...
+
+void loading()
+{
+	int percent = 0, current = 0;
+	std::string spacebar = "";
+	char square = (char)254u;
+	for (int i = 0; i < 11; i++)
+	{
+		SetConsoleTextAttribute(hConsole, current);
+		percent = (i * 10);
+		spacebar += square;
+		current++;
+		std::cout << spacebar << "\n" << percent << "%";
+		if (i == 10)
+		{
+			printf("\nHi! :D");
+			Sleep(1000);
+		}
+		Sleep(10);
+		system("CLS");
+	}
+}
+void limbo()
+{
+	// короче. в программе 4_1 есть ошибка при вводе слишком большого числа. я его не смог удалить НО смог убрать баг который уничтожает программу. Вместо бесконечного цикла я ввёл это предупреждение, которое длится очень много тиков... кто шарит, подскажите как нормально избавиться от прикола в 4_1?( 
+	SetConsoleTextAttribute(hConsole, 12);
+	system("CLS");
+	std::cout << ">:/ Welcome to LIMBO. If you see this, that means the program is going to be shut down soon.";
+	Sleep(1000);
+	std::cout << "\n>:/ If you are wondering what happened: the script has activated an alert system, that will put you in this LIMBO state.";
+	Sleep(1000);
+	std::cout << "\n>:/ The script is going to be terminated now. Do not do that again.";
+	Sleep(10000);
+	system("CLS");
+	std::cout << "Total scripts executions: " << script_e << "\n\n\n\n\n\n\n\n\n\n";
+	exit(0);
+}
+void cin_fixer()
+{
+	std::string exitS; // для тех кто читает это - тут какой-то рофл происходит, если этого не будет то сломается код драйвера, НО эта штука даже не просится в программе? Костыли ещё те, но я глупенький... :c
+	std::getline(std::cin, exitS); // для всех заданий которые имеют cin и потом ничего
+}
+void helper()
+{
+	std::cout << "!!!!!!!!!!!!!!!!!!!!!!!! Code check here." << std::endl;
+	Sleep(999999999);
+}
+
+void script_start()
+{
+	system("CLS");
+	SetConsoleTextAttribute(hConsole, cConsole); // задаёт цвет консоли. это крута :D... вернитесь наверх кода и почитайте что за hConsole и cConsole
+	std::cout << "Script ready.\n";
+}
+void script_executed()
+{
+	script_e++;
+	std::cout << "\nWait... ";
+	for (double a = 19; a > 0; a--)
+	{
+		std::cout << a / 10;
+		Sleep(100);
+		if (a != 10)
+		{
+			std::cout << "\b\b\b";
+		}
+		else
+		{
+			std::cout << "\b";
+		}
+	}
+	system("CLS");
+	SetConsoleTextAttribute(hConsole, 10); // ресетает цвет консоли на зелень ... 28.10.2023 - я дурак ввёл 0 и в итоге было НИЧЕГО :D, 10 работает
+	std::string scriptexec = ">:/ Script successfully executed, please select a new task...\b\n\n";
+	char* array = new char[scriptexec.length() + 1];
+	array[scriptexec.length()] = '\0';
+	for (int i = 0; i < scriptexec.length(); i++)
+	{
+		array[i] = scriptexec[i];
+	}
+	for (int animate = 0; animate < 62; animate++)
+	{
+		std::cout << array[animate]; Sleep(2);
+		if (animate > 59)
+		{
+			Sleep(100);
+		}
+	}
+	delete[] array;
+	system("CLS");
+}
+
+std::string circle_calc(double radius)
+{
+	std::string result;
+	double result_calc = 0;
+	if (radius > 0)
+	{
+		result_calc = pi * pow(radius, 2);
+		result = std::to_string(result_calc);
+	}
+	else
+	{
+		std::cout << "Cannot calculate.\b\n";
+	}
+	return result;
+}
+std::string triangle_calc(double a, double b, double h, double degree)
+{
+	// условия = 180 градусов, прямой = 1 угол = 90, острый = один угол <90, тупой = один угол >90;
+	// для прямого, формула a*b/2
+	// для острого a*h/2
+	// для тупого a*h/2
+	std::string result;
+	double result_calc = 0;
+	double temp = a * sin(degree);
+	if (a > 0 and h > 0 and b > 0 and degree <= 180 and degree > 0 && temp == h)
+	{
+		if (degree == 90)
+		{
+			result_calc = a * b / 2;
+			result = std::to_string(result_calc);
+		}
+		else if (180 > degree > 0)
+		{
+			result_calc = a * h / 2;
+			result = std::to_string(result_calc);
+		}
+	}
+	else
+	{
+		std::cout << "Cannot calculate.\b\n";
+	}
+	return result;
+}
+std::string rectangle_calc(double a, double b)
+{
+	std::string result;
+	double result_calc = 0;
+	if (a > 0 and b > 0)
+	{
+		result_calc = a * b;
+		result = std::to_string(result_calc);
+	}
+	else
+	{
+		std::cout << "Cannot calculate.\b\n";
+	}
+	return result;
+}
+std::string sign_x(int n) // подпрограмма для задания 2
+{
+	std::string na;
+	if (n > 0)
+	{
+		na = "1";
+	}
+	else if (n == 0)
+	{
+		na = '0';
+	}
+	else
+	{
+		na = "-1";
+	}
+	return na;
+}
+std::string removal(std::string s) // крч алгоритм по удалению букв из строк, как он работает с.м. void task3_1()
+{
+	std::string ns; // создаётся новая строка
+	for (int i = 0; i < s.length(); i++) // цикл 
+	{
+		if (s.at(i) >= '0' && s.at(i) <= '9' || s.at(i) == '.') // проверка, если текущий символ строки имеет в себе цифру от 0 до 9; 18.10.2023 ИЛИ . ПОТОМУ ЧТО ВТОРОЕ ЗАДАНИЕ =)
+		{
+			ns += s.at(i); // то ввести этот символ в новую строку ns
+		}
+	}
+	return ns;
+}
+
+// дз 1
+void task1_1()
+{
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	std::string bromhexine = "Made by Alexander Tolstov...";
+	char* char_array = new char[bromhexine.length() + 1]; // создание переменной массива, которая будет равна новому символу взятой из всей длины строки (а если легче то это как задание 3_5 из прошлой дз)
+	char_array[bromhexine.length()] = '\0'; // детерминация массива 
+	for (int anim = 0; anim < bromhexine.length(); anim++) // пробегает всю строчку
+	{
+		char_array[anim] = bromhexine[anim]; // перезаписывает символы
+	}
+	for (int b = 0; b < 28; b++)
+	{
+		std::cout << char_array[b]; Sleep(10); // анимация
+		if (b > 24)
+		{
+			Sleep(200);
+		}
+	}
+	delete[] char_array; // я додумался написать это чтоб не было утечки памяти
+	std::cout << std::endl;
+	script_executed();
+}
+void task1_2()
+{
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	std::cout << "      Enter two numbers...\b\n";
+	int number1 = 0, number2 = 0;
+	std::cin >> number1 >> number2;
+	std::cout << "   Select an operation...\b\n\n" << "1: +, 2: -, 3: *, 4: /\b\n\nTo exit this script, press 5.\n\n";
+	std::string selector;
+	while (selector[0] != '5')
+	{
+		switch (selector[0])
+		{
+		case '1':
+			std::cout << "Result: " << number1 + number2 << std::endl;
+			break;
+		case '2':
+			std::cout << "Result: " << number1 - number2 << std::endl;
+			break;
+		case '3':
+			std::cout << "Result: " << number1 * number2 << std::endl;
+			break;
+		case '4':
+			if (number1 != 0 && number2 != 0)
+			{
+				std::cout << "Result: " << number1 / number2 << std::endl;
+			}
+			else
+			{
+				std::cout << "The sun smiles at you with eternal malice." << std::endl;
+			}
+			break;
+		default:
+			break;
+		}
+		std::getline(std::cin, selector);
+	}
+	script_executed();
+}
+void task1_3()
+{
+	//задача bx+c = 0 !!! x = -c/b
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	std::cout << "Enter 2 number to solve for X...\b\n\n              bx+c = 0\b\n\n";
+	double b = 0, c = 0, x = 0;
+	std::string bfix, cfix;
+	std::getline(std::cin, bfix);
+	std::getline(std::cin, cfix);
+	std::string nb = removal(bfix);
+	std::string nc = removal(cfix);
+	if (std::empty(nc) == 1 || std::empty(nb) == 1)
+	{
+		std::cout << "Cannot execute.\nAre you sure you entered numerals?\n";
+	}
+	else
+	{
+		b = stod(nb);
+		c = stod(nc);
+		if (b != 0)
+		{
+			x = -c / b;
+			std::cout << "Result: " << x << std::endl;
+		}
+		else
+		{
+			std::cout << "Cannot calculate...\b\n";
+		}
+	}
+	script_executed();
+}
+void task1_4()
+{
+	// ужасный код но он взят с первого занятия и мне лень его переписывать
+	// ax^2 + bx + c = 0... 
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	double a = 0, b = 0, c = 0, disc = 0, x1 = 0, x2 = 0;
+	std::string error = "Result: x = 0\b\n";
+	std::string afix, bfix, cfix;
+	std::cout << "Enter 3 number to solve a square equation...\b\n";
+	std::getline(std::cin, afix);
+	std::getline(std::cin, bfix);
+	std::getline(std::cin, cfix);
+	std::string afixed = removal(afix);
+	std::string bfixed = removal(bfix);
+	std::string cfixed = removal(cfix);
+	if (std::empty(afixed) == 1 || std::empty(bfixed) == 1 || std::empty(cfixed) == 1)
+	{
+		std::cout << "Cannot execute.\nAre you sure you entered numerals?\n";
+	}
+	else
+	{
+		a = stod(afix);
+		b = stod(bfix);
+		c = stod(cfix);
+		disc = pow(b, 2) - 4 * a * c; // дискриминант
+		if (a != 0)
+		{
+			if (disc > 0)
+			{
+				x1 = (-b + sqrt(disc)) / (2 * a);
+				x2 = (-b + sqrt(disc)) / (2 * a);
+			}
+			if (disc == 0)
+			{
+				if (b != 0)
+				{
+					x1 = -b / (2 * a);
+				}
+				else
+				{
+					std::cout << error;
+				}
+			}
+			else
+			{
+				if (b != 0)
+				{
+					if (c == 0)
+					{
+						std::cout << error;
+					}
+					else
+					{
+						x1 = c / b;
+						std::cout << "x = " << x1 << std::endl;
+					}
+				}
+				else
+				{
+
+					std::cout << "Result: X can be anything\b\n";
+				}
+			}
+		}
+	}
+	script_executed();
+}
+void task1_5()
+{
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	std::cout << "Answer the following question.\b\n 1 = yes\n 0 = no\n\n";
+	bool outside, lamp, curtains;
+	std::cout << "Is it sunny?\n\n";
+	std::cin >> outside;
+	if (outside == 1)
+	{
+		std::cout << "Are your curtains open?\n\n";
+		std::cin >> curtains;
+
+		if (curtains == 0)
+		{
+			std::cout << "Your divine light was severed.\n\n";
+		}
+		else
+		{
+			std::cout << "Divine light established.\n\n";
+		}
+	}
+	else
+	{
+		std::cout << "Is your lamp on?\n\n";
+		std::cin >> lamp;
+		if (lamp == 0)
+		{
+			std::cout << "Your divine light was severed.\n\n";
+		}
+		else
+		{
+			std::cout << "Divine light established.\n\n";
+		}
+	}
+	cin_fixer();
+	script_executed();
+}
+// дз 2
+void task2_1()
+{
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	std::cout << "Enter 2 radius values and height to solve cone volume and surface level...\b\n\n";
+	float radius1{}, radius2{}, height{}, length{};
+	std::cout << "radius 1 = "; std::cin >> radius1; std::cout << std::endl;
+	std::cout << "radius 2 = "; std::cin >> radius2; std::cout << std::endl;
+	std::cout << "height = "; std::cin >> height; std::cout << std::endl;
+	if (radius1 <= 0 or radius2 <= 0 or height <= 0)
+	{
+		std::cout << "Unsolvable. Did you enter in values less than 0?" << std::endl;
+	}
+	else
+	{
+		length = sqrt((pow(radius1 - radius2, 2)) + pow(height, 2));
+		std::cout << "Cone volume value (V) is equal to... " << 1.0 / (3.0 * pi * (pow(radius1, 2) + radius1 * radius2 + pow(radius2, 2) * height)) << std::endl;
+		std::cout << "Cone surface value (S) is equal to... " << pi * (pow(radius1, 2) + (radius1 + radius2) * length + (pow(radius2, 2))) << std::endl;
+	}
+	cin_fixer();
+	script_executed();
+}
+void task2_2()
+{
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	float numbera{}, numberx{}, numberw{};
+	std::cout << "Enter 2 number, correlating to A and X. Solve a(ln|x|), if |x| < 1, or sqrt(a-x^2), if |x|>1" << std::endl;
+	std::cout << "a = "; std::cin >> numbera; std::cout << std::endl;
+	std::cout << "x = "; std::cin >> numberx; std::cout << std::endl;
+	if (abs(numberx) < 1 and numberx != 0)
+	{
+		numberw = numbera * log(abs(numberx));
+		std::cout << "Your W value is equal to... " << numberw << std::endl;
+	}
+	else if (numberx == 0)
+	{
+		std::cout << "Undefined" << std::endl;
+	}
+	else
+	{
+		if (numbera > pow(numberx, 2))
+		{
+			numberw = sqrt(numbera - pow(numberx, 2));
+			std::cout << "Your W value is equal to... " << numberw << std::endl;
+		}
+		else
+		{
+			std::cout << "Undefined" << std::endl;
+		}
+	}
+	cin_fixer();
+	script_executed();
+}
+void task2_3()
+{
+	script_start(); // вкратце цвет + вывод готовности скрипта
+	std::cout << "Enter 3 number values to solve z = ln(b-y)*sqrt(b-x). " << std::endl;
+	float numberX{}, numberY{}, numberB{}, numberZ;
+	int check = 0;
+	std::cout << "X = "; std::cin >> numberX; std::cout << std::endl;
+	std::cout << "Y = "; std::cin >> numberY; std::cout << std::endl;
+	std::cout << "B = "; std::cin >> numberB; std::cout << std::endl;
+	if (numberB < numberX)
+	{
+		std::cout << "Does not exist." << std::endl;
+		check += 1;
+	}
+	else if (check == 0 and numberB <= numberY)
+	{
+		std::cout << "Undefined." << std::endl;
+		check += 1;
+	}
+	else
+	{
+		numberZ = log(numberB - numberY) * sqrt(numberB - numberX);
+		std::cout << numberZ << std::endl;
+	}
+	cin_fixer();
+	script_executed();
+}
+void task2_4()
+{
+	script_start();
+	float numberN{}, Xnumber{};
+	Xnumber = 0.0;
+	std::cout << "Enter a number to get 10 new numbers. The calculation is x+=n, 10 times... " << std::endl;
+	std::cin >> numberN;
+	std::cout << "Your number list is... " << std::endl;
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << Xnumber << std::endl;
+		Xnumber += numberN;
+	}
+	cin_fixer();
+	script_executed();
+}
+void task2_5()
+{
+	script_start();
+	float finalnumberX, finalnumberY;
+	finalnumberX = -4.0;
+	while (finalnumberX <= 4)
+	{
+		if ((finalnumberX - 1) != 0)
+		{
+			finalnumberY = (pow(finalnumberX, 2) - 2 * finalnumberX + 2) / (finalnumberX - 1);
+			std::cout << finalnumberY << std::endl;
+
+		}
+		else
+		{
+			std::cout << "Cannot divide by 0" << std::endl;
+		}
+		finalnumberX += 0.5;
+	}
+	script_executed();
+}
+// дз 3
+void task3_1()
+{
+	script_start();
+	double m;
+	std::string pfix, sfix, nfix; // для алгоримтма создаются ещё переменные
+
+	std::cout << "Input the following values: p,S,n" << std::endl; std::cin >> pfix >> sfix >> nfix; // p = %, s = summ, n = time ... вводятся переменные ДЛЯ АЛГОРИТМА
+	std::string pN = removal(pfix); // исполнение алгоритма для введённых пользователем переменных
+	std::string sN = removal(sfix); // после выполнения этой хери останутся только цифры
+	std::string nN = removal(nfix); // если цифр нет, то будет пустая строка
+	if (std::empty(pN) == 1 || std::empty(sN) == 1 || std::empty(nN) == 1) // если строка пустая, прога не выполняется
+	{
+		std::cout << "Cannot calculate.\b\n";
+	}
+	else // иначе выполняется 1000000 (s) 15 (p) 20 (n)
+	{ // 0 1200 4
+		double p = stod(pN); // перевод строки в числовое
+		double s = stod(sN);
+		double n = stod(nN);
+		double r = p / 100;
+		double a;
+		double b;
+		a = s * r * pow(1 + r, n);
+		b = 12 * (pow(1 + r, n) - 1);
+		m = a / b;
+		if (n == 0 or (12 * (pow(1 + r, n) - 1)) == 0) {
+			std::cout << "Unsolvable\b\n";
+		}
+		else {
+			std::cout << "Successful execution, result: " << m << std::endl;
+		}
+	}
+	cin_fixer();
+	script_executed();
+}
+void task3_2()
+{
+	script_start();
+	double summary = 0.0, money = 0.0, money_sequel, percent = -100, time = 0.0, step = 5, epsilon = 0.01; //S = SUMMARY, M = MONEY, N = TIME, P = PERCENT
+	std::string summaryfix, moneyfix, timefix; // reference to algorithm above (string removal)
+	std::cout << "Input the following values:S, m, time\b\n"; std::cin >> summaryfix >> moneyfix >> timefix; // ввод данных
+	std::string ns = removal(summaryfix); // reference to algorithm above (string removal)
+	std::string na = removal(moneyfix); // reference to algorithm above (string removal)
+	std::string nb = removal(timefix); // reference to algorithm above (string removal)
+	// std::cout << summaryfix << moneyfix << timefix << std::endl;
+	// std::cout << ns << na << nb << std::endl;
+	int inter = 0; // не нужно, вообще.
+
+	if (std::empty(summaryfix) == 1 || std::empty(moneyfix) == 1 || std::empty(timefix) == 1) // reference to algorithm above (string removal)
+	{
+		std::cout << "Cannot calculate.\b\n";
+	}
+	else
+	{
+		double a = summary * (percent / 100) * (pow(1 + (percent / 100), time));  // числитель
+		double b = 12 * (pow(1 + (percent / 100), time) - 1); // знаминатель
+		money = a / b; // рофл
+		double summary = stod(ns); // reference to algorithm above (string removal)
+		double money = stod(na); // reference to algorithm above (string removal)
+		double time = stod(nb); // reference to algorithm above (string removal)
+		if (summary >= 0 && money >= 0 && time > 0) // 1000000 13313.5 20 otvet 15
+		{
+			while (true)
+			{
+				percent += step;
+				//std::cout << percent << std::endl; 
+				//^^^ DEBUG ДЛЯ ВЫВОДА
+				double a = summary * (percent / 100) * (pow(1 + (percent / 100), time));
+				double b = 12 * (pow(1 + (percent / 100), time) - 1);
+				if (percent != 0)
+				{
+					money_sequel = a / b;
+					//std::cout << money_sequel << std::endl; DEBUG!!!!!!!!!!!
+					inter++;
+				}
+				else
+				{
+					money_sequel = summary / 12 / time;
+					//std::cout << money_sequel << std::endl;
+					inter++;
+				}
+				if (abs(money_sequel - money) < epsilon) // Модуль текущего "денежного состояния" не больше эпсилона денежного состояния заданного пользователем...
+				{
+					//std::cout << money << money_sequel << std::endl;
+					std::cout << "Executed successfully: " << percent << "%\n";
+					std::cout << "Steps taken while calculating: " << inter << std::endl;
+					break;
+				}
+				else if (money_sequel > money)
+				{
+					percent -= step;
+					//std::cout << percent << std::endl;
+					step /= 10;
+					inter++;
+				}
+			}
+		}
+		else
+		{
+			std::cout << "Error\b\n";
+		}
+
+	}
+	cin_fixer();
+	script_executed();
+}
+void task3_3()
+{
+	script_start();
+	char userinput[255];
+	char text[259]; // можно было через string но меня уронили в детстве.
+	std::cout << "Input file value. (maximum of 255 symbols)\b\n";
+	std::cin.getline(userinput, 255); // ><> fish
+	std::ofstream textFile("text.txt");
+	if (textFile.is_open()) {
+		textFile << userinput;
+		textFile.close();
+	}
+	else
+	{
+		std::cout << "error\b\n";
+	}
+	std::ifstream file("text.txt");
+	if (!file.is_open())
+	{
+		std::cout << "error\b\n";
+	}
+	else
+	{
+		file.getline(text, 255);
+		std::cout << "File insides: " << text << std::endl;
+	}
+	file.close();
+	script_executed();
+
+	// дважды считать файл (через string, ломается проще), съестся последний символ файла todo
+
+}
+void task3_4()
+{
+	script_start();
+	char userinput[1024];
+	char text[1024]{};
+	int i = 1024;
+	std::cout << "Input file value. (maximum of 1024 symbols)\b\n";
+	std::cin.getline(userinput, i);
+	std::ofstream textFile("text.txt");
+	if (textFile.is_open()) {
+		textFile << userinput;
+		textFile.close();
+	}
+	else
+	{
+		std::cout << "error" << std::endl;
+	}
+	int c0 = 0;
+
+	std::string s;
+	std::ifstream inside;
+	inside.open("text.txt");
+	std::getline(inside, s);
+	std::cout << "Only number string: ";
+	for (int i = 0; i < s.length(); i++) // s == string
+	{
+		char character = s[i]; // переменная, которая сохраняет ТЕКУЩИЙ СИМВОЛ
+		int c0 = character - '0';
+		if ((c0 >= 0) and (c0 <= 9)) { // если текущий символ = 0 1 2 3 4 5 6 7 8 или 9, вывести c0
+			std::cout << c0;
+		}
+		else {
+			if (i == 0 and c0 > 9) { // иначе вместо букв выводим пробел
+				std::cout << '\b'; // пробел)
+			}
+			else std::cout << " "; // проверка чтоб не спамило пробелы если ввести "asdasdasdasdasdasdasdasdasd1sdasdasdasdasdasdasd1"
+			if ((i > 0) and (c0 > 9) and ((int(s[i - 1]) - '0') > 9)) { // ещё одна проверка (если круг начался и переменная c0 за гранью чисел и та же проверка для c0 которую я не понимаю
+				std::cout << '\b';
+			}
+		}
+	}
+	inside.close(); // ВСЁ!
+	script_executed();
+}
+void task3_5()
+{
+	script_start();
+	char array[31]{}; // массив
+	char userinput;
+
+	std::cout << "### WARNING: ARRAY ONLY TAKES FIRST 30 SYMBOLS, TERMINATE ARRAY BY INPUTTING 0 ### " << std::endl << "Enter symbols: " << std::endl;
+	for (int n = 0; n < 30; n++)
+	{
+		std::cin >> userinput;
+		if (userinput == '0')
+		{
+			break;
+		}
+		array[n] = userinput;
+		array[n + 1] = '\0';
+	}
+
+	for (int i = 0; array[i] != '\0'; i++) // цикл первый, который начинает с первого символа, доходит до конца, шагая по одному символу в раз
+	{
+		for (int j = i + 1; array[j] != '\0'; j++) // цикл второй, который начинает со следующего символа, относительно цикла первого
+		{
+			if ((char)tolower(array[i]) > ((char)tolower(array[j]))) // проверка приведённых к нижнему реегистру символов между собой (если первый нижний символ больше второго нижнего символа
+			{
+				char buffer = array[i]; // мы копируем текущий символ в буфер
+				array[i] = array[j]; // заменяем текущий символ на следующий
+				array[j] = buffer; // копируем информацию из буфера в следующий символ
+			}
+			else // иначе
+			{ // фигурная скобка
+				if ((char)tolower(array[i]) == (char)tolower(array[j]) and array[i] > array[j]) // проверка, в случае если нижний реегистр символа совпадает со следующим и текущий символ больше следующего;
+				{
+					char buffer = array[i]; // рокировка символов
+					array[i] = array[j];
+					array[j] = buffer;
+				}
+			}
+
+		}
+	}
+	std::cout << "Sorted array: " << array << std::endl;
+	cin_fixer();
+	script_executed();
+}
+// дз 4
+void task4_1()
+{
+	script_start();
+	bool alert = false;
+	std::ofstream file("file.txt");
+	std::cout << "           If user inputs '0', the script will stop gaining numbers and calculate your result.\b\n\n           Do not enter anything above over 2^31!\n";
+	int array[999]{};
+	int calc_buffer = 0;
+	int userinput;
+	int check = 1;
+	for (int n = 0; check != 0; n++)
+	{
+		std::cin >> userinput;
+		if (userinput >= 2147483647 || userinput <= -858993460) // крч это чтобы сама прога не ломалась. я поизучал что будет если ввести число выше 2^31 и оно выводило эти два числа. этот скрипт - предохранитель, если пользователь ******* и воооот. прога вырубится
+		{
+			std::cout << "Processing ";
+			for (int a = 5; a > 0; a--)
+			{
+				std::cout << "...";
+				Sleep(100);
+				printf("\b ");
+				Sleep(100);
+				printf("\b\b ");
+				Sleep(100);
+				printf("\b\b\b ");
+			}
+			printf("\b ");
+			alert = true;
+			check = 0;
+			userinput = 0;
+			calc_buffer = 0;
+			file.close();
+			std::cout << "\nCannot process!";
+			Sleep(100);
+			limbo(); // вот что выключает прогу, но модно
+		}
+		else
+		{
+			array[n] = userinput;
+			array[n + 1] = '\0';
+			calc_buffer++;
+		}
+		if (userinput == 0)
+		{
+			check = 0;
+			break;
+		}
+	}
+	for (int i = 0; calc_buffer != 0; i++)
+	{
+		file << array[i] << " ";
+		calc_buffer--;
+	}
+	file.close(); // пользователь закончил записывать числа 
+
+	std::vector<int> num_buffer;
+	int summ = 0;
+	std::ifstream ifile("file.txt");
+	if (ifile.good()) // через open не робит :>
+	{
+		int current = 0;
+		while (ifile >> current)
+		{
+			num_buffer.push_back(current); // push_back добавляет ячейку в конец вектора num_buffer, после current
+		}
+		ifile.close();
+		for (int i = 0; i < num_buffer.size(); i++)
+		{
+			//std::cout << num_buffer[i] << " "; debug, вывести из файла
+			summ += num_buffer[i];
+
+		}
+		std::cout << std::endl;
+	}
+	else
+	{
+		std::cout << "Error" << std::endl;
+	}
+	SetConsoleTextAttribute(hConsole, 7);
+	std::cout << "Result: " << summ << std::endl;
+	cin_fixer();
+	script_executed();
+}
+void task4_2()
+{
+	script_start();
+	std::cout << "              Please enter any number.\b\n\n     If your number is over 0, result will be 1.\b\n\n    If your number is lesser 0, result will be -1\b\n\n       If your number is 0, result will be 0\b\n\n";
+	int n;
+	std::string result;
+
+	std::cin >> n; std::cout << std::endl;
+	std::string x = sign_x(n);
+	result = x;
+	SetConsoleTextAttribute(hConsole, 7);
+	std::cout << "Result: " << result << "\n";
+
+	cin_fixer();
+	script_executed();
+}
+void task4_3()
+{
+	script_start();
+	std::string selector;
+	double a, b, radius, h, degree;
+	std::string resulter;
+
+	std::cout << "Please enter the name of a shape.\b\n Shapes available are:\b\n\n Circle\b\n Rectangle\b\n Triangle\b\n";
+	std::getline(std::cin, selector);
+
+	std::transform(selector.begin(), selector.end(), selector.begin(),  // я как понял, через алгоритм transform мы начинаем с первого символа selector, идём до конца и обратно в начало
+		[](unsigned char c)
+		{
+			return std::tolower(c);
+		});
+	// сразу признаюсь, взял из stackoverflow. вставляем новые данные о строчным selector в c и возвращаем это значение в selector?
+	if (selector == "rectangle") // это чисто чтоб пользователь мог ввести фигуру как слово, а не цифру. не знаю зачем я это делал но было весело и я уверен что это плохой метод решения этой проблемы
+	{
+		std::cout << "You have selected: rectangle.\b\n Please enter width and length value.\b\n";
+		selector = '1';
+	}
+	else if (selector == "triangle")
+	{
+		std::cout << "You have selected: triangle.\b\n Please enter 2 cathetus, height and degrees value.\b\n";
+		selector = '2';
+	}
+	else if (selector == "circle")
+	{
+		std::cout << "You have selected: circle.\b\n Please enter radius value.\b\n";
+		selector = '3';
+	}
+	while (true)
+	{
+		switch (selector[0])
+		{
+		case '1':
+			std::cin >> a >> b;
+			resulter = rectangle_calc(a, b);
+			break;
+		case '2':
+			std::cin >> a >> b >> h >> degree;
+			resulter = triangle_calc(a, b, h, degree);
+			break;
+		case '3':
+			std::cin >> radius;
+			resulter = circle_calc(radius);
+			break;
+		default:
+			limbo();
+			break;
+		}
+		break;
+	}
+	std::cout << resulter;
+	cin_fixer();
+	script_executed();
+}
+void task4_4()
+{
+	script_start();
+	char star = '*';
+	char line = '_';
+	char line2 = (char)254u;
+	std::cout << "                  This script runs in 2 modes.\b\n Enter 1 to get the flag instantly, enter 0 to get a small animation.\b\n          Any other symbol will terminate the script.\b\n";
+	int start;
+	std::cin >> start;
+	if (start == 1)
+	{
+		for (int i = 0; i < 13; i++) // сколько строк
+		{
+			for (int j = 0; j < 39; j++) // сколько может быть символов в строке
+			{
+				if (i < 4 && j < 8) // условие для звёзд
+				{
+					SetConsoleTextAttribute(hConsole, 12);
+					std::cout << star;
+				}
+				else // для линий
+				{
+					SetConsoleTextAttribute(hConsole, 9);
+					std::cout << line;
+				}
+			}
+			std::cout << std::endl; // отступать после цикла
+		}
+	}
+	else if (start == 0) // альтернатива, но с анимацией (команда sleep(); )
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			for (int j = 0; j < 24; j++)
+			{
+				if (i < 2)
+				{
+					SetConsoleTextAttribute(hConsole, 15);
+					std::cout << line2; Sleep(1);
+				}
+				else if (i < 4)
+				{
+					SetConsoleTextAttribute(hConsole, 9);
+					std::cout << line2;  Sleep(1);
+				}
+				else
+				{
+					SetConsoleTextAttribute(hConsole, 12);
+					std::cout << line2; Sleep(1);
+				}
+			}
+			std::cout << std::endl; Sleep(1);
+		}
+		printf("\nYA RUSSKIY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	}
+	else // Это БУКВАЛЬНО анимация для вывода текста.
+	{
+		std::string terminate_s = "Script terminated..."; // что должна вывести прога
+		char* char_array = new char[terminate_s.length() + 1]; // создание переменной массива, которая будет равна новому символу взятой из всей длины строки (а если легче то это как задание 3_5 из прошлой дз)
+		char_array[terminate_s.length()] = '\0'; // детерминация массива 
+		for (int anim = 0; anim < terminate_s.length(); anim++) // пробегает всю строчку
+		{
+			char_array[anim] = terminate_s[anim]; // перезаписывает символы
+		}
+		for (int b = 0; b < 20; b++)
+		{
+			std::cout << char_array[b]; Sleep(10); // анимация
+			if (b > 16)
+			{
+				Sleep(500);
+			}
+		}
+		delete[] char_array; // я додумался написать это чтоб не было утечки памяти
+	}
+	cin_fixer();
+	script_executed();
+}
+
+// ВОТ ЭТО ВСЁ ЗАДАНИЕ 5 =) 
+
+int NUM = 100; // количество точек
+LONG WINAPI WndProc(HWND, UINT, WPARAM, LPARAM); // WPARAM = WIDTH PARAMETER... LPARAM = LENGTH PARAMETER
+double** x; // массив данных
+// (двумерный массив, может содержать несколько рядов данных)
+double** getData(int n)
+{
+	double** f;
+	f = new double* [2];
+	f[0] = new double[n];
+	f[1] = new double[n];
+	for (int i = 0; i < n; i++)
+	{
+		double x = (double)i * 0.1;
+		f[0][i] = x;
+		f[1][i] = sin(x);
+	}
+	return f;
+}
+// Функция рисования графика
+void DrawGraph(HDC hdc, RECT rectClient,
+	double** x, // массив данных
+	int n, // количество точек
+	int numrow = 1) // количество рядов данных (по умолчанию 1)
+{
+	double OffsetY, OffsetX;
+	double MAX_X, MAX_Y;
+	double ScaleX, ScaleY;
+	double min, max;
+	int height, width;
+	int X, Y; // координаты в окне (в px)
+	HPEN hpen;
+	height = rectClient.bottom - rectClient.top;
+	width = rectClient.right - rectClient.left;
+	// Область допустимых значений X
+	min = x[0][0];
+	max = x[0][0];
+	for (int i = 0; i < n; i++)
+	{
+		if (x[0][i] < min) min = x[0][i];
+		if (x[0][i] > max) max = x[0][i];
+	}
+	// double temp = max - min;
+	MAX_X = max - min; // отвечает за то чтобы синус распределялся по всему окну
+	OffsetX = min * width / MAX_X; // смещение X
+	ScaleX = (double)width / MAX_X; // масштабный коэффициент X
+	// Область допустимых значений Y
+	min = x[1][0];
+	max = x[1][0];
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 1; j <= numrow; j++)
+		{
+			if (x[j][i] < min) min = x[j][i];
+			if (x[j][i] > max) max = x[j][i];
+		}
+	}
+	int color = RGB(255, 255, 255); // белое перо
+	MAX_Y = max - min; // отвечает за то чтобы синус распределялся по всему окну
+	OffsetY = max * height / (MAX_Y); // смещение Y
+	ScaleY = (double)height / MAX_Y; // масштабный коэффициент Y
+	// Отрисовка осей координат
+	hpen = CreatePen(PS_SOLID, 0, color); //  белая линия, я кстати так и не понял почему слева появляется большая линия по Y ... 28.10.2023 - баг найден, с.м. ниже
+	SelectObject(hdc, hpen);
+	MoveToEx(hdc, 0, OffsetY, 0); // перемещение в точку (0;OffsetY)
+	LineTo(hdc, width, OffsetY); // рисование горизонтальной оси
+	MoveToEx(hdc, OffsetX, 0, 0); // перемещение в точку (OffsetX;0)
+	LineTo(hdc, OffsetX, 0); // рисование вертикальной оси (не "видна") ... 28.10.2023 - я сидел над этим сломанным скриптом очень долго, если вместо 0 поставить height, как и было, то программа выведет большую белую линию, которая очень мешает. при 0 оно её не выводит
+	DeleteObject(hpen); // удаление белого пера
+	// Отрисовка графика функции
+	color = RGB(114, 137, 218); // чёрноватое перо
+	for (int j = 1; j <= numrow; j++)
+	{
+		hpen = CreatePen(PS_SOLID, 1, color); // формирование пера 1px
+		SelectObject(hdc, hpen);
+		X = (int)(OffsetX + x[0][0] * ScaleX); // начальная точка графика
+		Y = (int)(OffsetY - x[j][0] * ScaleY);
+		MoveToEx(hdc, X, Y, 0); // перемещение в начальную точку
+		for (int i = 0; i < n; i++)
+		{
+			X = OffsetX + x[0][i] * ScaleX;
+			Y = OffsetY - x[j][i] * ScaleY;
+			Sleep(10); // 28.10.2023 добавлено, чтобы график красиво выводился, обожаю эту функцию...
+			LineTo(hdc, X, Y);
+		}
+		color = color << 8; // изменение цвета пера для следующего ряда
+		DeleteObject(hpen); // удаление текущего пера
+	}
+}
+// Главная функция КОТОРУЮ НАДО ЕЩЁ ВЫЗВАТЬ !!!!!!!!!!!!!!!!!!!!!!!
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	HWND hwnd;
+	MSG msg;
+	WNDCLASS w;
+	x = getData(NUM); // задание исходны данных
+	memset(&w, 0, sizeof(WNDCLASS));
+	w.style = CS_HREDRAW | CS_VREDRAW;
+	w.lpfnWndProc = (WNDPROC)WndProc;
+	w.hInstance = hInstance;
+	w.hbrBackground = CreateSolidBrush(RGB(40, 43, 48));
+	w.lpszClassName = L"My Class";
+	RegisterClass(&w);
+	hwnd = CreateWindow(L"My Class", L"TASK 4_5",
+		WS_OVERLAPPEDWINDOW,
+		500, 300, 500, 380, NULL, NULL,
+		hInstance, NULL);
+	ShowWindow(hwnd, nCmdShow);
+	UpdateWindow(hwnd);
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	return msg.wParam;
+}
+// Оконная функция
+LONG WINAPI WndProc(HWND hwnd, UINT Message, WPARAM wparam, LPARAM lparam)
+{
+	HDC hdc;
+	PAINTSTRUCT ps;
+	switch (Message)
+	{
+	case WM_PAINT:
+		hdc = BeginPaint(hwnd, &ps);
+		DrawGraph(hdc, ps.rcPaint, x, NUM); // построение графика
+		/* Вывод текста y = sin(x)
+		SetTextColor(hdc, RGB(114, 137, 218)); // синий цвет букв
+		TextOut(hdc, 0, 0, L"sin(x)", 7);
+		EndPaint(hwnd, &ps); */
+		// закомментил потому что плохо выводит. Почему тут фон белого цвета?
+		break;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hwnd, Message, wparam, lparam);
+	}
+	return 0;
+}
+
+void task4_5()
+{
+	script_start();
+	std::cout << "\nPlease input a number length for executing the script. If you don't know what's best, enter 95 or 64.\n";
+	std::cin >> NUM;
+	std::cout << "\nPlease close the pop-up window.\n";
+	WinMain(0, 0, 0, 1);
+	system("CLS");
+	cin_fixer();
+	script_executed();
+}
+
+// ура 5 задание завершено шок...
+
+int number_conv(char number)
+{
+	// I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
+	// if number1 < number2 ; number2-number1 todo
+	// не больше 1 вычитания todo
+	// не больше 3 прибавлений todo
+	switch (number)
+	{
+	case 'I':
+	case 'i':
+		return 1;
+	case 'V':
+	case 'v':
+		return 5;
+	case 'X':
+	case 'x':
+		return 10;
+	case 'L':
+	case 'l':
+		return 50;
+	case 'C':
+	case 'c':
+		return 100;
+	case 'D':
+	case 'd':
+		return 500;
+	case 'M':
+	case 'm':
+		return 1000;
+	default:
+		return 0;
+	}
+}
+void task4_6()
+{
+	script_start();
+	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
+	int number_converted = 0;
+	int buffer = 0;
+	int next = 0;
+	bool alert = false;
+	std::string number;
+	std::getline(std::cin, number);
+	for (int j = 0; j < number.length(); j++)
+	{
+		if (j + 3 < number.length())
+		{
+			if (number[j] == number[j + 1] && number[j] == number[j + 2] && number[j] == number[j + 3])
+			{
+				std::cout << "Number does not exist... (error code 1)\n";
+				script_executed();
+				return;
+			}
+		}
+		for (int k = j + 1; k < number.length(); k++)
+		{
+			if (number[k] == number[j])
+			{
+				alert = true;
+			}
+			if (number[j] == number[j + 2] && number[j] < number[j + 1])
+			{
+				std::cout << "Number does not exist... (error code 3)\n";
+				script_executed();
+				return;
+			}
+			if (alert == true && number_conv(number[j]) < number_conv(number[k]))
+			{
+				std::cout << "Number does not exist... (error code 2)\n";
+				script_executed();
+				return;
+			}
+
+		}
+	}
+	for (int i = 0; i < number.length(); i++)
+	{
+		buffer = number_conv(number[i]);
+		next = i + 1 < number.length() ? number_conv(number[i + 1]) : 0; // ? == if (then), : == else 
+		number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
+	}
+
+	SetConsoleTextAttribute(hConsole, 7);
+	std::cout << "Result: " << number_converted << "\n";
+
+	script_executed();
+}
+void task4_7()
+{
+	script_start();
+
+	script_executed();
+}
+void task4_8()
+{
+	script_start();
+	double array1[3][4]{ {5,2,0,10}, {3,5,2,5}, {20,0,0,0} };
+	double array2[4][2]{ {1.2,0.5},{2.8,0.4},{5.0,1.0},{2.0,1.5} };
+	double result[3][2]; // результат умножения матриц. по правилам матрица 3 4 и 4 2 при умножении станут 3 2
+	double resinput = 0; // result input, ввод в массив выше
+
+	for (int i = 0; i < 3; i++) // 3 из result[3][2]
+	{
+		for (int j = 0; j < 2; j++) // 2 из result[3][2]
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				resinput += array1[i][k] * array2[k][j];
+			}
+			result[i][j] = resinput;
+		}
+	}
+
+	int max_t = 0, min_t = 0, max_s = 0, min_s = 0;
+	double summary = 0, tax = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		// ПЕРЕДЕЛАТЬ... ОНО РАБОТАЕТ НО IFIFIFIFIF
+		if (result[i][0] > result[max_s][0])
+		{
+			max_s = i;
+		}
+		if (result[i][1] > result[max_t][1])
+		{
+			max_t = i;
+		}
+		if (result[i][1] > result[min_t][1])
+		{
+			min_t = i;
+		}
+		if (result[i][2] > result[min_s][2])
+		{
+			min_s = i;
+		}
+		summary += result[i][0];
+		tax += result[i][1];
+		// конец задания ток вывести осталось
+	}
+
+	double answer5 = summary + tax;
+	std::string userinput;
+	std::cout << "\nPlease enter 0 to print C.\n1: Most/Least money earned.\n2:Most/Least CMM cash.\n3: Overall money earned.\n4:Overall CMM.\n5: Overall cashflow.\n";
+
+	while (true)
+	{
+		std::getline(std::cin, userinput);
+		switch (userinput[0])
+		{
+		case '0':
+			printf("C:\n");
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = 0; j < 2; j++)
+				{
+					std::cout << result[i][j] << "\n";
+				}
+			}
+			break;
+		case '1':
+			std::cout << "\nMax: " << max_s + 1 << "\nMin: " << min_s + 1 << "\n";
+			break;
+		case '2':
+			std::cout << "\nMax: " << max_t + 1 << "\nMin: " << min_t + 1 << "\n";
+			break;
+		case '3':
+			std::cout << "\nResult :" << summary << "\n";
+			break;
+		case '4':
+			std::cout << "\nResult: " << tax << "\n";
+			break;
+		case '5':
+			std::cout << "\nResult: " << answer5 << "\n";
+			break;
+		default:
+			script_executed();
+			return;
+		}
+	}
+}
+
+int x_to_dec(std::string number, int n_sys) // от пользователя нужно: число, система из которой переводится. dec = 10. из x в 10
+{
+	std::string str = "0123456789abcdef";
+	char ch{};
+	int result = 0;
+
+	for (int i = 0; i < number.size(); i++)
+	{
+		ch = number[i];
+		int value = str.find(tolower(ch));
+		result += value * pow(n_sys, number.size() - i - 1);
+	}
+	return result;
+}
+std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользователя нужно только система счисления. из 10 в x. x2d_res = x to dec result, берётся из задания
+{
+	std::string str = "0123456789abcdef", result{};
+	int temp = 0;
+
+	while (x2d_res > 0)
+	{
+		x2d_res /= n_new_sys;
+		temp = x2d_res % n_new_sys;
+		result += str[temp];
+	}
+	return result;
+}
+void task4_9()
+{
+	script_start();
+
+	std::string str = "0123456789abcdef";
+	bool alert = false;
+	char check_ch{}, ch{};
+	std::string number = "0";
+	int n_sys = 2, n_new_sys = 16; // для контекста 2 и 16 выставлено для собственного удобства. можете ставить 0
+
+	printf("Please enter a number\n");
+	std::cin >> number; //почему cin а не getline? getline забирает всю строку, а cin до пробела. у мат. чисел не бывает пробела
+	printf("\nEnter your old numeral system and preferable numeral system. (From 2 to 16)\n");
+	std::cin >> n_sys >> n_new_sys;
+
+	if (n_sys < 17 && n_sys > 1 && n_new_sys < 17 && n_new_sys > 1)
+	{
+		for (int i = 0; i < number.size(); i++)
+		{
+			bool check_alert = 0;
+			check_ch = tolower(number[i]);
+			if (str.find(check_ch) > 16 || str.find(check_ch) < 0)
+			{
+				check_alert = true;
+			}
+			if (check_alert == 1)
+			{
+				std::cout << "Cannot execute.";
+				break;
+			}
+			else
+			{
+				int dec_sys = x_to_dec(number, n_sys);
+				std::string exec_result;
+				if (n_new_sys != 10)
+				{
+					exec_result = dec_to_new_x(dec_sys, n_new_sys);
+					std::cout << "Result: " << exec_result;
+				}
+				else
+				{
+					std::cout << "Result: " << dec_sys;
+				}
+				break;
+			}
+		}
+	}
+	else
+	{
+		printf("Script cannot be executed.");
+	}
+
+	cin_fixer();
+	script_executed();
+}
+
+// driver code
+int main()
+{
+	loading();
+	std::string key;
+	std::string key_selector;
+	std::cout << ">:/ Enter E into homework selection to shut the program off.\b\n" << ">:/ Enter the Task number you wanna check out...\b\n\n";
+
+	while (true)
+	{
+		std::cout << ">:/ Entering homework number: "; std::getline(std::cin, key);
+		std::cout << ">:/ Entering task number: "; std::getline(std::cin, key_selector);
+		switch (key[0])
+		{
+		case 'e':
+		case 'E':
+			return 0;
+		case '1':
+			switch (key_selector[0])
+			{
+			case '1':
+				task1_1();
+				break;
+			case '2':
+				task1_2();
+				break;
+			case '3':
+				task1_3();
+				break;
+			case '4':
+				task1_4();
+				break;
+			case '5':
+				task1_5();
+				break;
+			default:
+				break;
+			}
+			break;
+		case '2':
+			switch (key_selector[0])
+			{
+			case '1':
+				task2_1();
+				break;
+			case '2':
+				task2_2();
+				break;
+			case '3':
+				task2_3();
+				break;
+			case '4':
+				task2_4();
+				break;
+			case '5':
+				task2_5();
+				break;
+			default:
+				break;
+			}
+			break;
+		case '3':
+			switch (key_selector[0])
+			{
+			case '1':
+				task3_1();
+				break;
+			case '2':
+				task3_2();
+				break;
+			case '3':
+				task3_3();
+				break;
+			case '4':
+				task3_4();
+				break;
+			case '5':
+				task3_5();
+				break;
+			default:
+				break;
+			}
+			break;
+		case '4':
+			switch (key_selector[0])
+			{
+			case '1':
+				task4_1();
+				break;
+			case '2':
+				task4_2();
+				break;
+			case '3':
+				task4_3();
+				break;
+			case '4':
+				task4_4();
+				break;
+			case '5':
+				task4_5();
+				break;
+			case '6':
+				task4_6();
+				break;
+			case '7':
+				task4_7();
+				break;
+			case '8':
+				task4_8();
+				break;
+			case '9':
+				task4_9();
+				break;
+			default:
+				break;
+			}
+			break;
+		case '5':
+			std::cout << "TODO LOL\b\n";
+			break;
+		default:
+			break;
+		}
+	}
+}
