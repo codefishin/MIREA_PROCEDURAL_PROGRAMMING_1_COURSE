@@ -9,6 +9,19 @@
 #include <Windows.h>
 #include <stdlib.h>
 
+std::string removal(std::string s) // крч алгоритм по удалению букв из строк
+{
+	std::string ns; // создаётся новая строка
+	for (int i = 0; i < s.length(); i++) // цикл 
+	{
+		if (s.at(i) >= '0' && s.at(i) <= '9' || s.at(i) == '.') // проверка, если текущий символ строки имеет в себе цифру от 0 до 9; 18.10.2023 ИЛИ . ПОТОМУ ЧТО ВТОРОЕ ЗАДАНИЕ =)
+		{
+			ns += s.at(i); // то ввести этот символ в новую строку ns
+		}
+	}
+	return ns;
+}
+
 void task1_1()
 {
 std::cout << "NAME";
