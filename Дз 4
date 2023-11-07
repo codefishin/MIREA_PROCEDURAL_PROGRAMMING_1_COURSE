@@ -435,7 +435,7 @@ void task4_6()
 	int buffer = 0;
 	int next = 0;
 	bool alert = false;
-	std::string number;
+		std::string number;
 	std::cout << "-> "; std::getline(std::cin, number);
 	for (int j = 0; j < number.length(); j++)
 	{
@@ -454,15 +454,21 @@ void task4_6()
 			{
 				alert = true;
 			}
-			if (number[j] == number[j + 2] && number[j] < number[j + 1])
+			if (number_conv(number[j]) == number_conv(number[j + 2]) && alert == true && number_conv(number[j]) < number_conv(number[k]))
 			{
 				std::cout << "Number does not exist... (error code 3)\n";
 				script_executed();
 				return;
 			}
-			if (alert == true && number_conv(number[j]) < number_conv(number[k]))
+			if (alert == true && number_conv(number[j]) > number_conv(number[k]))
 			{
 				std::cout << "Number does not exist... (error code 2)\n";
+				script_executed();
+				return;
+			}
+			if (number[j] > number[k] && number[j] != number[j + 2])
+			{
+				std::cout << "Number does not exist... (error code 4)\n";
 				script_executed();
 				return;
 			}
