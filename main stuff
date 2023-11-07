@@ -3,7 +3,7 @@
 *
 * для задания 5, сделай cos(x) и sin(x) [выбрать чтоб можно было], не обязательно
 *
-* todo; all 5 hw except 4
+* todo 4_7; all 5 hw
 */
 
 // UPDATE LIST: Добавлены bugfix для 3 и 6. Сделано 7, 8 и 9 [дз 4] и сделан 1 вариант для дз 5 задание 4
@@ -11,7 +11,6 @@
 // для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
 
 // если нужно только дз: смотрите программы "void"
-
 
 #include <iostream>
 #include <cstdlib>
@@ -1201,15 +1200,21 @@ void task4_6()
 			{
 				alert = true;
 			}
-			if (number[j] == number[j + 2] && number[j] < number[j + 1])
+			if (number_conv(number[j]) == number_conv(number[j + 2]) && alert == true && number_conv(number[j]) < number_conv(number[k]))
 			{
 				std::cout << "Number does not exist... (error code 3)\n";
 				script_executed();
 				return;
 			}
-			if (alert == true && number_conv(number[j]) < number_conv(number[k]))
+			if (alert == true && number_conv(number[j]) > number_conv(number[k]))
 			{
 				std::cout << "Number does not exist... (error code 2)\n";
+				script_executed();
+				return;
+			}
+			if (number[j] > number[k] && number[j] != number[j + 2])
+			{
+				std::cout << "Number does not exist... (error code 4)\n";
 				script_executed();
 				return;
 			}
@@ -1472,7 +1477,7 @@ void task5_3()
 
 	script_executed();
 }
-void task5_4_20()
+void task5_4_19()
 {
 	script_start();
 
@@ -1667,12 +1672,12 @@ int main()
 			{
 			case '4':
 				std::string choose;
-				printf("Please select task... (1 = 20 or 2 = 28)\n");
+				printf("Please select task... (1 = 19 or 2 = 28)\n");
 				std::cout << "-> ";  std::cin >> choose;
 				switch (choose[0])
 				{
 				case '1':
-					task5_4_20();
+					task5_4_19();
 					break;
 				case '2':
 					task5_4_28();
