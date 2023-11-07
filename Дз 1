@@ -1,0 +1,179 @@
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <cstring>
+#include <fstream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <Windows.h>
+#include <stdlib.h>
+
+void task1_1()
+{
+std::cout << "NAME";
+}
+void task1_2()
+{
+	std::cout << "      Enter two numbers...\b\n";
+	int number1 = 0, number2 = 0;
+	std::cout << "-> "; std::cin >> number1;  std::cout << "\n-> "; std::cin >> number2;
+	std::cout << "   Select an operation...\b\n\n" << "1: +, 2: -, 3: *, 4: /\b\n\nTo exit this script, press 5.\n\n";
+	std::string selector;
+	while (selector[0] != '5')
+	{
+		switch (selector[0])
+		{
+		case '1':
+			std::cout << "Result: " << number1 + number2 << std::endl;
+			break;
+		case '2':
+			std::cout << "Result: " << number1 - number2 << std::endl;
+			break;
+		case '3':
+			std::cout << "Result: " << number1 * number2 << std::endl;
+			break;
+		case '4':
+			if (number1 != 0 && number2 != 0)
+			{
+				std::cout << "Result: " << number1 / number2 << std::endl;
+			}
+			else
+			{
+				std::cout << "The sun smiles at you with eternal malice." << std::endl;
+			}
+			break;
+		default:
+			break;
+		}
+		std::cout << "-> "; std::getline(std::cin, selector);
+	}
+}
+void task1_3()
+{
+	//задача bx+c = 0 !!! x = -c/b
+	std::cout << "Enter 2 number to solve for X...\b\n\n              bx+c = 0\b\n\n";
+	double b = 0, c = 0, x = 0;
+	std::string bfix, cfix;
+	std::cout << "-> "; std::getline(std::cin, bfix);
+	std::cout << "-> "; std::getline(std::cin, cfix);
+	std::string nb = removal(bfix);
+	std::string nc = removal(cfix);
+	if (std::empty(nc) == 1 || std::empty(nb) == 1)
+	{
+		std::cout << "Cannot execute.\nAre you sure you entered numerals?\n";
+	}
+	else
+	{
+		b = stod(nb);
+		c = stod(nc);
+		if (b != 0)
+		{
+			x = -c / b;
+			std::cout << "Result: " << x << std::endl;
+		}
+		else
+		{
+			std::cout << "Cannot calculate...\b\n";
+		}
+	}
+}
+void task1_4()
+{
+	// ужасный код но он взят с первого занятия и мне лень его переписывать
+	// ax^2 + bx + c = 0... 
+	double a = 0, b = 0, c = 0, disc = 0, x1 = 0, x2 = 0;
+	std::string error = "Result: x = 0\b\n";
+	std::string afix, bfix, cfix;
+	std::cout << "Enter 3 number to solve a square equation...\b\n";
+	std::cout << "-> "; std::getline(std::cin, afix);
+	std::cout << "-> "; std::getline(std::cin, bfix);
+	std::cout << "-> "; std::getline(std::cin, cfix);
+	std::string afixed = removal(afix);
+	std::string bfixed = removal(bfix);
+	std::string cfixed = removal(cfix);
+	if (std::empty(afixed) == 1 || std::empty(bfixed) == 1 || std::empty(cfixed) == 1)
+	{
+		std::cout << "Cannot execute.\nAre you sure you entered numerals?\n";
+	}
+	else
+	{
+		a = stod(afix);
+		b = stod(bfix);
+		c = stod(cfix);
+		disc = pow(b, 2) - 4 * a * c; // дискриминант
+		if (a != 0)
+		{
+			if (disc > 0)
+			{
+				x1 = (-b + sqrt(disc)) / (2 * a);
+				x2 = (-b + sqrt(disc)) / (2 * a);
+			}
+			if (disc == 0)
+			{
+				if (b != 0)
+				{
+					x1 = -b / (2 * a);
+				}
+				else
+				{
+					std::cout << error;
+				}
+			}
+			else
+			{
+				if (b != 0)
+				{
+					if (c == 0)
+					{
+						std::cout << error;
+					}
+					else
+					{
+						x1 = c / b;
+						std::cout << "x = " << x1 << std::endl;
+					}
+				}
+				else
+				{
+
+					std::cout << "Result: X can be anything\b\n";
+				}
+			}
+		}
+	}
+}
+void task1_5()
+{
+	std::cout << "Answer the following question.\b\n 1 = yes\n 0 = no\n\n";
+	bool outside, lamp, curtains;
+	std::cout << "Is it sunny?\n\n";
+	std::cout << "-> "; std::cin >> outside;
+	if (outside == 1)
+	{
+		std::cout << "Are your curtains open?\n\n";
+		std::cout << "-> "; std::cin >> curtains;
+
+		if (curtains == 0)
+		{
+			std::cout << "Your divine light was severed.\n\n";
+		}
+		else
+		{
+			std::cout << "Divine light established.\n\n";
+		}
+	}
+	else
+	{
+		std::cout << "Is your lamp on?\n\n";
+		std::cout << "-> "; std::cin >> lamp;
+		if (lamp == 0)
+		{
+			std::cout << "Your divine light was severed.\n\n";
+		}
+		else
+		{
+			std::cout << "Divine light established.\n\n";
+		}
+	}
+}
