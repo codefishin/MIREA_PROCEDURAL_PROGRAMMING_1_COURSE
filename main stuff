@@ -3,14 +3,10 @@
 *
 * для задания 5, сделай cos(x) и sin(x) [выбрать чтоб можно было], не обязательно
 *
-* для задания 7 (m,i,c) =  37 3 64  or  25173 13849 65537 ... S[i] + 1 = (m*S[i] + i) % c ... 2 цикла for ...
-*
-* для задания 9 написать 1 войд и 2 подпрограммы... подпрограммы делают перевод из x в 10 и из 10 в x
-*
-* todo 4_7 4_9; all 5 hw
+* todo; all 5 hw except 4
 */
 
-// UPDATE LIST: Добавлены bugfix для 3 и 6. Сделан 8 и 9 [дз 4]
+// UPDATE LIST: Добавлены bugfix для 3 и 6. Сделано 7, 8 и 9 [дз 4] и сделан 1 вариант для дз 5 задание 4
 
 // для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
 
@@ -1232,10 +1228,57 @@ void task4_6()
 
 	script_executed();
 }
-void task4_7()
+void task4_7() // оч плохо : ) возможно не зачтут
 {
 	script_start();
 
+	int array[999]{}, m = 0, c = 0, inputlast;
+	const int i = 3;
+	const int i2 = 13849;
+
+	bool num_switch = 0;
+	printf("Enter 1 for values of: 37 3 64\nEnter 0 for values 25173 13849 65537\n");
+	std::cout << "-> ";  std::cin >> num_switch;
+	if (num_switch != 0)
+	{
+		m = 37; c = 64;
+		int S[i + 1]{};
+		S[0] = 0;
+		for (int count = 1; count <= i; count++)
+		{
+			S[count] = ((m * S[count - 1] + i) % c);
+		}
+		printf("\nInput a number from 1 to 3 to get a random number: \n-> "); std::cin >> inputlast;
+		if (inputlast <= 3 && inputlast >= 1)
+		{
+			std::cout << S[inputlast];
+		}
+		else
+		{
+			printf("Number does not exist in array.\n");
+		}
+	}
+	else
+	{
+		m = 25173; c = 65537;
+		int S2[i2 + 1]{};
+		S2[0] = 0;
+		for (int count = 1; count <= i2; count++)
+		{
+			S2[count] = ((m * S2[count - 1] + i) % c);
+		}
+		printf("\nInput a number from 1 to 13849 to get a random number: \n-> "); std::cin >> inputlast;
+		if (inputlast <= 13849 && inputlast >= 1)
+		{
+			std::cout << S2[inputlast];
+		}
+		else
+		{
+			printf("Number does not exist in array.\n");
+		}
+	}
+
+	cin_fixer();
 	script_executed();
 }
 void task4_8()
@@ -1435,7 +1478,7 @@ void task5_4_20()
 
 	bool alert = false;
 	double userinput = 1, array[999]{}, buffer{}, avg=0;
-	int temp = 1, people = -1;
+	int temp = 1, people = 0;
 
 	printf("**** Student Height Analysis ****\n Please enter student height and press <Enter>.\n When you are done, enter 0 and press <Enter>\n"); // Анализ роста студентов
 	
@@ -1452,13 +1495,6 @@ void task5_4_20()
 			{
 				avg = buffer / i;
 			}
-			for (int i = 0; i < temp; i++)
-			{
-				if (array[i] > avg)
-				{
-					people += 1;
-				}
-			}
 		}
 		else
 		{
@@ -1469,9 +1505,36 @@ void task5_4_20()
 	}
 	if (alert == false)
 	{
+		for (int i = 0; i < temp; i++)
+		{
+			if (array[i] > avg)
+			{
+				people += 1;
+			}
+		}
 		std::cout << "\nAverage student height: " << avg << "\nStudent taller than average height: " << people;
 	}
-	
+
+	cin_fixer();
+	script_executed();
+}
+void task5_4_28()
+{
+	script_start();
+
+	std::string str, buffer;
+	int current{}, summary{};
+
+	printf("Please enter a string of numbers.\n->");
+	std::cin >> str;
+	for (int count = 0; count < str.size(); count++)
+	{
+		buffer = str[count];
+		current = stoi(buffer);
+		summary += current;
+	}
+	std::cout << "Summary of each number: " << summary;
+
 	cin_fixer();
 	script_executed();
 }
@@ -1603,7 +1666,18 @@ int main()
 			switch (key_selector[0])
 			{
 			case '4':
-				task5_4_20();
+				std::string choose;
+				printf("Please select task... (1 = 20 or 2 = 28)\n");
+				std::cout << "-> ";  std::cin >> choose;
+				switch (choose[0])
+				{
+				case '1':
+					task5_4_20();
+					break;
+				case '2':
+					task5_4_28();
+					break;
+				}
 				break;
 			}
 			break;
