@@ -243,7 +243,7 @@ void task1_2()
 	script_start(); // вкратце цвет + вывод готовности скрипта
 	std::cout << "      Enter two numbers...\b\n";
 	int number1 = 0, number2 = 0;
-	std::cin >> number1 >> number2;
+	std::cout << "-> "; std::cin >> number1;  std::cout << "\n-> "; std::cin >> number2;
 	std::cout << "   Select an operation...\b\n\n" << "1: +, 2: -, 3: *, 4: /\b\n\nTo exit this script, press 5.\n\n";
 	std::string selector;
 	while (selector[0] != '5')
@@ -272,7 +272,7 @@ void task1_2()
 		default:
 			break;
 		}
-		std::getline(std::cin, selector);
+		std::cout << "-> "; std::getline(std::cin, selector);
 	}
 	script_executed();
 }
@@ -283,8 +283,8 @@ void task1_3()
 	std::cout << "Enter 2 number to solve for X...\b\n\n              bx+c = 0\b\n\n";
 	double b = 0, c = 0, x = 0;
 	std::string bfix, cfix;
-	std::getline(std::cin, bfix);
-	std::getline(std::cin, cfix);
+	std::cout << "-> "; std::getline(std::cin, bfix);
+	std::cout << "-> "; std::getline(std::cin, cfix);
 	std::string nb = removal(bfix);
 	std::string nc = removal(cfix);
 	if (std::empty(nc) == 1 || std::empty(nb) == 1)
@@ -316,9 +316,9 @@ void task1_4()
 	std::string error = "Result: x = 0\b\n";
 	std::string afix, bfix, cfix;
 	std::cout << "Enter 3 number to solve a square equation...\b\n";
-	std::getline(std::cin, afix);
-	std::getline(std::cin, bfix);
-	std::getline(std::cin, cfix);
+	std::cout << "-> "; std::getline(std::cin, afix);
+	std::cout << "-> "; std::getline(std::cin, bfix);
+	std::cout << "-> "; std::getline(std::cin, cfix);
 	std::string afixed = removal(afix);
 	std::string bfixed = removal(bfix);
 	std::string cfixed = removal(cfix);
@@ -380,11 +380,11 @@ void task1_5()
 	std::cout << "Answer the following question.\b\n 1 = yes\n 0 = no\n\n";
 	bool outside, lamp, curtains;
 	std::cout << "Is it sunny?\n\n";
-	std::cin >> outside;
+	std::cout << "-> "; std::cin >> outside;
 	if (outside == 1)
 	{
 		std::cout << "Are your curtains open?\n\n";
-		std::cin >> curtains;
+		std::cout << "-> "; std::cin >> curtains;
 
 		if (curtains == 0)
 		{
@@ -398,7 +398,7 @@ void task1_5()
 	else
 	{
 		std::cout << "Is your lamp on?\n\n";
-		std::cin >> lamp;
+		std::cout << "-> "; std::cin >> lamp;
 		if (lamp == 0)
 		{
 			std::cout << "Your divine light was severed.\n\n";
@@ -497,7 +497,7 @@ void task2_4()
 	float numberN{}, Xnumber{};
 	Xnumber = 0.0;
 	std::cout << "Enter a number to get 10 new numbers. The calculation is x+=n, 10 times... " << std::endl;
-	std::cin >> numberN;
+	std::cout << "-> "; std::cin >> numberN;
 	std::cout << "Your number list is... " << std::endl;
 	for (int i = 0; i < 10; i++)
 	{
@@ -535,7 +535,7 @@ void task3_1()
 	double m;
 	std::string pfix, sfix, nfix; // для алгоримтма создаются ещё переменные
 
-	std::cout << "Input the following values: p,S,n" << std::endl; std::cin >> pfix >> sfix >> nfix; // p = %, s = summ, n = time ... вводятся переменные ДЛЯ АЛГОРИТМА
+	std::cout << "Input the following values: p,S,n" << std::endl; std::cout << "-> "; std::cin >> pfix; std::cout << "\n-> "; std::cin >> sfix; std::cout << "\n-> "; std::cin >> nfix; // p = %, s = summ, n = time ... вводятся переменные ДЛЯ АЛГОРИТМА
 	std::string pN = removal(pfix); // исполнение алгоритма для введённых пользователем переменных
 	std::string sN = removal(sfix); // после выполнения этой хери останутся только цифры
 	std::string nN = removal(nfix); // если цифр нет, то будет пустая строка
@@ -569,7 +569,7 @@ void task3_2()
 	script_start();
 	double summary = 0.0, money = 0.0, money_sequel, percent = -100, time = 0.0, step = 5, epsilon = 0.01; //S = SUMMARY, M = MONEY, N = TIME, P = PERCENT
 	std::string summaryfix, moneyfix, timefix; // reference to algorithm above (string removal)
-	std::cout << "Input the following values:S, m, time\b\n"; std::cin >> summaryfix >> moneyfix >> timefix; // ввод данных
+	std::cout << "Input the following values:S, m, time\b\n"; std::cout << "-> "; std::cin >> summaryfix; std::cout << "-> "; std::cin >> moneyfix; std::cout << "-> ";std::cin >> timefix; // ввод данных
 	std::string ns = removal(summaryfix); // reference to algorithm above (string removal)
 	std::string na = removal(moneyfix); // reference to algorithm above (string removal)
 	std::string nb = removal(timefix); // reference to algorithm above (string removal)
@@ -641,7 +641,7 @@ void task3_3()
 	char userinput[255];
 	char text[259]; // можно было через string но меня уронили в детстве.
 	std::cout << "Input file value. (maximum of 255 symbols)\b\n";
-	std::cin.getline(userinput, 255); // ><> fish
+	std::cout << "-> "; std::cin.getline(userinput, 255); // ><> fish
 	std::ofstream textFile("text.txt");
 	if (textFile.is_open()) {
 		textFile << userinput;
@@ -674,7 +674,7 @@ void task3_4()
 	char text[1024]{};
 	int i = 1024;
 	std::cout << "Input file value. (maximum of 1024 symbols)\b\n";
-	std::cin.getline(userinput, i);
+	std::cout << "-> "; std::cin.getline(userinput, i);
 	std::ofstream textFile("text.txt");
 	if (textFile.is_open()) {
 		textFile << userinput;
@@ -720,7 +720,7 @@ void task3_5()
 	std::cout << "### WARNING: ARRAY ONLY TAKES FIRST 30 SYMBOLS, TERMINATE ARRAY BY INPUTTING 0 ### " << std::endl << "Enter symbols: " << std::endl;
 	for (int n = 0; n < 30; n++)
 	{
-		std::cin >> userinput;
+		std::cout << "-> "; std::cin >> userinput;
 		if (userinput == '0')
 		{
 			break;
@@ -768,7 +768,7 @@ void task4_1()
 	int check = 1;
 	for (int n = 0; check != 0; n++)
 	{
-		std::cin >> userinput;
+		std::cout << "-> "; std::cin >> userinput;
 		if (userinput >= 2147483647 || userinput <= -858993460) // крч это чтобы сама прога не ломалась. я поизучал что будет если ввести число выше 2^31 и оно выводило эти два числа. этот скрипт - предохранитель, если пользователь ******* и воооот. прога вырубится
 		{
 			std::cout << "Processing ";
@@ -811,7 +811,7 @@ void task4_1()
 	}
 	file.close(); // пользователь закончил записывать числа 
 
-	std::vector<int> num_buffer;
+	std::vector<int> num_buffer; // за вектора наорут
 	int summ = 0;
 	std::ifstream ifile("file.txt");
 	if (ifile.good()) // через open не робит :>
@@ -826,7 +826,6 @@ void task4_1()
 		{
 			//std::cout << num_buffer[i] << " "; debug, вывести из файла
 			summ += num_buffer[i];
-
 		}
 		std::cout << std::endl;
 	}
@@ -846,7 +845,7 @@ void task4_2()
 	int n;
 	std::string result;
 
-	std::cin >> n; std::cout << std::endl;
+	std::cout << "-> "; std::cin >> n; std::cout << std::endl;
 	std::string x = sign_x(n);
 	result = x;
 	SetConsoleTextAttribute(hConsole, 7);
@@ -863,7 +862,7 @@ void task4_3()
 	std::string resulter;
 
 	std::cout << "Please enter the name of a shape.\b\n Shapes available are:\b\n\n Circle\b\n Rectangle\b\n Triangle\b\n";
-	std::getline(std::cin, selector);
+	std::cout << "-> "; std::getline(std::cin, selector);
 
 	std::transform(selector.begin(), selector.end(), selector.begin(),  // я как понял, через алгоритм transform мы начинаем с первого символа selector, идём до конца и обратно в начало
 		[](unsigned char c)
@@ -891,15 +890,15 @@ void task4_3()
 		switch (selector[0])
 		{
 		case '1':
-			std::cin >> a >> b;
+			std::cout << "-> "; std::cin >> a; std::cout << "-> "; std::cin >> b;
 			resulter = rectangle_calc(a, b);
 			break;
 		case '2':
-			std::cin >> a >> b >> h >> degree;
+			std::cout << "-> "; std::cin >> a; std::cout << "-> "; std::cin >> b; std::cout << "-> "; std::cin >> h; std::cout << "-> "; std::cin >> degree;
 			resulter = triangle_calc(a, b, h, degree);
 			break;
 		case '3':
-			std::cin >> radius;
+			std::cout << "-> "; std::cin >> radius;
 			resulter = circle_calc(radius);
 			break;
 		default:
@@ -920,7 +919,7 @@ void task4_4()
 	char line2 = (char)254u;
 	std::cout << "                  This script runs in 2 modes.\b\n Enter 1 to get the flag instantly, enter 0 to get a small animation.\b\n          Any other symbol will terminate the script.\b\n";
 	int start;
-	std::cin >> start;
+	std::cout << "-> "; std::cin >> start;
 	if (start == 1)
 	{
 		for (int i = 0; i < 13; i++) // сколько строк
@@ -1136,7 +1135,7 @@ void task4_5()
 {
 	script_start();
 	std::cout << "\nPlease input a number length for executing the script. If you don't know what's best, enter 95 or 64.\n";
-	std::cin >> NUM;
+	std::cout << "-> "; std::cin >> NUM;
 	std::cout << "\nPlease close the pop-up window.\n";
 	WinMain(0, 0, 0, 1);
 	system("CLS");
@@ -1188,7 +1187,7 @@ void task4_6()
 	int next = 0;
 	bool alert = false;
 	std::string number;
-	std::getline(std::cin, number);
+	std::cout << "-> "; std::getline(std::cin, number);
 	for (int j = 0; j < number.length(); j++)
 	{
 		if (j + 3 < number.length())
@@ -1365,9 +1364,9 @@ void task4_9()
 	int n_sys = 2, n_new_sys = 16; // для контекста 2 и 16 выставлено для собственного удобства. можете ставить 0
 
 	printf("Please enter a number\n");
-	std::cin >> number; //почему cin а не getline? getline забирает всю строку, а cin до пробела. у мат. чисел не бывает пробела
+	std::cout << "-> "; std::cin >> number; //почему cin а не getline? getline забирает всю строку, а cin до пробела. у мат. чисел не бывает пробела
 	printf("\nEnter your old numeral system and preferable numeral system. (From 2 to 16)\n");
-	std::cin >> n_sys >> n_new_sys;
+	std::cout << "-> "; std::cin >> n_sys; std::cout << "-> "; std::cin >> n_new_sys;
 
 	if (n_sys < 17 && n_sys > 1 && n_new_sys < 17 && n_new_sys > 1)
 	{
@@ -1407,6 +1406,79 @@ void task4_9()
 	}
 
 	cin_fixer();
+	script_executed();
+}
+
+// все задания НИЖЕ имеют множество заданий подгрупп. Расписано так: ДЗ_НОМЕР_ПОДНОМЕР
+
+void task5_1()
+{
+	script_start();
+	
+	script_executed();
+}
+void task5_2()
+{
+	script_start();
+
+	script_executed();
+}
+void task5_3()
+{
+	script_start();
+
+	script_executed();
+}
+void task5_4_20()
+{
+	script_start();
+
+	bool alert = false;
+	double userinput = 1, array[999]{}, buffer{}, avg=0;
+	int temp = 1, people = -1;
+
+	printf("**** Student Height Analysis ****\n Please enter student height and press <Enter>.\n When you are done, enter 0 and press <Enter>\n"); // Анализ роста студентов
+	
+	for (int i = 0; userinput != 0; i++)
+	{
+		std::cout << "-> "; std::cin >> userinput;
+		if (userinput > -1)
+		{
+			buffer += userinput;
+			array[i] = userinput;
+			array[i + 1] = '\0';
+			temp++;
+			if (i != 0)
+			{
+				avg = buffer / i;
+			}
+			for (int i = 0; i < temp; i++)
+			{
+				if (array[i] > avg)
+				{
+					people += 1;
+				}
+			}
+		}
+		else
+		{
+			alert = true;
+			std::cout << "\nHeight cannot be below 0.\n";
+			break;
+		}
+	}
+	if (alert == false)
+	{
+		std::cout << "\nAverage student height: " << avg << "\nStudent taller than average height: " << people;
+	}
+	
+	cin_fixer();
+	script_executed();
+}
+void task5_5()
+{
+	script_start();
+
 	script_executed();
 }
 
@@ -1528,7 +1600,12 @@ int main()
 			}
 			break;
 		case '5':
-			std::cout << "TODO LOL\b\n";
+			switch (key_selector[0])
+			{
+			case '4':
+				task5_4_20();
+				break;
+			}
 			break;
 		default:
 			break;
