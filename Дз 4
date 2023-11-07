@@ -217,7 +217,6 @@ void task4_4()
 {
 	char star = '*';
 	char line = '_';
-	std::cout << "AAAAAAAAAAAAAAAAAAAA\b\n";
   for (int i = 0; i < 13; i++) // сколько строк
 		{
 			for (int j = 0; j < 39; j++) // сколько может быть символов в строке
