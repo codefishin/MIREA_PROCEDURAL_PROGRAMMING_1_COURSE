@@ -2,11 +2,8 @@
 #include <cstdlib>
 #include <string>
 #include <cstring>
-#include <fstream>
-#include <vector>
 #include <cmath>
 #include <algorithm>
-#include <Windows.h>
 #include <stdlib.h>
 
 std::string removal(std::string s) // крч алгоритм по удалению букв из строк
