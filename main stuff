@@ -3,14 +3,13 @@
 *
 * для задания 5, сделай cos(x) и sin(x) [выбрать чтоб можно было], не обязательно
 *
-* todo 4_7; all 5 hw
+* todo  5 hw ПЕРЕДЕЛАТЬ ЗАДАНИЕ 4_6
 */
 
-// UPDATE LIST: Добавлены bugfix для 3 и 6. Сделано 7, 8 и 9 [дз 4] и сделан 1 вариант для дз 5 задание 4
-
-// для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
-
-// если нужно только дз: смотрите программы "void"
+/* UPDATE LIST : Добавлены bugfix для 3 и 6. Сделано 7, 8 и 9[дз 4] и сделан 1 вариант для дз 5 задание 4
+ * для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
+ * если нужно только дз: смотрите программы "void"
+ */
 
 #include <iostream>
 #include <cstdlib>
@@ -564,7 +563,7 @@ void task3_2()
 	script_start();
 	double summary = 0.0, money = 0.0, money_sequel, percent = -100, time = 0.0, step = 5, epsilon = 0.01; //S = SUMMARY, M = MONEY, N = TIME, P = PERCENT
 	std::string summaryfix, moneyfix, timefix; // reference to algorithm above (string removal)
-	std::cout << "Input the following values:S, m, time\b\n"; std::cout << "-> "; std::cin >> summaryfix; std::cout << "-> "; std::cin >> moneyfix; std::cout << "-> ";std::cin >> timefix; // ввод данных
+	std::cout << "Input the following values:S, m, time\b\n"; std::cout << "-> "; std::cin >> summaryfix; std::cout << "-> "; std::cin >> moneyfix; std::cout << "-> "; std::cin >> timefix; // ввод данных
 	std::string ns = removal(summaryfix); // reference to algorithm above (string removal)
 	std::string na = removal(moneyfix); // reference to algorithm above (string removal)
 	std::string nb = removal(timefix); // reference to algorithm above (string removal)
@@ -1000,7 +999,7 @@ double** getData(int n)
 	{
 		double x = (double)i * 0.1;
 		f[0][i] = x;
-		f[1][i] = sin(x);
+		f[1][i] = -sin(x); // ЗДЕСЬ МОЖНО ПОМЕНЯТЬ СИН НА КОС :DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 	}
 	return f;
 }
@@ -1118,7 +1117,7 @@ LONG WINAPI WndProc(HWND hwnd, UINT Message, WPARAM wparam, LPARAM lparam)
 		// закомментил потому что плохо выводит. Почему тут фон белого цвета?
 		break;
 	case WM_DESTROY:
-		PostQuitMessage(0);
+		PostQuitMessage(0); // ничё не возвращает, на подобии exit(0); но не очень... эта выйдет из функции а exit закроет
 		break;
 	default:
 		return DefWindowProc(hwnd, Message, wparam, lparam);
@@ -1176,7 +1175,7 @@ int number_conv(char number)
 void task4_6()
 {
 	script_start();
-	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
+	std::cout << "Input ROME NUMBER... It will be converted to the arabic numeral system.\n\n";
 	int number_converted = 0;
 	int buffer = 0;
 	int next = 0;
@@ -1206,15 +1205,9 @@ void task4_6()
 				script_executed();
 				return;
 			}
-			if (alert == true && number_conv(number[j]) > number_conv(number[k]))
+			if (number_conv(number[j]) == 1 && number_conv(number[k]) == 500)
 			{
 				std::cout << "Number does not exist... (error code 2)\n";
-				script_executed();
-				return;
-			}
-			if (number[j] > number[k] && number[j] != number[j + 2])
-			{
-				std::cout << "Number does not exist... (error code 4)\n";
 				script_executed();
 				return;
 			}
@@ -1237,7 +1230,7 @@ void task4_7() // оч плохо : ) возможно не зачтут
 {
 	script_start();
 
-	int array[999]{}, m = 0, c = 0, inputlast;
+	int m = 0, c = 0, inputlast;
 	const int i = 3;
 	const int i2 = 13849;
 
@@ -1438,11 +1431,25 @@ void task4_9()
 				if (n_new_sys != 10)
 				{
 					exec_result = dec_to_new_x(dec_sys, n_new_sys);
-					std::cout << "Result: " << exec_result;
+					if (exec_result == "0")
+					{
+						printf("Error.\n");
+					}
+					else
+					{
+						std::cout << "Result: " << exec_result;
+					}
 				}
 				else
 				{
-					std::cout << "Result: " << dec_sys;
+					if (exec_result == "0")
+					{
+						printf("Error.\n");
+					}
+					else
+					{
+						std::cout << "Result: " << dec_sys;
+					}
 				}
 				break;
 			}
@@ -1457,12 +1464,35 @@ void task4_9()
 	script_executed();
 }
 
-// все задания НИЖЕ имеют множество заданий подгрупп. Расписано так: ДЗ_НОМЕР_ПОДНОМЕР
+// все задания НИЖЕ имеют множество заданий подгрупп. Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР
 
+int NOD(int a, int b) // нод = GCD на англе
+{
+	if (a == 0)
+	{
+		return abs(b); // если число а = 0 то типо делить дальше некуда
+	}
+	else
+	{
+		return abs(NOD(b % a, a)); // а если нет то можно делить на А
+	}
+}
 void task5_1()
 {
 	script_start();
-	
+	int a{}, b{}; // числа
+	printf("Please enter 2 numbers to find their GCD.\n-> ");
+	std::cin >> a; printf("-> "); std::cin >> b; // ввод
+	if (a == 0 || b == 0) // условие чтобы на 0 не делить
+	{
+		printf("Cannot divide by 0");
+	}
+	else
+	{
+		printf("GCD(%d,%d) = %d\n", a, b, NOD(a, b)); // здесь я понял что %d вставляет ближайшее значение после ковычек (1 %d вставит а, 2 %d вставит b, 3 %d вставит nod) :D
+	}
+
+	cin_fixer();
 	script_executed();
 }
 void task5_2()
@@ -1482,11 +1512,11 @@ void task5_4_19()
 	script_start();
 
 	bool alert = false;
-	double userinput = 1, array[999]{}, buffer{}, avg=0;
+	double userinput = 1, array[999]{}, buffer{}, avg = 0;
 	int temp = 1, people = 0;
 
 	printf("**** Student Height Analysis ****\n Please enter student height and press <Enter>.\n When you are done, enter 0 and press <Enter>\n"); // Анализ роста студентов
-	
+
 	for (int i = 0; userinput != 0; i++)
 	{
 		std::cout << "-> "; std::cin >> userinput;
@@ -1670,6 +1700,9 @@ int main()
 		case '5':
 			switch (key_selector[0])
 			{
+			case '1':
+				task5_1();
+				break;
 			case '4':
 				std::string choose;
 				printf("Please select task... (1 = 19 or 2 = 28)\n");
