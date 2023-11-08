@@ -431,7 +431,7 @@ int number_conv(char number)
 
 
 // ТУТ ВСЁ, 5 НОМЕР ЗАВЕРШЁН. СКОПИРУЙТЕ - СПАЛЯТ
-void task4_6()
+/*void task4_6()
 {
 	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
@@ -485,7 +485,7 @@ void task4_6()
 		number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
 	}
 	std::cout << "Result: " << number_converted << "\n";
-}
+}*/
 void task4_7() // оч плохо : ) возможно не зачтут
 {
 	int array[999]{}, m = 0, c = 0, inputlast;
