@@ -12,6 +12,8 @@
 #include <Windows.h>
 #include <stdlib.h>
 
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // а это для цвета консоли
+
 std::string circle_calc(double radius)
 {
 	std::string result;
@@ -145,7 +147,7 @@ void task4_1()
 	{
 		std::cout << "Error" << std::endl;
 	}
-	SetConsoleTextAttribute(hConsole, 7);
+	SetConsoleTextAttribute(hConsole, 7); // перекрас консоли
 	std::cout << "Result: " << summ << std::endl;
 }
 void task4_2()
@@ -157,7 +159,7 @@ void task4_2()
 	std::cout << "-> "; std::cin >> n; std::cout << std::endl;
 	std::string x = sign_x(n);
 	result = x;
-	SetConsoleTextAttribute(hConsole, 7);
+	SetConsoleTextAttribute(hConsole, 7); // перекрас консоли
 	std::cout << "Result: " << result << "\n";
 }
 void task4_3()
@@ -224,12 +226,12 @@ void task4_4()
 			{
 				if (i < 4 && j < 8) // условие для звёзд
 				{
-					SetConsoleTextAttribute(hConsole, 12);
+					SetConsoleTextAttribute(hConsole, 12); // перекрас консоли
 					std::cout << star;
 				}
 				else // для линий
 				{
-					SetConsoleTextAttribute(hConsole, 9);
+					SetConsoleTextAttribute(hConsole, 9); // перекрас консоли
 					std::cout << line;
 				}
 			}
@@ -482,8 +484,6 @@ void task4_6()
 		next = i + 1 < number.length() ? number_conv(number[i + 1]) : 0; // ? == if (then), : == else 
 		number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
 	}
-
-	SetConsoleTextAttribute(hConsole, 7);
 	std::cout << "Result: " << number_converted << "\n";
 }
 void task4_7() // оч плохо : ) возможно не зачтут
