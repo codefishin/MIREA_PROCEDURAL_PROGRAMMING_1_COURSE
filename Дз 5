@@ -1,0 +1,68 @@
+//Вы можете скопировать 5_1 5_2, но дальше всё вариацируется.
+// У вас не будут такие задания для 5_3 5_4 5_5, как у меня.
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <cstring>
+#include <fstream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <Windows.h>
+#include <stdlib.h>
+
+
+int NOD(int a, int b) // нод = GCD на англе
+{
+	if (a == 0)
+	{
+		return abs(b); // если число а = 0 то типо делить дальше некуда
+	}
+	else
+	{
+		return abs(NOD(b % a, a)); // а если нет то можно делить на А
+	}
+}
+void task5_1()
+{
+	int a{}, b{}; // числа
+	printf("Please enter 2 numbers to find their GCD.\n-> ");
+	std::cin >> a; printf("-> "); std::cin >> b; // ввод
+	if (a == 0 || b == 0) // условие чтобы на 0 не делить
+	{
+		printf("Cannot divide by 0");
+	}
+	else
+	{
+		printf("GCD(%d,%d) = %d\n", a, b, NOD(a, b)); // здесь я понял что %d вставляет ближайшее значение после ковычек (1 %d вставит а, 2 %d вставит b, 3 %d вставит nod) :D
+	}
+}
+
+int SOE(int a) // soe = sieve of erethosphetes, или же просто считает праймовые числа. как же меня бесит матан
+{
+	// тут рофло-баг, в конце всегда будет написана ху
+	bool prime[999]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
+    //upd: я сделал костыли, банально стирая недетерминированое число (для массива выше)
+	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
+
+	for (int p = 2; p * p <= a; p++) 
+	{ // p = 2 потому что это первое праймовое число
+		if (prime[p] == true) 
+		{
+			for (int i = p * p; i <= a; i += p) // по правилам матеши (круто)
+				prime[i] = false;
+		}
+	}
+	for (int p = 2; p < a; p++) // для вывода числ
+		if (prime[p])
+			std::cout << p << " ";
+}
+void task5_2()
+{
+	int a = 0;
+	printf("Please enter a number, to calculate primes.\n-> "); std::cin >> a; printf("You have entered %d. Primes are: \n-> ", a);
+	std::cout << SOE(a) << "\b \b\b \b\b \b\b ";
+	printf("\nEnter anything to exit the script.\n-> ");
+	std::cin >> a;
+}
