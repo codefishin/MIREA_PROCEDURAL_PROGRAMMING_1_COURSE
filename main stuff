@@ -1,5 +1,5 @@
 /*
-* todo: 4_9 4_8 4_6 исправить + 5 дз
+* todo: 4_9 4_6 исправить + 5: 25 16 (3), 25 45 (4), 25 50 (5)
 *
 * для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
 * если нужно только дз: смотрите программы "void"
@@ -18,9 +18,6 @@
 
 int script_e = 0; // это счётчик для выполненого кода. используется в script_executed()
 const double pi = 3.14159265358979323846; // это число пи, используется в математических заданиях
-
-// ВОООУУ МНОГО КОДА !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // а это для цвета консоли
 int cConsole = 14; // это ЖЁЛТЫЙ цвет для консоли...
 
@@ -1276,15 +1273,14 @@ void task4_7()
 void task4_8()
 {
 	script_start();
-	double array1[3][4]{ {5,2,0,10}, {3,5,2,5}, {20,0,0,0} };
-	double array2[4][2]{ {1.2,0.5},{2.8,0.4},{5.0,1.0},{2.0,1.5} };
+	double array1[3][4]={ {5, 2, 0, 10}, {3, 5, 2, 5}, {20, 0, 0, 0} };
+	double array2[4][2]={ {1.2, 0.5}, { 2.8, 0.4 }, { 5, 1 }, { 2, 1.5 } };
 	double result[3][2]; // результат умножения матриц. по правилам матрица 3 4 и 4 2 при умножении станут 3 2
-	double resinput = 0; // result input, ввод в массив выше
-
 	for (int i = 0; i < 3; i++) // 3 из result[3][2]
 	{
 		for (int j = 0; j < 2; j++) // 2 из result[3][2]
 		{
+			double resinput = 0; // result input, ввод в массив выше
 			for (int k = 0; k < 4; k++)
 			{
 				resinput += array1[i][k] * array2[k][j];
@@ -1294,11 +1290,13 @@ void task4_8()
 	}
 
 	int max_t = 0, min_t = 0, max_s = 0, min_s = 0;
-	double summary = 0, tax = 0;
+	double summary = 0, tax = 0, answer5=0;
 
 	for (int i = 0; i < 3; i++)
 	{
-		// ПЕРЕДЕЛАТЬ... ОНО РАБОТАЕТ НО IFIFIFIFIF
+		summary += result[i][0];
+		tax += result[i][1];
+		answer5 = tax + summary;
 		if (result[i][0] > result[max_s][0])
 		{
 			max_s = i;
@@ -1307,23 +1305,19 @@ void task4_8()
 		{
 			max_t = i;
 		}
-		if (result[i][1] > result[min_t][1])
-		{
-			min_t = i;
-		}
-		if (result[i][2] > result[min_s][2])
+		if (result[i][2] < result[min_s][2])
 		{
 			min_s = i;
 		}
-		summary += result[i][0];
-		tax += result[i][1];
+		if (result[i][1] < result[min_t][1])
+		{
+			min_t = i;
+		}
 		// конец задания ток вывести осталось
 	}
 
-	double answer5 = summary + tax;
 	std::string userinput;
 	std::cout << "\nPlease enter 0 to print C.\n1: Most/Least money earned.\n2:Most/Least CMM cash.\n3: Overall money earned.\n4:Overall CMM.\n5: Overall cashflow.\n";
-
 	while (true)
 	{
 		std::getline(std::cin, userinput);
@@ -1340,7 +1334,7 @@ void task4_8()
 			}
 			break;
 		case '1':
-			std::cout << "\nMax: " << max_s + 1 << "\nMin: " << min_s + 1 << "\n";
+			std::cout << "\nMax: " << max_s + 1 << "\nMin: " << min_s + 1 << "\n"; 
 			break;
 		case '2':
 			std::cout << "\nMax: " << max_t + 1 << "\nMin: " << min_t + 1 << "\n";
@@ -1458,7 +1452,7 @@ void task4_9()
 	script_executed();
 }
 
-// все задания НИЖЕ имеют множество заданий подгрупп. Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР
+// все задания НИЖЕ имеют множество заданий подгрупп. Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР. мои номера 25 16 (3) 25 45 (4) 25 50 (5)
 
 int NOD(int a, int b) // нод = GCD на англе
 {
@@ -1489,18 +1483,53 @@ void task5_1()
 	cin_fixer();
 	script_executed();
 }
+
+int SOE(int a) // soe = sieve of erethosphetes, или же просто считает праймовые числа. как же меня бесит матан
+{
+	// тут рофло-баг, в конце всегда будет написана ху
+	bool prime[999]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
+    //upd: я сделал костыли, банально стирая недетерминированое число (для массива выше)
+	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
+
+	for (int p = 2; p * p <= a; p++) 
+	{ // p = 2 потому что это первое праймовое число
+		if (prime[p] == true) 
+		{
+			for (int i = p * p; i <= a; i += p) // по правилам матеши (круто)
+				prime[i] = false;
+		}
+	}
+	for (int p = 2; p < a; p++) // для вывода числ
+		if (prime[p])
+			std::cout << p << " ";
+}
 void task5_2()
 {
 	script_start();
+	int a = 0;
+	printf("Please enter a number, to calculate primes.\n-> "); std::cin >> a; printf("You have entered %d. Primes are: \n-> ", a);
+	std::cout << SOE(a) << "\b \b\b \b\b \b\b ";
+	printf("\nEnter anything to exit the script.\n-> ");
+	std::cin >> a;
 
+	cin_fixer();
 	script_executed();
 }
-void task5_3()
+
+void task5_3_16()
 {
 	script_start();
 
 	script_executed();
 }
+void task5_3_25()
+{
+	script_start();
+
+	script_executed();
+}
+
+// вот эти задачи я сделал по приколу, удалять не буду мб кому пригодяться
 void task5_4_19()
 {
 	script_start();
@@ -1546,7 +1575,7 @@ void task5_4_19()
 
 	cin_fixer();
 	script_executed();
-}
+} // ненужное мне задача
 void task5_4_28()
 {
 	script_start();
@@ -1566,8 +1595,29 @@ void task5_4_28()
 
 	cin_fixer();
 	script_executed();
+} // тоже ненужная
+// конец прикола
+
+void task5_4_25()
+{
+	script_start();
+
+	script_executed();
 }
-void task5_5()
+void task5_4_45()
+{
+	script_start();
+
+	script_executed();
+}
+
+void task5_5_25()
+{
+	script_start();
+
+	script_executed();
+}
+void task5_5_50()
 {
 	script_start();
 
@@ -1610,6 +1660,8 @@ int main()
 				task1_5();
 				break;
 			default:
+				system("CLS");
+				printf("Task doesn't exist.\n");
 				break;
 			}
 			break;
@@ -1632,6 +1684,8 @@ int main()
 				task2_5();
 				break;
 			default:
+				system("CLS");
+				printf("Task doesn't exist.\n");
 				break;
 			}
 			break;
@@ -1654,6 +1708,8 @@ int main()
 				task3_5();
 				break;
 			default:
+				system("CLS");
+				printf("Task doesn't exist.\n");
 				break;
 			}
 			break;
@@ -1688,14 +1744,23 @@ int main()
 				task4_9();
 				break;
 			default:
+				system("CLS");
+				printf("Task doesn't exist.\n");
 				break;
 			}
 			break;
 		case '5':
 			switch (key_selector[0])
 			{
+			default:
+				system("CLS");
+				printf("Task doesn't exist.\n");
+				break;
 			case '1':
 				task5_1();
+				break;
+			case '2':
+				task5_2();
 				break;
 			case '4':
 				std::string choose;
@@ -1714,6 +1779,8 @@ int main()
 			}
 			break;
 		default:
+			system("CLS");
+			printf("Homework doesn't exist.\n");
 			break;
 		}
 	}
