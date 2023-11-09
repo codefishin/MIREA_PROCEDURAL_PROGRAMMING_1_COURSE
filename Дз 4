@@ -1,5 +1,5 @@
 // ВНИМАНИЕ - ПРИНЯЛИ 1 2 4 5 !!!!!!!!!!!!!!!!!! НЕ КОПИРОВАТЬ 5 И 6 ВООБЩЕ.
-// upd: 6 даже не читайте. если мне его примут это будет шок. калькулятор ужасно работает но мне лень переделывать. Удачи!
+// upd: 6 и 9 короче не работает нормально и фиксить буду не скоро
 
 #include <iostream>
 #include <cstdlib>
@@ -486,7 +486,7 @@ int number_conv(char number)
 	}
 	std::cout << "Result: " << number_converted << "\n";
 }*/
-void task4_7() // оч плохо : ) возможно не зачтут
+void task4_7() // для тех кто хочет скопировать: придерутся за то что сделано не в рекурсии.
 {
 	int array[999]{}, m = 0, c = 0, inputlast;
 	const int i = 3;
@@ -535,17 +535,18 @@ void task4_7() // оч плохо : ) возможно не зачтут
 	}
 
 }
+
 void task4_8()
 {
-	double array1[3][4]{ {5,2,0,10}, {3,5,2,5}, {20,0,0,0} };
-	double array2[4][2]{ {1.2,0.5},{2.8,0.4},{5.0,1.0},{2.0,1.5} };
+	script_start();
+	double array1[3][4]={ {5, 2, 0, 10}, {3, 5, 2, 5}, {20, 0, 0, 0} };
+	double array2[4][2]={ {1.2, 0.5}, { 2.8, 0.4 }, { 5, 1 }, { 2, 1.5 } };
 	double result[3][2]; // результат умножения матриц. по правилам матрица 3 4 и 4 2 при умножении станут 3 2
-	double resinput = 0; // result input, ввод в массив выше
-
 	for (int i = 0; i < 3; i++) // 3 из result[3][2]
 	{
 		for (int j = 0; j < 2; j++) // 2 из result[3][2]
 		{
+			double resinput = 0; // result input, ввод в массив выше
 			for (int k = 0; k < 4; k++)
 			{
 				resinput += array1[i][k] * array2[k][j];
@@ -555,11 +556,13 @@ void task4_8()
 	}
 
 	int max_t = 0, min_t = 0, max_s = 0, min_s = 0;
-	double summary = 0, tax = 0;
+	double summary = 0, tax = 0, answer5=0;
 
 	for (int i = 0; i < 3; i++)
 	{
-		// ПЕРЕДЕЛАТЬ... ОНО РАБОТАЕТ НО IFIFIFIFIF
+		summary += result[i][0];
+		tax += result[i][1];
+		answer5 = tax + summary;
 		if (result[i][0] > result[max_s][0])
 		{
 			max_s = i;
@@ -568,23 +571,19 @@ void task4_8()
 		{
 			max_t = i;
 		}
-		if (result[i][1] > result[min_t][1])
-		{
-			min_t = i;
-		}
-		if (result[i][2] > result[min_s][2])
+		if (result[i][2] < result[min_s][2])
 		{
 			min_s = i;
 		}
-		summary += result[i][0];
-		tax += result[i][1];
+		if (result[i][1] < result[min_t][1])
+		{
+			min_t = i;
+		}
 		// конец задания ток вывести осталось
 	}
 
-	double answer5 = summary + tax;
 	std::string userinput;
 	std::cout << "\nPlease enter 0 to print C.\n1: Most/Least money earned.\n2:Most/Least CMM cash.\n3: Overall money earned.\n4:Overall CMM.\n5: Overall cashflow.\n";
-
 	while (true)
 	{
 		std::getline(std::cin, userinput);
@@ -601,7 +600,7 @@ void task4_8()
 			}
 			break;
 		case '1':
-			std::cout << "\nMax: " << max_s + 1 << "\nMin: " << min_s + 1 << "\n";
+			std::cout << "\nMax: " << max_s + 1 << "\nMin: " << min_s + 1 << "\n"; 
 			break;
 		case '2':
 			std::cout << "\nMax: " << max_t + 1 << "\nMin: " << min_t + 1 << "\n";
@@ -616,11 +615,11 @@ void task4_8()
 			std::cout << "\nResult: " << answer5 << "\n";
 			break;
 		default:
+			script_executed();
 			return;
 		}
 	}
 }
-
 int x_to_dec(std::string number, int n_sys) // от пользователя нужно: число, система из которой переводится. dec = 10. из x в 10
 {
 	std::string str = "0123456789abcdef";
