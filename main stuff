@@ -10,6 +10,7 @@
 #include <string>
 #include <cstring>
 #include <fstream>
+#include <sstream>
 #include <vector>
 #include <cmath>
 #include <algorithm>
@@ -1605,10 +1606,40 @@ void task5_3_16()
 	findLineInFile(str_word); // находит ток слова а потом обсирается когда нужно искать линию
 	script_executed();
 }
+
+std::string filetostring()
+{
+	std::ifstream f("textfile.txt"); //taking file as inputstream
+	std::string str;
+	if (f) {
+		std::ostringstream ss;
+		ss << f.rdbuf(); // reading data
+		str = ss.str();
+	}
+	return str;
+}
+std::string findUnderLineInFile(std::string str) 
+{
+	std::string s = filetostring();
+	size_t pos = s.find(str);
+	if (pos != std::string::npos)
+		std::cout << "Found at pos:  " << pos << "\n";
+	else
+		std::cout << "Not found\n";
+	return s;
+}
 void task5_3_25()
 {
 	script_start();
 
+	cin_fixer();
+	std::string str = " ", str_line = " ";
+	printf("Please create a new file by enterring some characters\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
+	printf("Enter an under-line you wanna find.\n-> ");
+	std::getline(std::cin, str_line);
+	findUnderLineInFile(str_line);
 	script_executed();
 }
 
@@ -1860,7 +1891,7 @@ int main()
 				break;
 			case '3':
 				std::string choose;
-				printf("Please select task...\n");
+				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_28;\n");
 				std::cout << "-> ";  std::cin >> choose;
 				switch (choose[0])
 				{
