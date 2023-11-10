@@ -12,6 +12,47 @@
 #include <Windows.h>
 #include <stdlib.h>
 
+void createfile(std::string str)
+{
+	std::ofstream textFile("textfile.txt");
+	if (textFile.is_open()) {
+		textFile << str;
+		textFile.close();
+	}
+}
+std::string findWordInFile(std::string str)
+{
+	std::ifstream file("textfile.txt");
+	std::string str_word, word_store;
+	int foundCalc = 0;
+	bool found = false;
+	if(file.is_open())
+	{
+		while (file >> word_store)
+		{
+			if (word_store == str)
+			{
+				str_word += str;
+				str_word.push_back(' ');
+				found = true;
+				foundCalc += 1;
+			}
+		}
+
+	}
+	if (found == true)
+	{
+		std::cout << "\nWe found: " << str_word;
+		printf("\nTimes found: %d", foundCalc);
+	}
+	else
+	{
+		printf("\nWe found no matching word.\n");
+	}
+	printf("\n");
+	return str_word;
+	file.close();
+}
 
 int NOD(int a, int b) // нод = GCD на англе
 {
@@ -66,3 +107,78 @@ void task5_2()
 	printf("\nEnter anything to exit the script.\n-> ");
 	std::cin >> a;
 }
+
+
+
+
+// вот эти задачи я сделал по приколу, удалять не буду мб кому пригодяться
+void task5_3_15() // НАДО БЫЛО СДЕЛАТЬ НАХОЖДЕНИЕ СОЧИТАНИЙ СЛОВ НО Я СДЕЛАЛ ТОЛЬКО НАХОЖДЕНИЕ СЛОВА 
+{
+	cin_fixer();
+	script_start();
+	std::string str = " ", str_word = " ";
+	printf("Please create a new file by enterring some characters\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
+	printf("Enter a word or combination of words.\n-> ");
+	std::getline(std::cin, str_word);
+	findWordInFile(str_word);
+	script_executed();
+}
+void task5_4_19()
+{
+	bool alert = false;
+	double userinput = 1, array[999]{}, buffer{}, avg = 0;
+	int temp = 1, people = 0;
+
+	printf("**** Student Height Analysis ****\n Please enter student height and press <Enter>.\n When you are done, enter 0 and press <Enter>\n"); // Анализ роста студентов
+
+	for (int i = 0; userinput != 0; i++)
+	{
+		std::cout << "-> "; std::cin >> userinput;
+		if (userinput > -1)
+		{
+			buffer += userinput;
+			array[i] = userinput;
+			array[i + 1] = '\0';
+			temp++;
+			if (i != 0)
+			{
+				avg = buffer / i;
+			}
+		}
+		else
+		{
+			alert = true;
+			std::cout << "\nHeight cannot be below 0.\n";
+			break;
+		}
+	}
+	if (alert == false)
+	{
+		for (int i = 0; i < temp; i++)
+		{
+			if (array[i] > avg)
+			{
+				people += 1;
+			}
+		}
+		std::cout << "\nAverage student height: " << avg << "\nStudent taller than average height: " << people;
+	}
+} // ненужное мне задача
+void task5_4_28()
+{
+	std::string str, buffer;
+	int current{}, summary{};
+
+	printf("Please enter a string of numbers.\n->");
+	std::cin >> str;
+	for (int count = 0; count < str.size(); count++)
+	{
+		buffer = str[count];
+		current = stoi(buffer);
+		summary += current;
+	}
+	std::cout << "Summary of each number: " << summary;
+} // тоже ненужная
+// конец прикола
