@@ -1452,7 +1452,9 @@ void task4_9()
 	script_executed();
 }
 
-// все задания НИЖЕ имеют множество заданий подгрупп. Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР. мои номера 25 16 (3) 25 45 (4) 25 50 (5)
+// все задания НИЖЕ имеют множество заданий подгрупп. 
+// Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР. 
+// Мои номера 25 16 (3) 25 45 (4) 25 50 (5)
 
 int NOD(int a, int b) // нод = GCD на англе
 {
@@ -1677,8 +1679,8 @@ void task5_4_28()
 	std::string str, buffer;
 	int current{}, summary{};
 
-	printf("Please enter a string of numbers.\n->");
-	std::cin >> str;
+	printf("Please enter a string of numbers.\n-> ");
+	std::cin >> str; // не getline чтобы не было пробелов в строке
 	for (int count = 0; count < str.size(); count++)
 	{
 		buffer = str[count];
@@ -1869,6 +1871,7 @@ int main()
 					task5_3_25();
 					break;
 				case '3':
+					task5_4_28();
 					break;
 				case '4':
 					break;
