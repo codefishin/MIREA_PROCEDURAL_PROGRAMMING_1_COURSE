@@ -92,7 +92,6 @@ std::string sign_x(int n) // подпрограмма для задания 2
 
 void task4_1()
 {
-	bool alert = false;
 	std::ofstream file("file.txt");
 	std::cout << "           If user inputs '0', the script will stop gaining numbers and calculate your result.\b\n\n           Do not enter anything above over 2^31!\n";
 	int array[999]{};
