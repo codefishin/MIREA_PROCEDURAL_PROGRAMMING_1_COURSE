@@ -1557,24 +1557,50 @@ std::string findWordInFile(std::string str)
 	return str_word;
 	file.close();
 }
+std::string findLineInFile(std::string str) // сделать чтобы линию читало
+{
+	std::ifstream file("textfile.txt");
+	std::string str_word, word_store;
+	int foundCalc = 0;
+	bool found = false;
+	if (file.is_open())
+	{
+		while (file >> word_store)
+		{
+			if (word_store == str) // изменить чтобы чекало весь файл ради строк
+			{
+				str_word += str;
+				str_word.push_back(' ');
+				found = true;
+				foundCalc += 1;
+			}
+		}
+
+	}
+	if (found == true)
+	{
+		std::cout << "\nWe found: " << str_word;
+		printf("\nTimes found: %d", foundCalc);
+	}
+	else
+	{
+		printf("\nWe found no matching word.\n");
+	}
+	printf("\n");
+	return str_word;
+	file.close();
+}
 void task5_3_16()
 {
 	cin_fixer();
 	script_start();
 	std::string str = " ", str_word = " ";
-	int accept = 0;
-	printf("Do you want to change file contents? Press 0 if you do not want to.\n");
-	std::cin >> accept;
-	if (accept != 0)
-	{
-		printf("Please create a new file by enterring some characters\n-> ");
-		std::getline(std::cin, str);
-		createfile(str);
-	}
-	cin_fixer();
+	printf("Please create a new file by enterring some characters\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
 	printf("Enter a word or combination of words.\n-> ");
 	std::getline(std::cin, str_word);
-	findWordInFile(str_word);
+	findLineInFile(str_word); // находит ток слова а потом обсирается когда нужно искать линию
 	script_executed();
 }
 void task5_3_25()
@@ -1585,6 +1611,19 @@ void task5_3_25()
 }
 
 // вот эти задачи я сделал по приколу, удалять не буду мб кому пригодяться
+void task5_3_15() // НАДО БЫЛО СДЕЛАТЬ НАХОЖДЕНИЕ СОЧИТАНИЙ СЛОВ НО Я СДЕЛАЛ ТОЛЬКО НАХОЖДЕНИЕ СЛОВА 
+{
+	cin_fixer();
+	script_start();
+	std::string str = " ", str_word = " ";
+	printf("Please create a new file by enterring some characters\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
+	printf("Enter a word or combination of words.\n-> ");
+	std::getline(std::cin, str_word);
+	findWordInFile(str_word);
+	script_executed();
+}
 void task5_4_19()
 {
 	script_start();
