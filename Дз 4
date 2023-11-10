@@ -167,30 +167,8 @@ void task4_3()
 	double a, b, radius, h, degree;
 	std::string resulter;
 
-	std::cout << "Please enter the name of a shape.\b\n Shapes available are:\b\n\n Circle\b\n Rectangle\b\n Triangle\b\n";
+	std::cout << "Please enter the name of a shape.\b\n Shapes available are:\b\n\n Circle(1)\b\n Rectangle(2)\b\n Triangle(3)\b\n";
 	std::cout << "-> "; std::getline(std::cin, selector);
-
-	std::transform(selector.begin(), selector.end(), selector.begin(),  // я как понял, через алгоритм transform мы начинаем с первого символа selector, идём до конца и обратно в начало
-		[](unsigned char c)
-		{
-			return std::tolower(c);
-		});
-	// сразу признаюсь, взял из stackoverflow. вставляем новые данные о строчным selector в c и возвращаем это значение в selector?
-	if (selector == "rectangle") // это чисто чтоб пользователь мог ввести фигуру как слово, а не цифру. не знаю зачем я это делал но было весело и я уверен что это плохой метод решения этой проблемы
-	{
-		std::cout << "You have selected: rectangle.\b\n Please enter width and length value.\b\n";
-		selector = '1';
-	}
-	else if (selector == "triangle")
-	{
-		std::cout << "You have selected: triangle.\b\n Please enter 2 cathetus, height and degrees value.\b\n";
-		selector = '2';
-	}
-	else if (selector == "circle")
-	{
-		std::cout << "You have selected: circle.\b\n Please enter radius value.\b\n";
-		selector = '3';
-	}
 	while (true)
 	{
 		switch (selector[0])
@@ -208,7 +186,7 @@ void task4_3()
 			resulter = circle_calc(radius);
 			break;
 		default:
-			limbo();
+			return;
 			break;
 		}
 		break;
