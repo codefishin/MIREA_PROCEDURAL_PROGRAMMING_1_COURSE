@@ -486,9 +486,9 @@ int number_conv(char number)
 	}
 	std::cout << "Result: " << number_converted << "\n";
 }*/
-void task4_7() // для тех кто хочет скопировать: придерутся за то что сделано не в рекурсии.
+void task4_7() // задание сделано странно, препод просит через рекурсионные функции. Но его приняли
 {
-	int array[999]{}, m = 0, c = 0, inputlast;
+	int m = 0, c = 0, inputlast;
 	const int i = 3;
 	const int i2 = 13849;
 
@@ -535,7 +535,6 @@ void task4_7() // для тех кто хочет скопировать: при
 	}
 
 }
-
 void task4_8()
 {
 	script_start();
