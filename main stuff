@@ -1356,30 +1356,25 @@ void task4_8()
 	}
 }
 
-int x_to_dec(std::string number, int n_sys) // от пользователя нужно: число, система из которой переводится. dec = 10. из x в 10
-{
-	std::string str = "0123456789abcdef";
-	char ch{};
-	int result = 0;
+std::string strfor9 = "0123456789ABCDEF";
+int x_to_dec(std::string num, int sys) {
 
-	for (int i = 0; i < number.size(); i++)
-	{
-		ch = number[i];
-		int value = str.find(tolower(ch));
-		result += value * pow(n_sys, number.size() - i - 1);
+	int result = 0;
+	int len = num.size();
+	for (int i = 0; i < len; i++) {
+		char c = num[i];
+		int value = strfor9.find(toupper(c));
+		result += value * pow(sys, len - i - 1);
 	}
 	return result;
 }
 std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользователя нужно только система счисления. из 10 в x. x2d_res = x to dec result, берётся из задания
 {
-	std::string str = "0123456789abcdef", result{};
-	int temp = 0;
-
-	while (x2d_res > 0)
-	{
+	std::string result;
+	while (x2d_res > 0) {
+		int rem = x2d_res % n_new_sys;
+		result = strfor9[rem] + result;
 		x2d_res /= n_new_sys;
-		temp = x2d_res % n_new_sys;
-		result += str[temp];
 	}
 	return result;
 }
@@ -1387,67 +1382,43 @@ void task4_9()
 {
 	script_start();
 
-	std::string str = "0123456789abcdef";
 	bool alert = false;
 	char check_ch{}, ch{};
-	std::string number = "0";
+	std::string number;
 	int n_sys = 2, n_new_sys = 16; // для контекста 2 и 16 выставлено для собственного удобства. можете ставить 0
 
 	printf("Please enter a number\n");
 	std::cout << "-> "; std::cin >> number; //почему cin а не getline? getline забирает всю строку, а cin до пробела. у мат. чисел не бывает пробела
 	printf("\nEnter your old numeral system and preferable numeral system. (From 2 to 16)\n");
 	std::cout << "-> "; std::cin >> n_sys; std::cout << "-> "; std::cin >> n_new_sys;
-
-	if (n_sys < 17 && n_sys > 1 && n_new_sys < 17 && n_new_sys > 1)
+	if ((n_sys <= 1) or (n_sys > 16)) 
+	{
+		printf("MALFUNCTION");
+		return;
+	}
+	if (n_sys > 9)
 	{
 		for (int i = 0; i < number.size(); i++)
 		{
-			bool check_alert = 0;
-			check_ch = tolower(number[i]);
-			if (str.find(check_ch) > 16 || str.find(check_ch) < 0)
+			char c0 = number[i];
+			for (int j = 0; j < strfor9.size(); j++)
 			{
-				check_alert = true;
-			}
-			if (check_alert == 1)
-			{
-				std::cout << "Cannot execute.";
-				break;
-			}
-			else
-			{
-				int dec_sys = x_to_dec(number, n_sys);
-				std::string exec_result;
-				if (n_new_sys != 10)
+				if (tolower(c0) == (strfor9[j]))
 				{
-					exec_result = dec_to_new_x(dec_sys, n_new_sys);
-					if (exec_result == "0")
-					{
-						printf("Error.\n");
-					}
-					else
-					{
-						std::cout << "Result: " << exec_result;
-					}
+					printf("MALFUNCTION");
+					return;
 				}
-				else
-				{
-					if (exec_result == "0")
-					{
-						printf("Error.\n");
-					}
-					else
-					{
-						std::cout << "Result: " << dec_sys;
-					}
-				}
-				break;
 			}
 		}
 	}
-	else
+	if ((n_new_sys <= 1) or (n_new_sys > 16)) 
 	{
-		printf("Script cannot be executed.");
+		printf("MALFUNCTION");
+		return;
 	}
+	int dec = x_to_dec(number, n_sys);
+	std::string s_result = dec_to_new_x(dec, n_new_sys);
+	printf("from %d to %d is ", n_sys, n_new_sys); std::cout << s_result;
 
 	cin_fixer();
 	script_executed();
