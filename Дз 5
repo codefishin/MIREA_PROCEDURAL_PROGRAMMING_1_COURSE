@@ -1,5 +1,6 @@
 //Вы можете скопировать 5_1 5_2, но дальше всё вариацируется.
 // У вас не будут такие задания для 5_3 5_4 5_5, как у меня.
+// int main тут нет :>
 
 #include <iostream>
 #include <cstdlib>
@@ -53,7 +54,27 @@ std::string findWordInFile(std::string str)
 	return str_word;
 	file.close();
 }
-
+std::string filetostring()
+{
+	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
+	std::string str;
+	if (f) { // если ФАЙЛ !!
+		std::ostringstream ss; // типо переменная в виде out string stream
+		ss << f.rdbuf(); // читает данные типо readbuffer
+		str = ss.str(); // результат
+	}
+	return str;
+}
+std::string findUnderLineInFile(std::string str) 
+{
+	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
+	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
+	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
+		std::cout << "Found at pos:  " << pos << "\n";
+	else
+		std::cout << "Not found\n";
+	return s;
+}
 int NOD(int a, int b) // нод = GCD на англе
 {
 	if (a == 0)
@@ -182,3 +203,17 @@ void task5_4_28()
 	std::cout << "Summary of each number: " << summary;
 } // тоже ненужная
 // конец прикола
+void task5_3_25()
+{
+	script_start();
+
+	cin_fixer();
+	std::string str = " ", str_line = " ";
+	printf("Please create a new file by enterring some characters\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
+	printf("Enter an under-line you wanna find.\n-> ");
+	std::getline(std::cin, str_line);
+	findUnderLineInFile(str_line);
+	script_executed();
+}
