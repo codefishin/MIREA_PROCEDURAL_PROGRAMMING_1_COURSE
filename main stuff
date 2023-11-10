@@ -1,10 +1,10 @@
 /*
-* todo: 4_6 исправить + 5: 25+ 16 (3), 25 45 (4), 25 50 (5)
+* todo: 4_6 исправить 5: 25 45 (4), 25 50 (5)
 *
 * для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
 * если нужно только дз: смотрите программы "void"
 */
-// 5_3_16 забирает строку и находит слово но мне блять надо строку найти !!!!!!!!!!
+// для римских: перед 1 большим не может быть 2 маленьких; v не может встречаться больше 1 раза, x может, 50 не может, 100 может, 500 не может
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -541,7 +541,7 @@ void task3_1()
 		b = 12 * (pow(1 + r, n) - 1);
 		m = a / b;
 		if (p == 0) {
-			std::cout << s/12/n;
+			std::cout << s / 12 / n;
 		}
 		else {
 			std::cout << "Successful execution, result: " << m << std::endl;
@@ -1218,6 +1218,7 @@ void task4_6()
 
 	script_executed();
 }
+
 void task4_7()
 {
 	script_start();
@@ -1274,8 +1275,8 @@ void task4_7()
 void task4_8()
 {
 	script_start();
-	double array1[3][4]={ {5, 2, 0, 10}, {3, 5, 2, 5}, {20, 0, 0, 0} };
-	double array2[4][2]={ {1.2, 0.5}, { 2.8, 0.4 }, { 5, 1 }, { 2, 1.5 } };
+	double array1[3][4] = { {5, 2, 0, 10}, {3, 5, 2, 5}, {20, 0, 0, 0} };
+	double array2[4][2] = { {1.2, 0.5}, { 2.8, 0.4 }, { 5, 1 }, { 2, 1.5 } };
 	double result[3][2]; // результат умножения матриц. по правилам матрица 3 4 и 4 2 при умножении станут 3 2
 	for (int i = 0; i < 3; i++) // 3 из result[3][2]
 	{
@@ -1291,7 +1292,7 @@ void task4_8()
 	}
 
 	int max_t = 0, min_t = 0, max_s = 0, min_s = 0;
-	double summary = 0, tax = 0, answer5=0;
+	double summary = 0, tax = 0, answer5 = 0;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -1335,7 +1336,7 @@ void task4_8()
 			}
 			break;
 		case '1':
-			std::cout << "\nMax: " << max_s + 1 << "\nMin: " << min_s + 1 << "\n"; 
+			std::cout << "\nMax: " << max_s + 1 << "\nMin: " << min_s + 1 << "\n";
 			break;
 		case '2':
 			std::cout << "\nMax: " << max_t + 1 << "\nMin: " << min_t + 1 << "\n";
@@ -1391,7 +1392,7 @@ void task4_9()
 	std::cout << "-> "; std::cin >> number; //почему cin а не getline? getline забирает всю строку, а cin до пробела. у мат. чисел не бывает пробела
 	printf("\nEnter your old numeral system and preferable numeral system. (From 2 to 16)\n");
 	std::cout << "-> "; std::cin >> n_sys; std::cout << "-> "; std::cin >> n_new_sys;
-	if ((n_sys <= 1) or (n_sys > 16)) 
+	if ((n_sys <= 1) or (n_sys > 16))
 	{
 		printf("MALFUNCTION");
 		return;
@@ -1411,7 +1412,7 @@ void task4_9()
 			}
 		}
 	}
-	if ((n_new_sys <= 1) or (n_new_sys > 16)) 
+	if ((n_new_sys <= 1) or (n_new_sys > 16))
 	{
 		printf("MALFUNCTION");
 		return;
@@ -1426,7 +1427,7 @@ void task4_9()
 
 // все задания НИЖЕ имеют множество заданий подгрупп. 
 // Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР. 
-// Мои номера 25 16 (3) 25 45 (4) 25 50 (5)
+// Мои номера 25 16 (3)+ 25 45 (4) 25 50 (5)
 
 int NOD(int a, int b) // нод = GCD на англе
 {
@@ -1462,12 +1463,12 @@ int SOE(int a) // soe = sieve of erethosphetes, или же просто счи�
 {
 	// тут рофло-баг, в конце всегда будет написана ху
 	bool prime[999]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
-    //upd: я сделал костыли, банально стирая недетерминированое число (для массива выше)
+	//upd: я сделал костыли, банально стирая недетерминированое число (для массива выше)
 	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
 
-	for (int p = 2; p * p <= a; p++) 
+	for (int p = 2; p * p <= a; p++)
 	{ // p = 2 потому что это первое праймовое число
-		if (prime[p] == true) 
+		if (prime[p] == true)
 		{
 			for (int i = p * p; i <= a; i += p) // по правилам матеши (круто)
 				prime[i] = false;
@@ -1498,13 +1499,24 @@ void createfile(std::string str)
 		textFile.close();
 	}
 }
+std::string filetostring()
+{
+	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
+	std::string str;
+	if (f) { // если ФАЙЛ !!
+		std::ostringstream ss; // типо переменная в виде out string stream
+		ss << f.rdbuf(); // читает данные типо readbuffer
+		str = ss.str(); // результат
+	}
+	return str;
+}
 std::string findWordInFile(std::string str)
 {
 	std::ifstream file("textfile.txt");
 	std::string str_word, word_store;
 	int foundCalc = 0;
 	bool found = false;
-	if(file.is_open())
+	if (file.is_open())
 	{
 		while (file >> word_store)
 		{
@@ -1533,36 +1545,18 @@ std::string findWordInFile(std::string str)
 }
 std::string findLineInFile(std::string str) // сделать чтобы линию читало
 {
-	std::ifstream file("textfile.txt");
+	//std::ifstream file("textfile.txt");
 	std::string str_word, word_store;
 	int foundCalc = 0;
 	bool found = false;
-	if (file.is_open())
-	{
-		while (file >> word_store)
-		{
-			if (word_store == str) // изменить чтобы чекало весь файл ради строк
-			{
-				str_word += str;
-				str_word.push_back(' ');
-				found = true;
-				foundCalc += 1;
-			}
-		}
-
-	}
-	if (found == true)
-	{
-		std::cout << "\nWe found: " << str_word;
-		printf("\nTimes found: %d", foundCalc);
-	}
+	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
+	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
+	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
+		std::cout << "Found:  " << str << "\n"; // pos >> есть; str. нету ; нету
 	else
-	{
-		printf("\nWe found no matching word.\n");
-	}
+		std::cout << "Not found\n";
 	printf("\n");
 	return str_word;
-	file.close();
 }
 void task5_3_16()
 {
@@ -1578,18 +1572,7 @@ void task5_3_16()
 	script_executed();
 }
 
-std::string filetostring()
-{
-	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
-	std::string str;
-	if (f) { // если ФАЙЛ !!
-		std::ostringstream ss; // типо переменная в виде out string stream
-		ss << f.rdbuf(); // читает данные типо readbuffer
-		str = ss.str(); // результат
-	}
-	return str;
-}
-std::string findUnderLineInFile(std::string str) 
+std::string findUnderLineInFile(std::string str)
 {
 	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
 	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
@@ -1728,7 +1711,7 @@ int main()
 	loading();
 	std::string key;
 	std::string key_selector;
-	std::cout << ">:/ Enter E into homework selection to shut the program off.\b\n" << ">:/ Enter the Task number you wanna check out...\b\n\n";
+	std::cout << ">:/ Enter E into homework selection to shut the program off.\n" << ">:/ Enter the Task number you wanna check out...\n\n";
 
 	while (true)
 	{
