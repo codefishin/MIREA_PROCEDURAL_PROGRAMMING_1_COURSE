@@ -1,5 +1,5 @@
 /*
-* todo: 4_9 4_6 исправить + 5: 25 16 (3), 25 45 (4), 25 50 (5)
+* todo: 4_9 4_6 исправить + 5: 25+ 16 (3), 25 45 (4), 25 50 (5)
 *
 * для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
 * если нужно только дз: смотрите программы "void"
@@ -1521,7 +1521,7 @@ void task5_2()
 
 void createfile(std::string str)
 {
-	std::ofstream textFile("textfile.txt");
+	std::ofstream textFile("textfile.txt"); // чисто файл создаёт
 	if (textFile.is_open()) {
 		textFile << str;
 		textFile.close();
@@ -1609,20 +1609,20 @@ void task5_3_16()
 
 std::string filetostring()
 {
-	std::ifstream f("textfile.txt"); //taking file as inputstream
+	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
 	std::string str;
-	if (f) {
-		std::ostringstream ss;
-		ss << f.rdbuf(); // reading data
-		str = ss.str();
+	if (f) { // если ФАЙЛ !!
+		std::ostringstream ss; // типо переменная в виде out string stream
+		ss << f.rdbuf(); // читает данные типо readbuffer
+		str = ss.str(); // результат
 	}
 	return str;
 }
 std::string findUnderLineInFile(std::string str) 
 {
-	std::string s = filetostring();
-	size_t pos = s.find(str);
-	if (pos != std::string::npos)
+	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
+	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
+	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
 		std::cout << "Found at pos:  " << pos << "\n";
 	else
 		std::cout << "Not found\n";
