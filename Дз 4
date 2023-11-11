@@ -1,6 +1,7 @@
 // ВНИМАНИЕ - ПРИНЯЛИ 1 2 4 5 !!!!!!!!!!!!!!!!!! НЕ КОПИРОВАТЬ 5 И 6 ВООБЩЕ.
 // upd: 6 короче не работает нормально и фиксить буду не скоро
 // 9 украл у medivero. позже модифицирую
+// вариация для 5 задания. Спасибо Диме (task4_5_ver2)
 
 #include <iostream>
 #include <cstdlib>
@@ -409,6 +410,35 @@ int number_conv(char number)
 
 
 // ТУТ ВСЁ, 5 НОМЕР ЗАВЕРШЁН. СКОПИРУЙТЕ - СПАЛЯТ
+void task4_5_ver2() {
+    int width = 80; // Ширина консоли
+    int height = 24; // Высота консоли
+    double xMin = -3.14;
+    double xMax = 3.14;
+
+    for (int y = 0; y < height; y++) {//вертикальные позиции
+        double yValue = 2.0 * y / static_cast<double>(height - 1) - 1.0;//приводим y к диапазону
+        double xStep = (xMax - xMin) / (width - 1);//шаг вычилсения между значениями x
+        for (int x = 0; x < width; x++) {
+            double xValue = xMin + x * xStep; //масштабированние x
+            double functionValue = -sin(xValue);//вычисление sinx
+
+            if (fabs(functionValue - yValue) < 0.1) {
+                cout << '*';//сам график
+            }
+            else if (x == width / 2) {
+                cout << '|'; // Вертикальная ось
+            }
+            else if (y == height / 2) {
+                cout << '-'; // Горизонтальная ось
+            }
+            else {
+                cout << ' ';
+            }
+        }
+        cout << '\n';
+    }
+}
 /*void task4_6()
 {
 	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
