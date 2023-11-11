@@ -1,5 +1,5 @@
 /*
-* todo: 4_6 исправить 5: 25 45 (4), 25 50 (5)
+* todo: 4_6 исправить + 5: 25+ 16+ (3), 25 45 (4), 25 50 (5)
 *
 * для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
 * если нужно только дз: смотрите программы "void"
@@ -17,6 +17,7 @@
 #include <Windows.h>
 #include <stdlib.h>
 
+std::string strfor9 = "0123456789ABCDEF";
 int script_e = 0; // это счётчик для выполненого кода. используется в script_executed()
 const double pi = 3.14159265358979323846; // это число пи, используется в математических заданиях
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // а это для цвета консоли
@@ -113,6 +114,102 @@ void script_executed()
 	system("CLS");
 }
 
+void createfile(std::string str)
+{
+	std::ofstream textFile("textfile.txt"); // чисто файл создаёт
+	if (textFile.is_open()) {
+		textFile << str;
+		textFile.close();
+	}
+}
+void createfilename(std::string filename)
+{
+	std::ifstream file;
+	std::string cont;
+	filename.append(".txt");
+	file.open(filename);
+	if (!file.is_open())
+	{
+		printf("MALFUNCTION");
+		return;
+	}
+	while (true) // крч файл находит но я хуесос и надо ещё вывести кол-во не пустых строк вот здесь todo
+	{
+		std::getline(file, cont);
+		if (file.eof()) break;
+		std::cout << cont << "\n";
+	}
+	return;
+}
+std::string filetostring()
+{
+	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
+	std::string str;
+	if (f) { // если ФАЙЛ !!
+		std::ostringstream ss; // типо переменная в виде out string stream
+		ss << f.rdbuf(); // читает данные типо readbuffer
+		str = ss.str(); // результат
+	}
+	return str;
+}
+std::string findWordInFile(std::string str)
+{
+	std::ifstream file("textfile.txt");
+	std::string str_word, word_store;
+	int foundCalc = 0;
+	bool found = false;
+	if (file.is_open())
+	{
+		while (file >> word_store)
+		{
+			if (word_store == str)
+			{
+				str_word += str;
+				str_word.push_back(' ');
+				found = true;
+				foundCalc += 1;
+			}
+		}
+
+	}
+	if (found == true)
+	{
+		std::cout << "\nWe found: " << str_word;
+		printf("\nTimes found: %d", foundCalc);
+	}
+	else
+	{
+		printf("\nWe found no matching word.\n");
+	}
+	printf("\n");
+	return str_word;
+	file.close();
+}
+std::string findLineInFile(std::string str) // сделать чтобы линию читало
+{
+	//std::ifstream file("textfile.txt");
+	std::string str_word, word_store;
+	int foundCalc = 0;
+	bool found = false;
+	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
+	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
+	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
+		std::cout << "Found:  " << str << "\n"; // pos >> есть; str. нету ; нету
+	else
+		std::cout << "Not found\n";
+	printf("\n");
+	return str_word;
+}
+std::string findUnderLineInFile(std::string str)
+{
+	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
+	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
+	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
+		std::cout << "Found at pos:  " << pos << "\n";
+	else
+		std::cout << "Not found\n";
+	return s;
+}
 std::string circle_calc(double radius)
 {
 	std::string result;
@@ -199,6 +296,90 @@ std::string removal(std::string s) // крч алгоритм по удален�
 		}
 	}
 	return ns;
+}
+std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользователя нужно только система счисления. из 10 в x. x2d_res = x to dec result, берётся из задания
+{
+	std::string result;
+	while (x2d_res > 0) {
+		int rem = x2d_res % n_new_sys;
+		result = strfor9[rem] + result;
+		x2d_res /= n_new_sys;
+	}
+	return result;
+}
+int x_to_dec(std::string num, int sys) {
+
+	int result = 0;
+	int len = num.size();
+	for (int i = 0; i < len; i++) {
+		char c = num[i];
+		int value = strfor9.find(toupper(c));
+		result += value * pow(sys, len - i - 1);
+	}
+	return result;
+}
+int number_conv(char number)
+{
+	// I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
+	// if number1 < number2 ; number2-number1 todo
+	// не больше 1 вычитания todo
+	// не больше 3 прибавлений todo
+	switch (number)
+	{
+	case 'I':
+	case 'i':
+		return 1;
+	case 'V':
+	case 'v':
+		return 5;
+	case 'X':
+	case 'x':
+		return 10;
+	case 'L':
+	case 'l':
+		return 50;
+	case 'C':
+	case 'c':
+		return 100;
+	case 'D':
+	case 'd':
+		return 500;
+	case 'M':
+	case 'm':
+		return 1000;
+	default:
+		return 0;
+	}
+}
+int NOD(int a, int b) // нод = GCD на англе
+{
+	if (a == 0)
+	{
+		return abs(b); // если число а = 0 то типо делить дальше некуда
+	}
+	else
+	{
+		return abs(NOD(b % a, a)); // а если нет то можно делить на А
+	}
+}
+int SOE(int a) // soe = sieve of erethosphetes, или же просто считает праймовые числа. как же меня бесит матан
+{
+	// тут рофло-баг, в конце всегда будет написана ху
+	bool prime[999]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
+	//upd: я сделал костыли, банально стирая недетерминированое число (для массива выше)
+	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
+
+	for (int p = 2; p * p <= a; p++)
+	{ // p = 2 потому что это первое праймовое число
+		if (prime[p] == true)
+		{
+			for (int i = p * p; i <= a; i += p) // по правилам матеши (круто)
+				prime[i] = false;
+		}
+	}
+	for (int p = 2; p < a; p++) // для вывода числ
+		if (prime[p])
+			std::cout << p << " ";
 }
 
 // дз 1
@@ -1131,39 +1312,6 @@ void task4_5()
 
 // ура 5 задание завершено шок...
 
-int number_conv(char number)
-{
-	// I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
-	// if number1 < number2 ; number2-number1 todo
-	// не больше 1 вычитания todo
-	// не больше 3 прибавлений todo
-	switch (number)
-	{
-	case 'I':
-	case 'i':
-		return 1;
-	case 'V':
-	case 'v':
-		return 5;
-	case 'X':
-	case 'x':
-		return 10;
-	case 'L':
-	case 'l':
-		return 50;
-	case 'C':
-	case 'c':
-		return 100;
-	case 'D':
-	case 'd':
-		return 500;
-	case 'M':
-	case 'm':
-		return 1000;
-	default:
-		return 0;
-	}
-}
 void task4_6()
 {
 	script_start();
@@ -1357,28 +1505,6 @@ void task4_8()
 	}
 }
 
-std::string strfor9 = "0123456789ABCDEF";
-int x_to_dec(std::string num, int sys) {
-
-	int result = 0;
-	int len = num.size();
-	for (int i = 0; i < len; i++) {
-		char c = num[i];
-		int value = strfor9.find(toupper(c));
-		result += value * pow(sys, len - i - 1);
-	}
-	return result;
-}
-std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользователя нужно только система счисления. из 10 в x. x2d_res = x to dec result, берётся из задания
-{
-	std::string result;
-	while (x2d_res > 0) {
-		int rem = x2d_res % n_new_sys;
-		result = strfor9[rem] + result;
-		x2d_res /= n_new_sys;
-	}
-	return result;
-}
 void task4_9()
 {
 	script_start();
@@ -1429,17 +1555,6 @@ void task4_9()
 // Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР. 
 // Мои номера 25 16 (3)+ 25 45 (4) 25 50 (5)
 
-int NOD(int a, int b) // нод = GCD на англе
-{
-	if (a == 0)
-	{
-		return abs(b); // если число а = 0 то типо делить дальше некуда
-	}
-	else
-	{
-		return abs(NOD(b % a, a)); // а если нет то можно делить на А
-	}
-}
 void task5_1()
 {
 	script_start();
@@ -1458,26 +1573,6 @@ void task5_1()
 	cin_fixer();
 	script_executed();
 }
-
-int SOE(int a) // soe = sieve of erethosphetes, или же просто считает праймовые числа. как же меня бесит матан
-{
-	// тут рофло-баг, в конце всегда будет написана ху
-	bool prime[999]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
-	//upd: я сделал костыли, банально стирая недетерминированое число (для массива выше)
-	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
-
-	for (int p = 2; p * p <= a; p++)
-	{ // p = 2 потому что это первое праймовое число
-		if (prime[p] == true)
-		{
-			for (int i = p * p; i <= a; i += p) // по правилам матеши (круто)
-				prime[i] = false;
-		}
-	}
-	for (int p = 2; p < a; p++) // для вывода числ
-		if (prime[p])
-			std::cout << p << " ";
-}
 void task5_2()
 {
 	script_start();
@@ -1491,73 +1586,6 @@ void task5_2()
 	script_executed();
 }
 
-void createfile(std::string str)
-{
-	std::ofstream textFile("textfile.txt"); // чисто файл создаёт
-	if (textFile.is_open()) {
-		textFile << str;
-		textFile.close();
-	}
-}
-std::string filetostring()
-{
-	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
-	std::string str;
-	if (f) { // если ФАЙЛ !!
-		std::ostringstream ss; // типо переменная в виде out string stream
-		ss << f.rdbuf(); // читает данные типо readbuffer
-		str = ss.str(); // результат
-	}
-	return str;
-}
-std::string findWordInFile(std::string str)
-{
-	std::ifstream file("textfile.txt");
-	std::string str_word, word_store;
-	int foundCalc = 0;
-	bool found = false;
-	if (file.is_open())
-	{
-		while (file >> word_store)
-		{
-			if (word_store == str)
-			{
-				str_word += str;
-				str_word.push_back(' ');
-				found = true;
-				foundCalc += 1;
-			}
-		}
-
-	}
-	if (found == true)
-	{
-		std::cout << "\nWe found: " << str_word;
-		printf("\nTimes found: %d", foundCalc);
-	}
-	else
-	{
-		printf("\nWe found no matching word.\n");
-	}
-	printf("\n");
-	return str_word;
-	file.close();
-}
-std::string findLineInFile(std::string str) // сделать чтобы линию читало
-{
-	//std::ifstream file("textfile.txt");
-	std::string str_word, word_store;
-	int foundCalc = 0;
-	bool found = false;
-	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
-	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
-	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
-		std::cout << "Found:  " << str << "\n"; // pos >> есть; str. нету ; нету
-	else
-		std::cout << "Not found\n";
-	printf("\n");
-	return str_word;
-}
 void task5_3_16()
 {
 	cin_fixer();
@@ -1572,16 +1600,6 @@ void task5_3_16()
 	script_executed();
 }
 
-std::string findUnderLineInFile(std::string str)
-{
-	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
-	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
-	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
-		std::cout << "Found at pos:  " << pos << "\n";
-	else
-		std::cout << "Not found\n";
-	return s;
-}
 void task5_3_25()
 {
 	script_start();
@@ -1695,6 +1713,10 @@ void task5_4_45()
 void task5_5_25()
 {
 	script_start();
+	std::string name, content;
+	printf("Enter file name");
+	std::cin >> name;
+	createfilename(name);
 
 	script_executed();
 }
@@ -1845,7 +1867,7 @@ int main()
 				break;
 			case '3':
 				std::string choose;
-				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_28;\n");
+				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_45;\n 5: 5_5_25;\n 6: 5_5_50;\n");
 				std::cout << "-> ";  std::cin >> choose;
 				switch (choose[0])
 				{
@@ -1856,13 +1878,19 @@ int main()
 					task5_3_25();
 					break;
 				case '3':
-					task5_4_28();
+					task5_4_25();
 					break;
 				case '4':
+					task5_4_45();
 					break;
 				case '5':
+					task5_5_25();
 					break;
 				case '6':
+					task5_5_50();
+					break;
+				case '7':
+					printf("иди нахуй");
 					break;
 				}
 				break;
