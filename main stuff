@@ -158,6 +158,7 @@ void createfile(std::string str)
 }
 void createfilename(std::string filename)
 {
+	std::ofstream textFile(filename + ".txt"); // чисто файл создаёт
 	std::ifstream file;
 	std::string cont;
 	filename.append(".txt");
@@ -166,6 +167,10 @@ void createfilename(std::string filename)
 	{
 		printf("MALFUNCTION");
 		return;
+	}
+	else {
+		textFile << "text goes here IDK bruh";
+		textFile.close();
 	}
 	while (true) // крч файл находит и надо ещё вывести кол-во не пустых строк вот здесь todo
 	{
@@ -1795,6 +1800,7 @@ void task5_5_25()
 	std::cin >> name;
 	createfilename(name); // FIX FIX FIX !!!
 
+	cin_fixer();
 	script_executed();
 }
 void task5_5_50()
@@ -1955,7 +1961,7 @@ int main()
 				break;
 			case '3':
 				std::string choose;
-				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_45;\n 5: 5_5_25;\n 6: 5_5_50;\n");
+				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_45; todo\n 5: 5_5_25; todo\n 6: 5_5_50; todo\n");
 				std::cout << "-> ";  std::cin >> choose;
 				switch (choose[0])
 				{
