@@ -1889,9 +1889,6 @@ int main()
 				case '6':
 					task5_5_50();
 					break;
-				case '7':
-					printf("иди нахуй");
-					break;
 				}
 				break;
 			}
