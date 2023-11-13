@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-
 void text()
 {
 	std::cout << "hello";
@@ -11,7 +10,7 @@ void text()
 int main()
 {
 	std::string key;
-	std::cout << "TEXT";
+	std::cout << "TEXT\n"; // = "\n" == std::endl;
 
 		while (true)
 		{
