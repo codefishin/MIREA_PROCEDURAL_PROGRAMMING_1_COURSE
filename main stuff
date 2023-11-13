@@ -22,6 +22,7 @@ int script_e = 0; // это счётчик для выполненого код�
 const double pi = 3.14159265358979323846; // это число пи, используется в математических заданиях
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // а это для цвета консоли
 int cConsole = 14; // это ЖЁЛТЫЙ цвет для консоли...
+int haxConsole = 10;
 
 void loading()
 {
@@ -49,7 +50,7 @@ void limbo()
 	// короче. в программе 4_1 есть ошибка при вводе слишком большого числа. я его не смог удалить НО смог убрать баг который уничтожает программу. Вместо бесконечного цикла я ввёл это предупреждение, которое длится очень много тиков... кто шарит, подскажите как нормально избавиться от прикола в 4_1?( 
 	SetConsoleTextAttribute(hConsole, 12);
 	system("CLS");
-	std::cout << ">:/ Welcome to LIMBO. If you see this, that means the program is going to be shut down soon.";
+	std::cout << ">:/ If you see this, that means the program is going to be shut down soon.";
 	Sleep(1000);
 	std::cout << "\n>:/ If you are wondering what happened: the script has activated an alert system, that will put you in this LIMBO state.";
 	Sleep(1000);
@@ -67,7 +68,7 @@ void cin_fixer()
 void script_start()
 {
 	system("CLS");
-	SetConsoleTextAttribute(hConsole, cConsole); // задаёт цвет консоли. это крута :D... вернитесь наверх кода и почитайте что за hConsole и cConsole
+	SetConsoleTextAttribute(hConsole, haxConsole); // задаёт цвет консоли. это крута :D... вернитесь наверх кода и почитайте что за hConsole и cConsole
 	std::cout << "Script ready.\n";
 }
 void script_executed()
@@ -88,7 +89,7 @@ void script_executed()
 		}
 	}
 	system("CLS");
-	SetConsoleTextAttribute(hConsole, 10); // ресетает цвет консоли на зелень ... 28.10.2023 - я дурак ввёл 0 и в итоге было НИЧЕГО :D, 10 работает
+	SetConsoleTextAttribute(hConsole, haxConsole); // ресетает цвет консоли на зелень ... 28.10.2023 - я дурак ввёл 0 и в итоге было НИЧЕГО :D, 10 работает
 	std::string scriptexec = ">:/ Script successfully executed, please select a new task...\b\n\n";
 	char* array = new char[scriptexec.length() + 1];
 	array[scriptexec.length()] = '\0';
@@ -106,6 +107,45 @@ void script_executed()
 	}
 	delete[] array;
 	system("CLS");
+}
+void choosecolor()
+{
+	system("cls");
+	for (int k = 255; k > 0; k--)
+	{
+		SetConsoleTextAttribute(hConsole, k);
+		std::cout << k << " Color hex you can input\n";
+	}
+	SetConsoleTextAttribute(hConsole, 10);
+	printf("\n\n\nEnter a color value\n\n");
+	printf("-> "); std::cin >> cConsole;
+	if (cConsole <= 0 || cConsole >= 256)
+	{
+		SetConsoleTextAttribute(hConsole, 10);
+		printf("MALFUNCTION 1");
+		script_executed();
+	}
+	int temp = cConsole, temp2 = 10, logic = 16, multi = 1;
+	for (int i = 1; i < 255; i++)
+	{
+		if (i == temp && i > 16)
+		{
+			haxConsole = 10 + (logic * multi);
+			break;
+		}
+		else if (i <= 16 && i == temp)
+		{
+			haxConsole = 10;
+			break;
+		}
+		else
+		{
+			multi++;
+		}
+	}
+	cin_fixer();
+	SetConsoleTextAttribute(hConsole, haxConsole);
+	system("cls");
 }
 
 void createfile(std::string str)
@@ -815,7 +855,7 @@ void task3_2()
 		}
 		else
 		{
-			std::cout << "Error\b\n";
+			std::cout << "MALFUNCTION\n";
 		}
 
 	}
@@ -836,12 +876,12 @@ void task3_3()
 	}
 	else
 	{
-		std::cout << "error\b\n";
+		std::cout << "MALFUNCTION\n";
 	}
 	std::ifstream file("text.txt");
 	if (!file.is_open())
 	{
-		std::cout << "error\b\n";
+		std::cout << "MALFUNCTION\n";
 	}
 	else
 	{
@@ -869,7 +909,7 @@ void task3_4()
 	}
 	else
 	{
-		std::cout << "error" << std::endl;
+		std::cout << "MALFUNCTION" << std::endl;
 	}
 	int c0 = 0;
 
@@ -1018,7 +1058,7 @@ void task4_1()
 	}
 	else
 	{
-		std::cout << "Error" << std::endl;
+		std::cout << "MALFUNCTION" << std::endl;
 	}
 	SetConsoleTextAttribute(hConsole, 7);
 	std::cout << "Result: " << summ << std::endl;
@@ -1348,7 +1388,7 @@ void task4_6()
 		{
 			if (number[j] == number[j + 1] && number[j] == number[j + 2] && number[j] == number[j + 3])
 			{
-				std::cout << "Number does not exist... (error code 1)\n";
+				std::cout << "Number does not exist... (MALFUNCTION 1)\n";
 				script_executed();
 				return;
 			}
@@ -1361,13 +1401,13 @@ void task4_6()
 			}
 			if (number_conv(number[j]) == number_conv(number[j + 2]) && alert == true && number_conv(number[j]) < number_conv(number[k]))
 			{
-				std::cout << "Number does not exist... (error code 3)\n";
+				std::cout << "Number does not exist... (MALFUNCTION 3)\n";
 				script_executed();
 				return;
 			}
 			if (number_conv(number[j]) == 1 && number_conv(number[k]) == 500)
 			{
-				std::cout << "Number does not exist... (error code 2)\n";
+				std::cout << "Number does not exist... (MALFUNCTION 2)\n";
 				script_executed();
 				return;
 			}
@@ -1720,13 +1760,16 @@ void task5_4_25()
 	script_start();
 	std::string num;
 	bool alert = false;
+
+	printf("\nThe number is set in 5th numeral system and gets converted into binary.\n\nPlease enter a number you want to convert.\n-> ");
 	std::cin >> num;
 	for (int i = 0; i < num.length(); i++)
 	{
 		if (num[i] <= 'f' && num[i] >= '5')
 		{
 			alert = true;
-			printf("MALFUNCTION");
+			system("cls");
+			printf("MALFUNCTION 1\n");
 			break;
 		}
 	}
@@ -1785,6 +1828,10 @@ int main()
 		case 'e':
 		case 'E':
 			return 0;
+		case 'c':
+		case 'C':
+			choosecolor();
+			break;
 		case '1':
 			switch (key_selector[0])
 			{
@@ -1933,6 +1980,11 @@ int main()
 				}
 				break;
 			}
+			break;
+		case '6':
+			task5_3_15();
+			task5_4_19();
+			task5_4_28();
 			break;
 		default:
 			system("CLS");
