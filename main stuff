@@ -64,12 +64,6 @@ void cin_fixer()
 	std::string exitS; // для тех кто читает это - тут какой-то рофл происходит, если этого не будет то сломается код драйвера, НО эта штука даже не просится в программе? Костыли ещё те, но я глупенький... :c
 	std::getline(std::cin, exitS); // для всех заданий которые имеют cin и потом ничего
 }
-void helper()
-{
-	std::cout << "!!!!!!!!!!!!!!!!!!!!!!!! Code check here." << std::endl;
-	Sleep(999999999);
-}
-
 void script_start()
 {
 	system("CLS");
@@ -133,7 +127,7 @@ void createfilename(std::string filename)
 		printf("MALFUNCTION");
 		return;
 	}
-	while (true) // крч файл находит но я хуесос и надо ещё вывести кол-во не пустых строк вот здесь todo
+	while (true) // крч файл находит и надо ещё вывести кол-во не пустых строк вот здесь todo
 	{
 		std::getline(file, cont);
 		if (file.eof()) break;
@@ -362,7 +356,7 @@ int NOD(int a, int b) // нод = GCD на англе
 		return abs(NOD(b % a, a)); // а если нет то можно делить на А
 	}
 }
-int SOE(int a) // soe = sieve of erethosphetes, или же просто считает праймовые числа. как же меня бесит матан
+int SOE(int a) // soe = sieve of erethosphetes, или же просто считает простые числа. как же меня бесит матан
 {
 	// тут рофло-баг, в конце всегда будет написана ху
 	bool prime[999]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
@@ -380,6 +374,34 @@ int SOE(int a) // soe = sieve of erethosphetes, или же просто счи�
 	for (int p = 2; p < a; p++) // для вывода числ
 		if (prime[p])
 			std::cout << p << " ";
+}
+int int5to2(std::string num)
+{
+	int num_in2{}, result{};
+	std::string temp;
+	num_in2 = x_to_dec(num, 5);
+	temp = dec_to_new_x(num_in2, 2);
+	result = stoi(temp);
+	return result;
+}
+double createdoublearray(int num1, int num2)
+{
+	double** coolarray = new double* [num1]; // создание двумерного массива
+	double summary{}; // переменная для вычисления
+	for (int i = 0; i < num1; i++)
+	{
+		coolarray[i] = new double[num2]; // столб i равен второму
+		for (int j = 0; j < num2; j++)
+		{
+			summary += coolarray[i][j]; // чёто тут походу
+		}
+	}
+	for (int i = 0; i < num1; i++)
+	{
+		delete[] coolarray[i];
+	}
+	delete[] coolarray;
+	return summary;
 }
 
 // дз 1
@@ -740,8 +762,6 @@ void task3_2()
 	std::string ns = removal(summaryfix); // reference to algorithm above (string removal)
 	std::string na = removal(moneyfix); // reference to algorithm above (string removal)
 	std::string nb = removal(timefix); // reference to algorithm above (string removal)
-	// std::cout << summaryfix << moneyfix << timefix << std::endl;
-	// std::cout << ns << na << nb << std::endl;
 	int inter = 0; // не нужно, вообще.
 
 	if (std::empty(summaryfix) == 1 || std::empty(moneyfix) == 1 || std::empty(timefix) == 1) // reference to algorithm above (string removal)
@@ -1591,7 +1611,7 @@ void task5_3_16()
 	cin_fixer();
 	script_start();
 	std::string str = " ", str_word = " ";
-	printf("Please create a new file by enterring some characters\n-> ");
+	printf("Please create a new file and enter random words.\n-> ");
 	std::getline(std::cin, str);
 	createfile(str);
 	printf("Enter a word or combination of words.\n-> ");
@@ -1599,14 +1619,13 @@ void task5_3_16()
 	findLineInFile(str_word); // находит ток слова а потом обсирается когда нужно искать линию
 	script_executed();
 }
-
 void task5_3_25()
 {
 	script_start();
 
 	cin_fixer();
 	std::string str = " ", str_line = " ";
-	printf("Please create a new file by enterring some characters\n-> ");
+	printf("Please create a new file and enter random lines.\n-> ");
 	std::getline(std::cin, str);
 	createfile(str);
 	printf("Enter an under-line you wanna find.\n-> ");
@@ -1696,11 +1715,26 @@ void task5_4_28()
 	script_executed();
 } // тоже ненужная
 // конец прикола
-
 void task5_4_25()
 {
 	script_start();
-
+	std::string num;
+	bool alert = false;
+	std::cin >> num;
+	for (int i = 0; i < num.length(); i++)
+	{
+		if (num[i] <= 'f' && num[i] >= '5')
+		{
+			alert = true;
+			printf("MALFUNCTION");
+			break;
+		}
+	}
+	if (alert != true)
+	{
+		printf("Script result: %d.", int5to2(num));
+	}
+	cin_fixer();
 	script_executed();
 }
 void task5_4_45()
@@ -1716,14 +1750,21 @@ void task5_5_25()
 	std::string name, content;
 	printf("Enter file name");
 	std::cin >> name;
-	createfilename(name);
+	createfilename(name); // FIX FIX FIX !!!
 
 	script_executed();
 }
 void task5_5_50()
 {
 	script_start();
+	int num1, num2;
+	double result{};
 
+	printf("\n-> "); std::cin >> num1;
+	printf("\n-> "); std::cin >> num2;
+	result = createdoublearray(num1, num2); // я чёто не то написал тут лол
+	std::cout << "Result: " << result << ".\n";
+	cin_fixer();
 	script_executed();
 }
 
