@@ -1,26 +1,29 @@
 // вам нужно написать всю прогу через void и использовать int main() как драйвер/меню.
 // вот вам как сделать меню:
 
+#include <iostream>
+#include <string>
+
 void text()
 {
-  std::cout << "hello";
+	std::cout << "hello";
 }
 int main()
 {
 	std::string key;
-	std::cout << "TEXT"
+	std::cout << "TEXT";
 
-	while (true)
-	{
-		std::cout << "text"; std::getline(std::cin, key);
-		switch (key[0])
+		while (true)
 		{
-		case 'e': // при вводе е программа завершится
-			return 0;
-		case '1': // при вводе 1 программа сделает следующее
-      text();
-      break;
-    }
-  }
+			std::cout << "text"; std::getline(std::cin, key);
+			switch (key[0])
+			{
+			case 'e': // при вводе е программа завершится
+				return 0;
+			case '1': // при вводе 1 программа сделает следующее
+				text();
+				break;
+			}
+		}
 }
 // после ввода 1 в драйвер, программа выведет "hello" из void task1_1() {}
