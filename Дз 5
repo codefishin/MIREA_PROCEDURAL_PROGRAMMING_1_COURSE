@@ -21,6 +21,16 @@ void createfile(std::string str)
 		textFile.close();
 	}
 }
+std::string findUnderLineInFile(std::string str)
+{
+	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
+	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
+	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
+		std::cout << "Found at pos:  " << pos << "\n";
+	else
+		std::cout << "Not found\n";
+	return s;
+}
 std::string findWordInFile(std::string str)
 {
 	std::ifstream file("textfile.txt");
@@ -54,6 +64,27 @@ std::string findWordInFile(std::string str)
 	return str_word;
 	file.close();
 }
+std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользователя нужно только система счисления. из 10 в x. x2d_res = x to dec result, берётся из задания
+{
+	std::string result;
+	while (x2d_res > 0) {
+		int rem = x2d_res % n_new_sys;
+		result = strfor9[rem] + result;
+		x2d_res /= n_new_sys;
+	}
+	return result;
+}
+int x_to_dec(std::string num, int sys) {
+
+	int result = 0;
+	int len = num.size();
+	for (int i = 0; i < len; i++) {
+		char c = num[i];
+		int value = strfor9.find(toupper(c));
+		result += value * pow(sys, len - i - 1);
+	}
+	return result;
+}
 std::string filetostring()
 {
 	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
@@ -85,6 +116,15 @@ int NOD(int a, int b) // нод = GCD на англе
 	{
 		return abs(NOD(b % a, a)); // а если нет то можно делить на А
 	}
+}
+int int5to2(std::string num)
+{
+	int num_in2{}, result{};
+	std::string temp;
+	num_in2 = x_to_dec(num, 5);
+	temp = dec_to_new_x(num_in2, 2);
+	result = stoi(temp);
+	return result;
 }
 void task5_1()
 {
@@ -135,8 +175,6 @@ void task5_2()
 // вот эти задачи я сделал по приколу, удалять не буду мб кому пригодяться
 void task5_3_15() // НАДО БЫЛО СДЕЛАТЬ НАХОЖДЕНИЕ СОЧИТАНИЙ СЛОВ НО Я СДЕЛАЛ ТОЛЬКО НАХОЖДЕНИЕ СЛОВА 
 {
-	cin_fixer();
-	script_start();
 	std::string str = " ", str_word = " ";
 	printf("Please create a new file by enterring some characters\n-> ");
 	std::getline(std::cin, str);
@@ -144,7 +182,6 @@ void task5_3_15() // НАДО БЫЛО СДЕЛАТЬ НАХОЖДЕНИЕ СО�
 	printf("Enter a word or combination of words.\n-> ");
 	std::getline(std::cin, str_word);
 	findWordInFile(str_word);
-	script_executed();
 }
 void task5_4_19()
 {
@@ -203,17 +240,42 @@ void task5_4_28()
 	std::cout << "Summary of each number: " << summary;
 } // тоже ненужная
 // конец прикола
+void task5_3_16()
+{
+	std::string str = " ", str_word = " ";
+	printf("Please create a new file and enter random words.\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
+	printf("Enter a word or combination of words.\n-> ");
+	std::getline(std::cin, str_word);
+	findLineInFile(str_word); // находит ток слова а потом обсирается когда нужно искать линию
+}
 void task5_3_25()
 {
-	script_start();
-
-	cin_fixer();
 	std::string str = " ", str_line = " ";
-	printf("Please create a new file by enterring some characters\n-> ");
+	printf("Please create a new file and enter random lines.\n-> ");
 	std::getline(std::cin, str);
 	createfile(str);
 	printf("Enter an under-line you wanna find.\n-> ");
 	std::getline(std::cin, str_line);
 	findUnderLineInFile(str_line);
-	script_executed();
+}
+void task5_4_25()
+{
+	std::string num;
+	bool alert = false;
+	std::cin >> num;
+	for (int i = 0; i < num.length(); i++)
+	{
+		if (num[i] <= 'f' && num[i] >= '5')
+		{
+			alert = true;
+			printf("MALFUNCTION");
+			break;
+		}
+	}
+	if (alert != true)
+	{
+		printf("Script result: %d.", int5to2(num));
+	}
 }
