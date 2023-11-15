@@ -1,7 +1,8 @@
 /*
-* сдать: 25 16 (3) 25 35 (4)
-* todo: 4_6 4_9 исправить + 5: 25 50 (5)
+* todo: 4_6, 4_9, 5_4_25 bugs, 
+* todo: 5_5_25 5_5_50 solve
 * число для теста 4_6 MCCCXXXVII, 4_9 9ac0, 5_4_25 - нужен массив чисел
+* нужен _CRT_SECURE_NO_WARNINGS
 */
 // для римских: перед 1 большим не может быть 2 маленьких; v не может встречаться больше 1 раза, x может, 50 не может, 100 может, 500 не может
 #include <iostream>
@@ -1675,34 +1676,6 @@ void task5_2()
 	script_executed();
 }
 
-void task5_3_16()
-{
-	cin_fixer();
-	script_start();
-	std::string str = " ", str_word = " ";
-	printf("Please create a new file and enter random words.\n-> ");
-	std::getline(std::cin, str);
-	createfile(str);
-	printf("Enter a word or combination of words.\n-> ");
-	std::getline(std::cin, str_word);
-	findLineInFile(str_word); // находит ток слова а потом обсирается когда нужно искать линию
-	script_executed();
-}
-void task5_3_25()
-{
-	script_start();
-
-	cin_fixer();
-	std::string str = " ", str_line = " ";
-	printf("Please create a new file and enter random lines.\n-> ");
-	std::getline(std::cin, str);
-	createfile(str);
-	printf("Enter an under-line you wanna find.\n-> ");
-	std::getline(std::cin, str_line);
-	findUnderLineInFile(str_line);
-	script_executed();
-}
-
 // вот эти задачи я сделал по приколу, удалять не буду мб кому пригодяться
 void task5_3_15() // НАДО БЫЛО СДЕЛАТЬ НАХОЖДЕНИЕ СОЧИТАНИЙ СЛОВ НО Я СДЕЛАЛ ТОЛЬКО НАХОЖДЕНИЕ СЛОВА 
 {
@@ -1784,6 +1757,35 @@ void task5_4_28()
 	script_executed();
 } // тоже ненужная
 // конец прикола
+
+void task5_3_16()
+{
+	cin_fixer();
+	script_start();
+	std::string str = " ", str_word = " ";
+	printf("Please create a new file and enter random words.\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
+	printf("Enter a word or combination of words.\n-> ");
+	std::getline(std::cin, str_word);
+	findLineInFile(str_word); // находит ток слова а потом обсирается когда нужно искать линию
+	script_executed();
+}
+void task5_3_25()
+{
+	script_start();
+
+	cin_fixer();
+	std::string str = " ", str_line = " ";
+	printf("Please create a new file and enter random lines.\n-> ");
+	std::getline(std::cin, str);
+	createfile(str);
+	printf("Enter an under-line you wanna find.\n-> ");
+	std::getline(std::cin, str_line);
+	findUnderLineInFile(str_line);
+	script_executed();
+}
+
 void task5_4_25()
 {
 	script_start();
