@@ -1,8 +1,7 @@
 /*
-* todo: 4_6 исправить + 5: 25+ 16+ (3), 25 45 (4), 25 50 (5)
-*
-* для всех читающих - не копируйте номер 5 для дз 4!!! прошу... ужасный код, сделайте сами :<
-* если нужно только дз: смотрите программы "void"
+* сдать: 25 16 (3) 25 35 (4)
+* todo: 4_6 4_9 исправить + 5: 25 50 (5)
+* число для теста 4_6 MCCCXXXVII, 4_9 9ac0, 5_4_25 - нужен массив чисел
 */
 // для римских: перед 1 большим не может быть 2 маленьких; v не может встречаться больше 1 раза, x может, 50 не может, 100 может, 500 не может
 #include <iostream>
@@ -16,8 +15,10 @@
 #include <algorithm>
 #include <Windows.h>
 #include <stdlib.h>
+#include <time.h>
 
 std::string strfor9 = "0123456789ABCDEF";
+std::string taskstr = "0123456789      QWERTYUIOPASDFGHJKLZXCVBNMq w e r t y u i o p a s d f g h j k l z x c v b n m ";
 int script_e = 0; // это счётчик для выполненого кода. используется в script_executed()
 const double pi = 3.14159265358979323846; // это число пи, используется в математических заданиях
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // а это для цвета консоли
@@ -346,6 +347,29 @@ std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользоват�
 	}
 	return result;
 }
+std::string chargen(int limit)
+{
+	std::string generator;
+	for (int i = 1; i < 1 + limit + 10; i++)
+	{
+		char x = taskstr[rand() % 94];
+		generator += x;
+	}
+	return generator;
+}
+std::string regen(int limit, int gen)
+{
+	std::string keep;
+	for (int i = 0; i < gen; i++)
+	{
+		chargen(limit);
+		if (i == gen - 1)
+		{
+			keep = chargen(limit);
+		}
+	}
+	return keep;
+}
 int x_to_dec(std::string num, int sys) {
 
 	int result = 0;
@@ -403,22 +427,22 @@ int NOD(int a, int b) // нод = GCD на англе
 }
 int SOE(int a) // soe = sieve of erethosphetes, или же просто считает простые числа. как же меня бесит матан
 {
-	// тут рофло-баг, в конце всегда будет написана ху
-	bool prime[999]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
-	//upd: я сделал костыли, банально стирая недетерминированое число (для массива выше)
+	// тут рофло-баг, в конце всегда будет написана ерунда
+	bool* prime = new bool[a]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
 	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
-
-	for (int p = 2; p * p <= a; p++)
+	for (int p = 2; p * p < a; p++)
 	{ // p = 2 потому что это первое праймовое число
 		if (prime[p] == true)
 		{
-			for (int i = p * p; i <= a; i += p) // по правилам матеши (круто)
+			for (int i = p * p; i < a; i += p) // по правилам матеши (круто)
 				prime[i] = false;
 		}
 	}
 	for (int p = 2; p < a; p++) // для вывода числ
 		if (prime[p])
 			std::cout << p << " ";
+	delete[] prime;
+	return 0;
 }
 int int5to2(std::string num)
 {
@@ -1618,7 +1642,7 @@ void task4_9()
 
 // все задания НИЖЕ имеют множество заданий подгрупп. 
 // Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР. 
-// Мои номера 25 16 (3)+ 25 45 (4) 25 50 (5)
+// Мои номера 25 16 (3) 25 35 (4) 25 50 (5)
 
 void task5_1()
 {
@@ -1641,11 +1665,11 @@ void task5_1()
 void task5_2()
 {
 	script_start();
-	int a = 0;
+	int a = 1;
 	printf("Please enter a number, to calculate primes.\n-> "); std::cin >> a; printf("You have entered %d. Primes are: \n-> ", a);
-	std::cout << SOE(a) << "\b \b\b \b\b \b\b ";
+	std::cout << SOE(a) << "\b ";
 	printf("\nEnter anything to exit the script.\n-> ");
-	std::cin >> a;
+	std::cin.get() >> a;
 
 	cin_fixer();
 	script_executed();
@@ -1766,8 +1790,13 @@ void task5_4_25()
 	std::string num;
 	bool alert = false;
 
-	printf("\nThe number is set in 5th numeral system and gets converted into binary.\n\nPlease enter a number you want to convert.\n-> ");
-	std::cin >> num;
+	printf("\nThe number is set in 5th numeral system and gets converted into binary.\n\nPlease enter a number you want to convert.\nEnter 0 to stop overwriting array\n");
+	//while(true)
+	printf("-> "); std::cin >> num; printf("\n");
+	/*if (num == "0")
+	{
+		alert = true;
+	}*/
 	for (int i = 0; i < num.length(); i++)
 	{
 		if (num[i] <= 'f' && num[i] >= '5')
@@ -1785,10 +1814,38 @@ void task5_4_25()
 	cin_fixer();
 	script_executed();
 }
-void task5_4_45()
+void task5_4_35()
 {
 	script_start();
-
+	// для этого задания я сделал рандомайзер строки через время. не осуждайте
+	time_t currentTime{}; // в коде создаётся переменная, хранящая все данные про текущее время
+	time(&currentTime); // вот, ток тут не в числовом формате
+	struct tm* myTime = localtime(&currentTime); // теперь создаётся int переменная, в которой хранятся данные о времени в числовом формате
+	// & = pointer 
+	int limit = myTime->tm_hour, gen = myTime->tm_sec, resetnum{}, buffer{}, maxSpacebars{}, enter{};
+	std::string str = regen(limit,gen);
+	std::string pointer;
+	// рандом строка сделана
+	for (int i = 0; i < str.size(); i++)
+	{
+		if (str[i] == ' ')
+		{
+			buffer++;
+			pointer += "^";
+			if (buffer > maxSpacebars)
+			{
+				maxSpacebars = buffer;
+			}
+		}
+		else
+		{
+			buffer = 0;
+			pointer += " ";
+		}
+	}
+	
+	printf("String (starting after arrow) ->%s.\n                                %s\nSpacebars: %i\nPress <Enter> to continue", str.c_str(), pointer.c_str(),maxSpacebars);
+	std::cin >> enter;
 	script_executed();
 }
 
@@ -1961,7 +2018,7 @@ int main()
 				break;
 			case '3':
 				std::string choose;
-				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_45; todo\n 5: 5_5_25; todo\n 6: 5_5_50; todo\n");
+				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_35;\n 5: 5_5_25; todo\n 6: 5_5_50; todo\n");
 				std::cout << "-> ";  std::cin >> choose;
 				switch (choose[0])
 				{
@@ -1975,7 +2032,7 @@ int main()
 					task5_4_25();
 					break;
 				case '4':
-					task5_4_45();
+					task5_4_35();
 					break;
 				case '5':
 					task5_5_25();
