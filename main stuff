@@ -1,13 +1,13 @@
 /*
-* todo: 4_6, 5_4_25 bugs, 
+* todo: 4_6, 4_9 bugs
 * todo: 5_5_25 solve
-* todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0
-* 
-* число для теста 4_6 MCCCXXXVII, 4_9 9ac0, 5_4_25 - нужен массив чисел
-* 
+* todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0 ... 5_4_25 сделать так чтобы число не входящее в 5 ричную не вводилось в массив и не прекращало цикл
+*
+* число для теста 4_6 MCCCXXXVII, 4_9 9ac0, 
+*
 * нужен _CRT_SECURE_NO_WARNINGS
 */
-// для римских: перед 1 большим не может быть 2 маленьких; v не может встречаться больше 1 раза, x может, 50 не может, 100 может, 500 не может
+
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -79,7 +79,8 @@ void script_start()
 void script_executed()
 {
 	script_e++;
-	int enter;
+	int enter{};
+	printf("\nPress Enter to continue");
 	std::cin.get() >> enter;
 	std::cout << "\nWait... ";
 	for (double a = 19; a > 0; a--)
@@ -162,30 +163,6 @@ void createfile(std::string str)
 		textFile << str;
 		textFile.close();
 	}
-}
-void createfilename(std::string filename)
-{
-	std::ofstream textFile(filename + ".txt"); // чисто файл создаёт
-	std::ifstream file;
-	std::string cont;
-	filename.append(".txt");
-	file.open(filename);
-	if (!file.is_open())
-	{
-		printf("MALFUNCTION");
-		return;
-	}
-	else {
-		textFile << "text goes here IDK bruh";
-		textFile.close();
-	}
-	while (true) // крч файл находит и надо ещё вывести кол-во не пустых строк вот здесь todo
-	{
-		std::getline(file, cont);
-		if (file.eof()) break;
-		std::cout << cont << "\n";
-	}
-	return;
 }
 std::string filetostring()
 {
@@ -450,14 +427,54 @@ int SOE(int a) // soe = sieve of erethosphetes, или же просто счи�
 	delete[] prime;
 	return 0;
 }
-int int5to2(std::string num)
+int int5to2()
 {
-	int num_in2{}, result{};
-	std::string temp;
-	num_in2 = x_to_dec(num, 5);
-	temp = dec_to_new_x(num_in2, 2);
-	result = stoi(temp);
-	return result;
+	int num_in2{}, result{}, tracker = 0;
+	bool alert = false;
+	std::string temp,num,tempf;
+	std::string arraytemp[2000]{};
+	for (int j = 0; j < 2000;j++)
+	{
+		printf("-> "); std::cin >> num; printf("\n");
+
+		if (num == "0")
+		{
+			break;
+		}
+		for (int i = 0; i < num.length(); i++)
+		{
+			if (num[i] <= 'f' && num[i] >= '5')
+			{
+				alert = true;
+				printf("MALFUNCTION 1\n");
+				return 0;
+			}
+		}
+		arraytemp[j] = num;
+		tracker++;
+	}
+	std::string* array5 = new std::string[tracker];
+	int* array2 = new int[tracker];
+	for (int i = 0; i < tracker; i++)
+	{
+		array5[i] = arraytemp[i];
+	}
+
+	for (int i = 0; i < tracker; i++)
+	{
+		temp = array5[i];
+		num_in2 = x_to_dec(temp, 5);
+		tempf = dec_to_new_x(num_in2, 2);
+		result = stoi(tempf);
+		array2[i] = result;	
+	}
+	printf("Code result\n");
+	for (int i = 0; i < tracker; i++)
+	{
+		std::cout << array2[i] << "\n";
+	}
+	delete[] array5; delete[] array2;
+	return 0;
 }
 
 // дз 1
@@ -1385,9 +1402,7 @@ void task4_5()
 	cin_fixer();
 	script_executed();
 }
-
 // ура 5 задание завершено шок...
-
 void task4_6()
 {
 	/*Rule 1: When a smaller symbol is after a greater symbol, it’s added.
@@ -1427,7 +1442,7 @@ Rule 6: Only I, X, and C can be used as subtractive numerals.*/
 	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
 	int buffer = 0;
-	int next = 0, alert5=0,alert52=0,alert53=0;
+	int next = 0, alert5 = 0, alert52 = 0, alert53 = 0;
 	bool alert = false;
 	// I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
 	std::string number;
@@ -1497,7 +1512,6 @@ Rule 6: Only I, X, and C can be used as subtractive numerals.*/
 		printf("MALFUNCTION 5");
 	}
 }
-
 void task4_7()
 {
 	script_start();
@@ -1635,7 +1649,6 @@ void task4_8()
 		}
 	}
 }
-
 void task4_9()
 {
 	script_start();
@@ -1681,11 +1694,9 @@ void task4_9()
 	cin_fixer();
 	script_executed();
 }
-
 // все задания НИЖЕ имеют множество заданий подгрупп. 
 // Расписано так: ДЗ_НОМЕР_ПОДНОМЕР или ДЗ_НОМЕР. 
 // Мои номера 25 16 (3) 25 35 (4) 25 50 (5)
-
 void task5_1()
 {
 	script_start();
@@ -1716,7 +1727,6 @@ void task5_2()
 	cin_fixer();
 	script_executed();
 }
-
 // вот эти задачи я сделал по приколу, удалять не буду мб кому пригодяться
 void task5_3_15() // НАДО БЫЛО СДЕЛАТЬ НАХОЖДЕНИЕ СОЧИТАНИЙ СЛОВ НО Я СДЕЛАЛ ТОЛЬКО НАХОЖДЕНИЕ СЛОВА 
 {
@@ -1798,7 +1808,6 @@ void task5_4_28()
 	script_executed();
 } // тоже ненужная
 // конец прикола
-
 void task5_3_16()
 {
 	cin_fixer();
@@ -1826,7 +1835,6 @@ void task5_3_25()
 	findUnderLineInFile(str_line);
 	script_executed();
 }
-
 void task5_4_25()
 {
 	script_start();
@@ -1834,26 +1842,7 @@ void task5_4_25()
 	bool alert = false;
 
 	printf("\nThe number is set in 5th numeral system and gets converted into binary.\n\nPlease enter a number you want to convert.\nEnter 0 to stop overwriting array\n");
-	//while(true)
-	printf("-> "); std::cin >> num; printf("\n");
-	/*if (num == "0")
-	{
-		alert = true;
-	}*/
-	for (int i = 0; i < num.length(); i++)
-	{
-		if (num[i] <= 'f' && num[i] >= '5')
-		{
-			alert = true;
-			system("cls");
-			printf("MALFUNCTION 1\n");
-			break;
-		}
-	}
-	if (alert != true)
-	{
-		printf("Script result: %d.", int5to2(num));
-	}
+	int5to2();
 	cin_fixer();
 	script_executed();
 }
@@ -1865,8 +1854,8 @@ void task5_4_35()
 	time(&currentTime); // вот, ток тут не в числовом формате
 	struct tm* myTime = localtime(&currentTime); // теперь создаётся int переменная, в которой хранятся данные о времени в числовом формате
 	// & = pointer 
-	int limit = myTime->tm_hour+10, gen = myTime->tm_sec, resetnum{}, buffer{}, maxSpacebars{};
-	std::string str = regen(limit,gen);
+	int limit = myTime->tm_hour + 10, gen = myTime->tm_sec, resetnum{}, buffer{}, maxSpacebars{};
+	std::string str = regen(limit, gen);
 	std::string pointer;
 	// рандом строка сделана
 	for (int i = 0; i < str.size(); i++)
@@ -1886,19 +1875,20 @@ void task5_4_35()
 			pointer += " ";
 		}
 	}
-	
-	printf("String (starting after arrow) ->%s.\n                                %s\nSpacebars: %i\nPress <Enter> to continue", str.c_str(), pointer.c_str(),maxSpacebars);
+
+	printf("String (starting after arrow) ->%s.\n                                %s\nSpacebars: %i\n", str.c_str(), pointer.c_str(), maxSpacebars);
 	cin_fixer();
 	script_executed();
 }
-
 void task5_5_25()
 {
 	script_start();
-	std::string name, content;
-	printf("Enter file name");
-	std::cin >> name;
-	createfilename(name); // FIX FIX FIX !!!
+
+	std::ofstream textFile("textfile.txt"); 
+	if (textFile.is_open()) {
+		// вводить сюда чё нить можн
+		textFile.close();
+	}
 
 	cin_fixer();
 	script_executed();
@@ -2084,7 +2074,7 @@ int main()
 				break;
 			case '3':
 				std::string choose;
-				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_35;\n 5: 5_5_25; todo\n 6: 5_5_50; todo\n");
+				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_35;\n 5: 5_5_25; todo\n 6: 5_5_50 can be improved;\n");
 				std::cout << "-> ";  std::cin >> choose;
 				switch (choose[0])
 				{
