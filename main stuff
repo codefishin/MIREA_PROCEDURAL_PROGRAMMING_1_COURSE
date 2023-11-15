@@ -1420,7 +1420,10 @@ For example,
 
 XXX = 10 + 10 + 10 = 30, but 40 is not XXXX. 40 is XL.
 
-CCC = 100 + 100 + 100 = 300, but 400 is not CCCC. 400 is CD.*/
+CCC = 100 + 100 + 100 = 300, but 400 is not CCCC. 400 is CD.
+ ...
+Rule 5: The letters V, L, and D are not repeated.
+Rule 6: Only I, X, and C can be used as subtractive numerals.*/
 	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
 	int buffer = 0;
