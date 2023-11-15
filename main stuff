@@ -1,7 +1,10 @@
 /*
-* todo: 4_6, 4_9, 5_4_25 bugs, 
-* todo: 5_5_25 5_5_50 solve
+* todo: 4_6, 5_4_25 bugs, 
+* todo: 5_5_25 solve
+* todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0
+* 
 * число для теста 4_6 MCCCXXXVII, 4_9 9ac0, 5_4_25 - нужен массив чисел
+* 
 * нужен _CRT_SECURE_NO_WARNINGS
 */
 // для римских: перед 1 большим не может быть 2 маленьких; v не может встречаться больше 1 раза, x может, 50 не может, 100 может, 500 не может
@@ -76,6 +79,8 @@ void script_start()
 void script_executed()
 {
 	script_e++;
+	int enter;
+	std::cin.get() >> enter;
 	std::cout << "\nWait... ";
 	for (double a = 19; a > 0; a--)
 	{
@@ -453,25 +458,6 @@ int int5to2(std::string num)
 	temp = dec_to_new_x(num_in2, 2);
 	result = stoi(temp);
 	return result;
-}
-double createdoublearray(int num1, int num2)
-{
-	double** coolarray = new double* [num1]; // создание двумерного массива
-	double summary{}; // переменная для вычисления
-	for (int i = 0; i < num1; i++)
-	{
-		coolarray[i] = new double[num2]; // столб i равен второму
-		for (int j = 0; j < num2; j++)
-		{
-			summary += coolarray[i][j]; // чёто тут походу
-		}
-	}
-	for (int i = 0; i < num1; i++)
-	{
-		delete[] coolarray[i];
-	}
-	delete[] coolarray;
-	return summary;
 }
 
 // дз 1
@@ -1404,16 +1390,59 @@ void task4_5()
 
 void task4_6()
 {
-	script_start();
-	std::cout << "Input ROME NUMBER... It will be converted to the arabic numeral system.\n\n";
+	/*Rule 1: When a smaller symbol is after a greater symbol, it’s added.
+
+For example,
+
+XI = 10 + 1 = 11
+
+Rule 2: If a symbol comes after itself, it’s added.
+
+For example,
+
+XX = 10 + 10 = 20
+
+CCLX = 100 + 100 + 50 + 10 = 260
+
+Rule 3: When a smaller symbol appears before a greater symbol, it is subtracted.
+
+For example,
+
+IX = 10 – 1 = 9
+
+XL= 50 – 10 = 40
+
+CM = 1000 – 100 = 900
+
+Rule 4: The same symbol cannot be used more than three times in a row.
+
+For example,
+
+XXX = 10 + 10 + 10 = 30, but 40 is not XXXX. 40 is XL.
+
+CCC = 100 + 100 + 100 = 300, but 400 is not CCCC. 400 is CD.*/
+	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
 	int buffer = 0;
-	int next = 0;
+	int next = 0, alert5=0,alert52=0,alert53=0;
 	bool alert = false;
+	// I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
 	std::string number;
 	std::cout << "-> "; std::getline(std::cin, number);
 	for (int j = 0; j < number.length(); j++)
 	{
+		if (number[j] == 'V' || number[j] == 'v')
+		{
+			alert5 += 1; // простит меня бог за такой прикол. ПЕРЕПИСАТЬ
+		}
+		if (number[j] == 'L' || number[j] == 'l')
+		{
+			alert52 += 1; // простит меня бог за такой прикол. ПЕРЕПИСАТЬ
+		}
+		if (number[j] == 'D' || number[j] == 'd')
+		{
+			alert53 += 1; // простит меня бог за такой прикол. ПЕРЕПИСАТЬ
+		}
 		if (j + 3 < number.length())
 		{
 			if (number[j] == number[j + 1] && number[j] == number[j + 2] && number[j] == number[j + 3])
@@ -1435,26 +1464,35 @@ void task4_6()
 				script_executed();
 				return;
 			}
-			if (number_conv(number[j]) == 1 && number_conv(number[k]) == 500)
+			if (alert == true && number_conv(number[j]) > number_conv(number[k]))
 			{
 				std::cout << "Number does not exist... (MALFUNCTION 2)\n";
 				script_executed();
 				return;
-			}
+			} // не даёт mcccxxxvii вывестить
+			if (number[j] > number[k] && number[j] != number[j + 2])
+			{
+				std::cout << "Number does not exist... (MALFUNCTION 4)\n";
+				script_executed();
+				return;
+			} // не даёт mcccxxxvii вывестить
 
 		}
 	}
-	for (int i = 0; i < number.length(); i++)
+	if (alert5 <= 1) // доделать
 	{
-		buffer = number_conv(number[i]);
-		next = i + 1 < number.length() ? number_conv(number[i + 1]) : 0; // ? == if (then), : == else 
-		number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
+		for (int i = 0; i < number.length(); i++)
+		{
+			buffer = number_conv(number[i]);
+			next = i + 1 < number.length() ? number_conv(number[i + 1]) : 0; // ? == if (then), : == else
+			number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
+		}
+		std::cout << "Result: " << number_converted << "\n";
 	}
-
-	SetConsoleTextAttribute(hConsole, 7);
-	std::cout << "Result: " << number_converted << "\n";
-
-	script_executed();
+	else
+	{
+		printf("MALFUNCTION 5");
+	}
 }
 
 void task4_7()
@@ -1610,27 +1648,27 @@ void task4_9()
 	std::cout << "-> "; std::cin >> n_sys; std::cout << "-> "; std::cin >> n_new_sys;
 	if ((n_sys <= 1) or (n_sys > 16))
 	{
-		printf("MALFUNCTION");
+		printf("MALFUNCTION 1");
+		script_executed();
 		return;
 	}
-	if (n_sys > 9)
+	for (int i = 0; i < number.size(); i++)
 	{
-		for (int i = 0; i < number.size(); i++)
+		char c0 = number[i];
+		for (int j = 0; j < strfor9.size(); j++)
 		{
-			char c0 = number[i];
-			for (int j = 0; j < strfor9.size(); j++)
+			if (toupper(c0) < '0' || toupper(c0) > 'F')
 			{
-				if (tolower(c0) == (strfor9[j]))
-				{
-					printf("MALFUNCTION");
-					return;
-				}
+				printf("MALFUNCTION 2");
+				script_executed();
+				return;
 			}
 		}
 	}
 	if ((n_new_sys <= 1) or (n_new_sys > 16))
 	{
-		printf("MALFUNCTION");
+		printf("MALFUNCTION 3");
+		script_executed();
 		return;
 	}
 	int dec = x_to_dec(number, n_sys);
@@ -1824,7 +1862,7 @@ void task5_4_35()
 	time(&currentTime); // вот, ток тут не в числовом формате
 	struct tm* myTime = localtime(&currentTime); // теперь создаётся int переменная, в которой хранятся данные о времени в числовом формате
 	// & = pointer 
-	int limit = myTime->tm_hour, gen = myTime->tm_sec, resetnum{}, buffer{}, maxSpacebars{}, enter{};
+	int limit = myTime->tm_hour+10, gen = myTime->tm_sec, resetnum{}, buffer{}, maxSpacebars{};
 	std::string str = regen(limit,gen);
 	std::string pointer;
 	// рандом строка сделана
@@ -1847,7 +1885,7 @@ void task5_4_35()
 	}
 	
 	printf("String (starting after arrow) ->%s.\n                                %s\nSpacebars: %i\nPress <Enter> to continue", str.c_str(), pointer.c_str(),maxSpacebars);
-	std::cin >> enter;
+	cin_fixer();
 	script_executed();
 }
 
@@ -1865,13 +1903,36 @@ void task5_5_25()
 void task5_5_50()
 {
 	script_start();
-	int num1, num2;
-	double result{};
+	// пользователь введёт массив 1 и массив 2. потом сложить их столбцы
+	int array[3][3]{}, updArr[3]{};
+	printf("Please enter numbers corresponding to array position\n");
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			std::cout << "Arr[" << i << "][" << j << "]\n";
+			std::cin >> array[i][j];
+		}
+	}
+	printf("Your array is: \n");
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			std::cout << array[i][j] << " ";
+		}
+		std::cout << "\n";
+	}
+	printf("\nCalculation result:\n");
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			updArr[i] = array[0][i] + array[1][i] + array[2][i];
+		}
+		std::cout << updArr[i] << " ";
+	}
 
-	printf("\n-> "); std::cin >> num1;
-	printf("\n-> "); std::cin >> num2;
-	result = createdoublearray(num1, num2); // я чёто не то написал тут лол
-	std::cout << "Result: " << result << ".\n";
 	cin_fixer();
 	script_executed();
 }
