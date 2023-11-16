@@ -1,9 +1,10 @@
 /*
-* todo: 4_6, 4_9 bugs
+* todo: 4_6, bugs
+* 4_9 fixed? не уверен
 * todo: 5_5_25 solve
 * todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0 ... 5_4_25 сделать так чтобы число не входящее в 5 ричную не вводилось в массив и не прекращало цикл
 *
-* число для теста 4_6 MCCCXXXVII, 4_9 9ac0, 
+* число для теста 4_6 MCCCXXXVII, 4_9 9ac0,
 *
 * нужен _CRT_SECURE_NO_WARNINGS
 */
@@ -411,17 +412,17 @@ int NOD(int a, int b) // нод = GCD на англе
 int SOE(int a) // soe = sieve of erethosphetes, или же просто считает простые числа. как же меня бесит матан
 {
 	// тут рофло-баг, в конце всегда будет написана ерунда
-	bool* prime = new bool[a]; // тут проблема. я не могу расписать массив как а+1. почему это не работает как в 4_7?? 
+	bool* prime = new bool[a]; 
 	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
-	for (int p = 2; p * p < a; p++)
+	for (int p = 2; p * p < a+1; p++)
 	{ // p = 2 потому что это первое праймовое число
 		if (prime[p] == true)
 		{
-			for (int i = p * p; i < a; i += p) // по правилам матеши (круто)
+			for (int i = p * p; i < a+1; i += p) // по правилам матеши (круто)
 				prime[i] = false;
 		}
 	}
-	for (int p = 2; p < a; p++) // для вывода числ
+	for (int p = 2; p < a+1; p++) // для вывода числ
 		if (prime[p])
 			std::cout << p << " ";
 	delete[] prime;
@@ -431,9 +432,9 @@ int int5to2()
 {
 	int num_in2{}, result{}, tracker = 0;
 	bool alert = false;
-	std::string temp,num,tempf;
+	std::string temp, num, tempf;
 	std::string arraytemp[2000]{};
-	for (int j = 0; j < 2000;j++)
+	for (int j = 0; j < 2000; j++)
 	{
 		printf("-> "); std::cin >> num; printf("\n");
 
@@ -466,7 +467,7 @@ int int5to2()
 		num_in2 = x_to_dec(temp, 5);
 		tempf = dec_to_new_x(num_in2, 2);
 		result = stoi(tempf);
-		array2[i] = result;	
+		array2[i] = result;
 	}
 	printf("Code result\n");
 	for (int i = 0; i < tracker; i++)
@@ -1721,9 +1722,7 @@ void task5_2()
 	int a = 1;
 	printf("Please enter a number, to calculate primes.\n-> "); std::cin >> a; printf("You have entered %d. Primes are: \n-> ", a);
 	std::cout << SOE(a) << "\b ";
-	printf("\nEnter anything to exit the script.\n-> ");
-	std::cin.get() >> a;
-
+	
 	cin_fixer();
 	script_executed();
 }
@@ -1884,7 +1883,7 @@ void task5_5_25()
 {
 	script_start();
 
-	std::ofstream textFile("textfile.txt"); 
+	std::ofstream textFile("textfile.txt");
 	if (textFile.is_open()) {
 		// вводить сюда чё нить можн
 		textFile.close();
