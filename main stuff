@@ -30,6 +30,121 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // а это для цвет�
 int cConsole = 14; // это ЖЁЛТЫЙ цвет для консоли...
 int haxConsole = 10;
 
+
+// простите за то что ниже, листайте в строчку 147
+
+std::string frame2 =
+"          A\n"
+"         @Aa\n"
+"        @@Aaa\n"
+"       @@@Aaaa\n"
+"      @@@@Aaaaa\n"
+"     @@@@@Aaaaaa\n"
+"    @@@@@@Aaaaaaa\n"
+"   @@@@@@@Aaaaaaaa\n"
+"  @@@@@@@@Aaaaaaaaa\n"
+" @@@@@@@@@Aaaaaaaaaa\n"
+"@@@@@@@@@@Aaaaaaaaaaa\n"
+"   @@@@@@@Aaaaaaaa\n"
+"        @@Aaa\n"
+"          \"\n";
+std::string frame3 =
+"          A\n"
+"         @Aa\n"
+"        @@Aaa\n"
+"       @@Aaaaa\n"
+"      @@Aaaaaaa\n"
+"     @@Aaaaaaaaa\n"
+"    @@Aaaaaaaaaaa\n"
+"   @@Aaaaaaaaaaaaa\n"
+"  @@Aaaaaaaaaaaaaaa\n"
+" @@Aaaaaaaaaaaaaaaaa\n"
+"@@Aaaaaaaaaaaaaaaaaaa\n"
+" @Aaaaaaaaaaaaaa\n"
+"  \"\n";
+std::string frame4 =
+"          A\n"
+"         Aaa\n"
+"        Aaaaa\n"
+"       Aaaaaaa\n"
+"      Aaaaaaaaa\n"
+"     Aaaaaaaaaaa\n"
+"    Aaaaaaaaaaaaa\n"
+"   Aaaaaaaaaaaaaaa\n"
+"  Aaaaaaaaaaaaaaaaa\n"
+" Aaaaaaaaaaaaaaaaaaa\n"
+"Aaaaaaaaaaaaaaaaaaaaa\n"
+"\"                   \"\n";;
+std::string frame1 =
+"          A\n"
+"         @Aa\n"
+"        @@Aaa\n"
+"       @@@@Aaa\n"
+"      @@@@@@Aaa\n"
+"     @@@@@@@@Aaa\n"
+"    @@@@@@@@@@Aaa\n"
+"   @@@@@@@@@@@@Aaa\n"
+"  @@@@@@@@@@@@@@Aaa\n"
+" @@@@@@@@@@@@@@@@Aaa\n"
+"@@@@@@@@@@@@@@@@@@Aaa\n"
+"     @@@@@@@@@@@@@Aa\n"
+"                  \"\n";
+std::string frame5 =
+"          A\n"
+"         aA@\n"
+"        aaA@@\n"
+"       aaaaA@@\n"
+"      aaaaaaA@@\n"
+"     aaaaaaaaA@@\n"
+"    aaaaaaaaaaA@@\n"
+"   aaaaaaaaaaaaA@@\n"
+"  aaaaaaaaaaaaaaA@@\n"
+" aaaaaaaaaaaaaaaaA@@\n"
+"aaaaaaaaaaaaaaaaaaA@@\n"
+"     aaaaaaaaaaaaaA@\n"
+"                  \"\n";
+std::string frame6 =
+"          A\n"
+"         aA@\n"
+"        aaA@@\n"
+"       aaaA@@@\n"
+"      aaaaA@@@@\n"
+"     aaaaaA@@@@@\n"
+"    aaaaaaA@@@@@@\n"
+"   aaaaaaaA@@@@@@@\n"
+"  aaaaaaaaA@@@@@@@@\n"
+" aaaaaaaaaA@@@@@@@@@\n"
+"aaaaaaaaaaA@@@@@@@@@@\n"
+"   aaaaaaaA@@@@@@@\n"
+"        aaA@@\n"
+"          \"\n";
+std::string frame7 =
+"          A\n"
+"         aA@\n"
+"        aaA@@\n"
+"       aaA@@@@\n"
+"      aaA@@@@@@\n"
+"     aaA@@@@@@@@\n"
+"    aaA@@@@@@@@@@\n"
+"   aaA@@@@@@@@@@@@\n"
+"  aaA@@@@@@@@@@@@@@\n"
+" aaA@@@@@@@@@@@@@@@@\n"
+"aaA@@@@@@@@@@@@@@@@@@\n"
+" aA@@@@@@@@@@@@@\n"
+"  \"\n";
+std::string frame8 =
+"          A\n"
+"         A@@\n"
+"        A@@@@\n"
+"       A@@@@@@\n"
+"      A@@@@@@@@\n"
+"     A@@@@@@@@@@\n"
+"    A@@@@@@@@@@@@\n"
+"   A@@@@@@@@@@@@@@\n"
+"  A@@@@@@@@@@@@@@@@\n"
+" A@@@@@@@@@@@@@@@@@@\n"
+"A@@@@@@@@@@@@@@@@@@@@\n"
+"\"                   \"\n";
 void loading()
 {
 	int percent = 0, current = 0;
@@ -51,6 +166,17 @@ void loading()
 		system("CLS");
 	}
 }
+void pyramid()
+{
+	SetConsoleTextAttribute(hConsole, 14);
+	for (int i = 0; i < 2; i++)
+	{
+		std::cout << frame1; Sleep(40); system("cls"); std::cout << frame2; Sleep(40); system("cls"); std::cout << frame3; Sleep(40); system("cls");  std::cout << frame4; Sleep(40); system("cls");
+		std::cout << frame5; Sleep(40); system("cls"); std::cout << frame6; Sleep(40); system("cls"); std::cout << frame7; Sleep(40); system("cls"); std::cout << frame8; Sleep(40); system("cls");
+	}
+	std::cout << frame1; Sleep(40); system("cls");
+	std::cout << frame2; printf("\nWelcome...\n\n"); Sleep(1000); system("cls");
+}
 void limbo()
 {
 	// короче. в программе 4_1 есть ошибка при вводе слишком большого числа. я его не смог удалить НО смог убрать баг который уничтожает программу. Вместо бесконечного цикла я ввёл это предупреждение, которое длится очень много тиков... кто шарит, подскажите как нормально избавиться от прикола в 4_1?( 
@@ -58,7 +184,7 @@ void limbo()
 	system("CLS");
 	std::cout << ">:/ If you see this, that means the program is going to be shut down soon.";
 	Sleep(1000);
-	std::cout << "\n>:/ If you are wondering what happened: the script has activated an alert system, that will put you in this LIMBO state.";
+	std::cout << "\n>:/ If you are wondering what happened: the script has activated an alert system, that will put you in this state.";
 	Sleep(1000);
 	std::cout << "\n>:/ The script is going to be terminated now. Do not do that again.";
 	Sleep(10000);
@@ -1932,13 +2058,14 @@ void task5_5_50()
 // driver code
 int main()
 {
-	loading();
+	pyramid();
 	std::string key;
 	std::string key_selector;
-	std::cout << ">:/ Enter E into homework selection to shut the program off.\n" << ">:/ Enter the Task number you wanna check out...\n\n";
 
 	while (true)
 	{
+		SetConsoleTextAttribute(hConsole, cConsole); std::cout << frame2 << "\n"; 
+		std::cout << ">:/ Enter E into homework selection to shut the program off.\n" << ">:/ Enter the Task number you wanna check out...\n";
 		std::cout << ">:/ Entering homework number: "; std::getline(std::cin, key);
 		std::cout << ">:/ Entering task number: "; std::getline(std::cin, key_selector);
 		switch (key[0])
