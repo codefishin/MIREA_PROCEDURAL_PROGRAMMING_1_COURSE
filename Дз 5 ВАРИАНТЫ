@@ -1,3 +1,148 @@
 // ДЛЯ ВСЕХ КТО НАДЕЯТСЯ НАЙТИ СВОЙ - НЕ ПЫТАЙТЕСЬ, ТУТ ТОЛЬКО ОПЛАЧЕННЫЕ.
 // ну или же вы из другой группы тогда ищите :>
 
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <cmath>
+#include <fstream>
+#include <Windows.h>
+// gosha: (3) 17 (4) 17 (5) 17
+// done: 24 53 58
+// ps. 4_53 = 5_58
+
+using namespace std;
+
+string filecontent = "This document has text";
+void createfile(string filename) // подпрограмма, которая забирает переменную filename. её надо вносить при вызове
+{
+	setlocale(LC_ALL, "russian"); // установка русского языка
+	ofstream textFile(filename + ".txt"); // файл создаёт
+	ifstream file; // читает файл
+	filename.append(".txt"); // добавляет к вводу пользователя .txt
+	file.open(filename); // открывает файл filename.txt, где filename введён пользователем
+	if (!file.is_open()) // если файл не может быть открыт
+	{
+		printf("Ошибка"); // вывести ошибку
+		return; // завершить подпрограмму
+	}
+	else { // иначе
+		textFile << filecontent; // в файл вносится данный текст :) 
+		textFile.close(); // файл закрывается
+	}
+	return; // вернуть значение
+}
+string filevstroku(string filename) // подпрограмма, которая забирает переменную filename. её надо вносить при вызове
+{
+	setlocale(LC_ALL, "russian"); // установка русского языка
+	ifstream file; // читается файл
+	filename.append(".txt"); // к введённому filename добавляется .txt
+	file.open(filename); // открыть файл с названием filename.txt, где filename ввёл пользователь
+	string str; // строчная переменная
+	if (file) { // если файл существует
+		ostringstream strings; // переменная в виде out string stream
+		strings << file.rdbuf(); // читает данные readbuffer
+		str = strings.str(); // результат
+	}
+	return str; // вернуть результат программы
+}
+int letter_d_buf = 0;
+string deleteletter(string filename) // подпрограмма, которая забирает переменную filename. её надо вносить при вызове
+{
+	setlocale(LC_ALL, "russian"); // установить русский язык
+	string str = filevstroku(filename); // строчная переменная, которая равна вызову функции выше
+	transform(str.begin(), str.end(), str.begin(), ::toupper); // вся строка переводится в заглавный реегстр. допустим текст станет ТЕКСТ
+	for (int i = str.length(); i >= 0; i--) // цикл. число i равно длине строки, i больше 0 и после выполнения вычитается 1 от i
+	{ // «A», «E», «I», «O», «U», «Y».
+		if (str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'Y')
+		{
+			// если текущий символ строки равен гласной
+			str[i] = ' '; // текущий символ переписывается в виртуальный 0. его не видно
+			letter_d_buf++;
+		}
+	}
+	return str; // вернуть строку
+}
+void zadanie3_24() // подпрограмма самой домашки
+{
+	// ответ должен быть Д 1 или С 1
+	setlocale(LC_ALL, "russian"); // установить русский язык
+	string filename, buffer; // название файла который задаёт пользователь
+	int counter = 0;
+	printf("Введите название файла на английском.\nФайл с которым вы работаете имеет в себе: %s\n", filecontent.c_str()); // вывод текста
+	cin >> filename; // ввод названия файла
+	createfile(filename); // создать файл
+	string soglbukvi= deleteletter(filename);// удаляет гласные
+	char *arrsoglbukvi = new char[soglbukvi.size()+2]; // создание динамичного массива. +2 указано для \0, чтобы не повредить память
+	for (int i = 0; i < soglbukvi.size()+1; i++) // цикл записи строки без гласных букв в массив
+	{ 
+		arrsoglbukvi[i] = soglbukvi[i];
+		arrsoglbukvi[i+1] = '\0';
+	}
+	int i = 0, alphabet[26] = { 0 }, j; // счёт по алфавиту
+	while (arrsoglbukvi[i] != '\0') {
+		if (arrsoglbukvi[i] >= 'A' && arrsoglbukvi[i] <= 'Z') {
+			j = arrsoglbukvi[i] - 'A';
+			++alphabet[j];
+		}
+		++i;
+	}
+	/*for (i = 0; i < 26; i++) // вывод всех букв, не нужно
+		cout << char(i + 'a') << " : " << alphabet[i] << endl;*/
+	// debug, удалить /**/ чтобы заработало
+	int min = 0;
+	for (int i = 0; i < 26; i++) // проверка на минимум
+	{
+		if (alphabet[i] > alphabet[i + 1] && alphabet[i]!=0)
+		{
+			min = alphabet[i];
+		}
+	}
+	cout << "\nRESULT: " << min;
+	delete[] arrsoglbukvi; // удаление утечки
+}
+void zadanie3_17() {
+	// сортировка слов в файле по алфавиту
+}
+void zadanie4_17()
+{
+	// с уравнением
+}
+void zadanie4_53()
+{
+	setlocale(LC_ALL, "russian"); // установить русский язык
+	float usernum{}, avg{}, summ{}; // переменные
+	cout << "Обработка последовательности дробных чисел. После ввода каждого числа нажимайте <Enter> ";
+	for (int i = 1; i <= 5; i++) // цикл, лимитирующий ввод до 5
+	{
+		printf("-> ");
+		cin >> usernum; // ввод числа
+		summ += usernum; 
+		avg = (summ / i) + 0.0001; // среднее арифметическое
+		printf("Введено чисел: %i Сумма: %.2f Сред.арифметическое: %.2f\n", i, summ, avg); // вывод результата
+		// как работает printf? выводит текст, но можно вставить переменные с помощью %.
+		//  %i = вставит int. %f = float ... .2f = float до точности в сотую. поле "" надо писать какие переменные вставить
+	}
+}
+void zadanie5_17()
+{
+	// создать файл с вещественными N числами и посчитать их дробь и занести в другой файл
+}
+void zadanie5_58()
+{
+	setlocale(LC_ALL, "russian"); // установить русский язык
+	float usernum{}, avg{}, summ{}; // переменные
+	cout << "Обработка последовательности дробных чисел. После ввода каждого числа нажимайте <Enter> ";
+	for (int i = 1; i <= 5; i++) // цикл, лимитирующий ввод до 5
+	{
+		printf("-> ");
+		cin >> usernum; // ввод числа
+		summ += usernum;
+		avg = (summ / i) + 0.0001; // среднее арифметическое
+		printf("Введено чисел: %i Сумма: %.2f Сред.арифметическое: %.2f\n", i, summ, avg); // вывод результата
+		// как работает printf? выводит текст, но можно вставить переменные с помощью %.
+		//  %i = вставит int. %f = float ... .2f = float до точности в сотую. поле "" надо писать какие переменные вставить
+	}
+}
+
