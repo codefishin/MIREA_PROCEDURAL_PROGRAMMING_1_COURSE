@@ -8,9 +8,6 @@
 #include <cmath>
 #include <fstream>
 #include <Windows.h>
-// gosha: (3) 17 (4) 17 (5) 17
-// done: 24 53 58
-// ps. 4_53 = 5_58
 
 using namespace std;
 
