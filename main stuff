@@ -1,7 +1,7 @@
 /*
 * todo: 4_6, bugs
 * 4_9 fixed? не уверен
-* todo: 5_5_25 solve
+* 
 * todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0 ... 5_4_25 сделать так чтобы число не входящее в 5 ричную не вводилось в массив и не прекращало цикл
 *
 * число для теста 4_6 MCCCXXXVII, 4_9 9ac0,
@@ -171,8 +171,8 @@ void pyramid()
 	SetConsoleTextAttribute(hConsole, 14);
 	for (int i = 0; i < 2; i++)
 	{
-		std::cout << frame1; Sleep(40); system("cls"); std::cout << frame2; Sleep(40); system("cls"); std::cout << frame3; Sleep(40); system("cls");  std::cout << frame4; Sleep(40); system("cls");
-		std::cout << frame5; Sleep(40); system("cls"); std::cout << frame6; Sleep(40); system("cls"); std::cout << frame7; Sleep(40); system("cls"); std::cout << frame8; Sleep(40); system("cls");
+		std::cout << frame1; Sleep(75); system("cls"); std::cout << frame2; Sleep(75); system("cls"); std::cout << frame3; Sleep(75); system("cls");  std::cout << frame4; Sleep(75); system("cls");
+		std::cout << frame5; Sleep(75); system("cls"); std::cout << frame6; Sleep(75); system("cls"); std::cout << frame7; Sleep(75); system("cls"); std::cout << frame8; Sleep(75); system("cls");
 	}
 	std::cout << frame1; Sleep(40); system("cls");
 	std::cout << frame2; printf("\nWelcome...\n\n"); Sleep(1000); system("cls");
@@ -291,6 +291,10 @@ void createfile(std::string str)
 		textFile.close();
 	}
 }
+void sortString(std::string& str)
+{
+	sort(str.begin(), str.end());
+}
 std::string filetostring()
 {
 	std::ifstream f("textfile.txt"); // input stream я хз чё тут объяснять
@@ -355,7 +359,7 @@ std::string findUnderLineInFile(std::string str)
 	std::string s = filetostring(); // переписывается из функции выше. почему я разделил? хз
 	size_t pos = s.find(str); // пришлось size_t юзать. типо может хранить в себе теоретически максимальное значение
 	if (pos != std::string::npos) // если наше size_t не равен концу файла (?)
-		std::cout << "Found at pos:  " << pos << "\n";
+		std::cout << "Found at pos:  " << pos+1 << "\n";
 	else
 		std::cout << "Not found\n";
 	return s;
@@ -2009,12 +2013,48 @@ void task5_5_25()
 {
 	script_start();
 
-	std::ofstream textFile("textfile.txt");
+	std::string input = "hello ABCDEFG GHGSq ";
+	std::ofstream textFile("task5.txt");
 	if (textFile.is_open()) {
-		// вводить сюда чё нить можн
+		textFile << input;
 		textFile.close();
 	}
 
+	std::ifstream f("task5.txt"); // input stream я хз чё тут объяснять
+	std::string str; 
+	if (f) { // если ФАЙЛ !!
+		std::ostringstream ss; // типо переменная в виде out string stream
+		ss << f.rdbuf(); // читает данные типо readbuffer
+		str = ss.str(); // результат
+	}
+	
+	std::string wordarray[10],buffer,wordarraybuffer[10];
+	int tracker = 0;
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (str[i] != ' ')
+		{
+			buffer += str[i];
+		}
+		else if (str[i] == ' ')
+		{
+			wordarray[tracker] = buffer;
+			wordarraybuffer[tracker] = buffer;
+			buffer = "";
+			tracker++;
+		}
+	}
+	int result = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		sortString(wordarray[i]);
+		// std::cout << wordarraybuffer[i] << " " << wordarray[i] << std::endl; // <debug>
+		if (wordarray[i] == wordarraybuffer[i])
+		{
+			result++;
+		}
+	}
+	printf("\nFound already sorted lines: %i\n", result);
 	cin_fixer();
 	script_executed();
 }
@@ -2200,7 +2240,7 @@ int main()
 				break;
 			case '3':
 				std::string choose;
-				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_35;\n 5: 5_5_25; todo\n 6: 5_5_50 can be improved;\n");
+				printf("Please select task...\n 1: 5_3_16;\n 2: 5_3_25;\n 3: 5_4_25;\n 4: 5_4_35;\n 5: 5_5_25;\n 6: 5_5_50;\n");
 				std::cout << "-> ";  std::cin >> choose;
 				switch (choose[0])
 				{
