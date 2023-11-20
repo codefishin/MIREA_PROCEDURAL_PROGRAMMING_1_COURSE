@@ -1,6 +1,6 @@
 /*
-* todo: 4_6, bugs
-* 4_9 fixed? не уверен
+* 
+* 4_6 4_9 fixed? не уверен
 * 
 * todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0 ... 5_4_25 сделать так чтобы число не входящее в 5 ричную не вводилось в массив и не прекращало цикл
 *
@@ -1536,65 +1536,37 @@ void task4_5()
 // ура 5 задание завершено шок...
 void task4_6()
 {
-	/*Rule 1: When a smaller symbol is after a greater symbol, it’s added.
-
-For example,
-
-XI = 10 + 1 = 11
-
-Rule 2: If a symbol comes after itself, it’s added.
-
-For example,
-
-XX = 10 + 10 = 20
-
-CCLX = 100 + 100 + 50 + 10 = 260
-
-Rule 3: When a smaller symbol appears before a greater symbol, it is subtracted.
-
-For example,
-
-IX = 10 – 1 = 9
-
-XL= 50 – 10 = 40
-
-CM = 1000 – 100 = 900
-
-Rule 4: The same symbol cannot be used more than three times in a row.
-
-For example,
-
-XXX = 10 + 10 + 10 = 30, but 40 is not XXXX. 40 is XL.
-
-CCC = 100 + 100 + 100 = 300, but 400 is not CCCC. 400 is CD.
- ...
-Rule 5: The letters V, L, and D are not repeated.
-Rule 6: Only I, X, and C can be used as subtractive numerals.*/
-	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
+	std::cout << "\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
-	int buffer = 0;
-	int next = 0, alert5 = 0, alert52 = 0, alert53 = 0;
+	int buffer = 0, warning = 0;
+	int next = 0,warning2=0,warning3=0;
 	bool alert = false;
-	// I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
 	std::string number;
 	std::cout << "-> "; std::getline(std::cin, number);
+	for (int i = 0; i < number.length(); i++)
+	{
+		if (number[i] == 'V' || number[i] == 'v')
+		{
+			warning++;
+		}
+		else if (number[i] == 'L' || number[i] == 'l') {
+			warning2++;
+		}
+		else if (number[i] == 'D' || number[i] == 'd') {
+			warning3++;
+		}
+	}
+	if (warning > 1 || warning2 > 1 || warning3 > 1) // V L D rule
+	{
+		std::cout << "Number does not exist... (MALFUNCTION 4)\n";
+		script_executed();
+		return;
+	}
 	for (int j = 0; j < number.length(); j++)
 	{
-		if (number[j] == 'V' || number[j] == 'v')
-		{
-			alert5 += 1; // простит меня бог за такой прикол. ПЕРЕПИСАТЬ
-		}
-		if (number[j] == 'L' || number[j] == 'l')
-		{
-			alert52 += 1; // простит меня бог за такой прикол. ПЕРЕПИСАТЬ
-		}
-		if (number[j] == 'D' || number[j] == 'd')
-		{
-			alert53 += 1; // простит меня бог за такой прикол. ПЕРЕПИСАТЬ
-		}
 		if (j + 3 < number.length())
 		{
-			if (number[j] == number[j + 1] && number[j] == number[j + 2] && number[j] == number[j + 3])
+			if (number[j] == number[j + 1] && number[j] == number[j + 2] && number[j] == number[j + 3]) // больше 3 чисел одинаковых (типо XXXX)
 			{
 				std::cout << "Number does not exist... (MALFUNCTION 1)\n";
 				script_executed();
@@ -1603,45 +1575,35 @@ Rule 6: Only I, X, and C can be used as subtractive numerals.*/
 		}
 		for (int k = j + 1; k < number.length(); k++)
 		{
-			if (number[k] == number[j])
+			if (number[k] == number[j]) // если след число = текущему
 			{
 				alert = true;
 			}
-			if (number_conv(number[j]) == number_conv(number[j + 2]) && alert == true && number_conv(number[j]) < number_conv(number[k]))
+			if (number[k] == 'V' || number[k] == 'D' || number[k] == 'L')
 			{
-				std::cout << "Number does not exist... (MALFUNCTION 3)\n";
-				script_executed();
-				return;
+				if (number_conv(number[j]) < number_conv(number[k]))
+				{
+					std::cout << "Number does not exist... (MALFUNCTION 3)\n";
+					script_executed();
+					return;
+				}
 			}
-			if (alert == true && number_conv(number[j]) > number_conv(number[k]))
+			if (alert == true && number_conv(number[k]) > number_conv(number[j])) // против ixx типо
 			{
 				std::cout << "Number does not exist... (MALFUNCTION 2)\n";
 				script_executed();
 				return;
-			} // не даёт mcccxxxvii вывестить
-			if (number[j] > number[k] && number[j] != number[j + 2])
-			{
-				std::cout << "Number does not exist... (MALFUNCTION 4)\n";
-				script_executed();
-				return;
-			} // не даёт mcccxxxvii вывестить
-
+			}
 		}
 	}
-	if (alert5 <= 1) // доделать
+	for (int i = 0; i < number.length(); i++)
 	{
-		for (int i = 0; i < number.length(); i++)
-		{
-			buffer = number_conv(number[i]);
-			next = i + 1 < number.length() ? number_conv(number[i + 1]) : 0; // ? == if (then), : == else
-			number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
-		}
-		std::cout << "Result: " << number_converted << "\n";
+		buffer = number_conv(number[i]);
+		next = i + 1 < number.length() ? number_conv(number[i + 1]) : 0; // ? == if (then), : == else 
+		number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
 	}
-	else
-	{
-		printf("MALFUNCTION 5");
-	}
+	std::cout << "Result: " << number_converted << "\n";
+	script_executed();
 }
 void task4_7()
 {
