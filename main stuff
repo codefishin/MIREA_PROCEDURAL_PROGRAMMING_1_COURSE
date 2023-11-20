@@ -1,5 +1,4 @@
 /*
-* 
 * 4_6 4_9 fixed? не уверен
 * 
 * todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0 ... 5_4_25 сделать так чтобы число не входящее в 5 ричную не вводилось в массив и не прекращало цикл
@@ -1536,6 +1535,7 @@ void task4_5()
 // ура 5 задание завершено шок...
 void task4_6()
 {
+	script_start();
 	std::cout << "\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
 	int buffer = 0, warning = 0;
@@ -1555,6 +1555,12 @@ void task4_6()
 		else if (number[i] == 'D' || number[i] == 'd') {
 			warning3++;
 		}
+	}
+	if (number[0] == 'V' && number.length() > 2 && number_conv(number[1]) < 2 && number_conv(number[2]) > 2)
+	{
+		std::cout << "Number does not exist... (MALFUNCTION 5)\n";
+		script_executed();
+		return;
 	}
 	if (warning > 1 || warning2 > 1 || warning3 > 1) // V L D rule
 	{
