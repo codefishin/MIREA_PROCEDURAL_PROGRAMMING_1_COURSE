@@ -250,7 +250,58 @@ void zadanie3_16()
 	findLineInFile(str_word); // находит ток слова а потом обсирается когда нужно искать линию
 }
 void zadanie3_17() {
-	// Сортировка слов в текстовом файле по алфавиту.
+	// сортировка слов в файле по алфавиту
+	string words = "this is a line of text ";
+	ofstream textFile("wordsort.txt"); // файл создаёт
+	ifstream file("wordsort.txt");
+	if (!file.is_open()) // если файл не может быть открыт
+	{
+		printf("Ошибка"); // вывести ошибку
+		return; // завершить подпрограмму
+	}
+	else { // иначе
+		textFile << words; // в файл вносится данный текст :) 
+		textFile.close(); // файл закрывается
+	}
+	string str; // строчная переменная
+
+	if (file) { // если файл существует
+		ostringstream strings; // переменная в виде out string stream
+		strings << file.rdbuf(); // читает данные readbuffer
+		str = strings.str(); // результат
+	}
+	string words_from_file[6], buffer = "";
+	int tracker = 0;
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (str[i] != ' ')
+		{
+			buffer += str[i];
+		}
+		else if (str[i] == ' ')
+		{
+			words_from_file[tracker] = buffer;
+			buffer = "";
+			tracker++;
+		}
+	}
+	string temp;
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 1; j < 6 - i; j++)
+		{
+			if (words_from_file[j - 1] > words_from_file[j])
+			{
+				temp = words_from_file[j - 1];
+				words_from_file[j - 1] = words_from_file[j];
+				words_from_file[j] = temp;
+			}
+		}
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		cout << words_from_file[i] << endl;
+	}
 }
 void zadanie3_18() {
 	//Поиск вхождения подстроки в строку текстового файла
