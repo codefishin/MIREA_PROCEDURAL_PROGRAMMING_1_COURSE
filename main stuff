@@ -1,10 +1,4 @@
 /*
-* 4_6 4_9 fixed? не уверен
-* 
-* todo (not needed): 5_5_50 сделать бесконечно массивным, до ввода 0 ... 5_4_25 сделать так чтобы число не входящее в 5 ричную не вводилось в массив и не прекращало цикл
-*
-* число для теста 4_6 MCCCXXXVII, 4_9 9ac0,
-*
 * нужен _CRT_SECURE_NO_WARNINGS
 */
 
@@ -170,8 +164,8 @@ void pyramid()
 	SetConsoleTextAttribute(hConsole, 14);
 	for (int i = 0; i < 2; i++)
 	{
-		std::cout << frame1; Sleep(75); system("cls"); std::cout << frame2; Sleep(75); system("cls"); std::cout << frame3; Sleep(75); system("cls");  std::cout << frame4; Sleep(75); system("cls");
-		std::cout << frame5; Sleep(75); system("cls"); std::cout << frame6; Sleep(75); system("cls"); std::cout << frame7; Sleep(75); system("cls"); std::cout << frame8; Sleep(75); system("cls");
+		std::cout << "\n" << frame1; Sleep(75); system("cls"); std::cout << "\n\n" << frame2; Sleep(75); system("cls"); std::cout << "\n" << frame3; Sleep(75); system("cls");  std::cout << frame4; Sleep(75); system("cls");
+		std::cout << "\n" << frame5; Sleep(75); system("cls"); std::cout << "\n\n" << frame6; Sleep(75); system("cls"); std::cout << "\n" << frame7; Sleep(75); system("cls"); std::cout << frame8; Sleep(75); system("cls");
 	}
 	std::cout << frame1; Sleep(40); system("cls");
 	std::cout << frame2; printf("\nWelcome...\n\n"); Sleep(1000); system("cls");
@@ -607,6 +601,31 @@ int int5to2()
 	return 0;
 }
 
+void menu() {
+	system("cls");
+	printf("You have chosen menu. Every task is written here.\nTask number is assigned by I-J, where I = homework number and J = task number\n");
+	printf("\n1-1: Print student name.\n1-2: User enters 2 numbers. Program needs to calculate summary, subtraction, multiplication and if possible division \n1-3: User enters b and c. Calculate the equation bx + c = 0\n1-4: User enters a b and c. Calculate the equation ax^2 + bx + c = 0\n1-5: Program asks user some questions. User enters 'yes' or 'no'. Determine if user has light in their room.\n");
+	printf("\n2-1: User enters a number. Calculate cone value.\n2-2: User enters a number. Calculate a complex number with ln and roots.\n2-3: User enters a number. Calculate the following function - z = ln(b-y) root(b-x)\n2-4: User enters a number. Print 10 numbers starting from user number.\n2-5: User enters a number. Print out values for equation from -4 to 4 with a step of 0.5\n");
+	printf("\n3-1: User enters some numbers. Calculate how much he took from bank\n3-2: User enters some numbers. Calculate debt percent using an algorithm.\n3-3: Copy file data from disk.\n3-4: File filtering.\n3-5: Letter sort.\n");
+	printf("\n4-1: User enters 10 numbers. Copy them into a file and print out summary of all numbers.\n4-2: User enters a number. Print out 1 if number is over 0, 0 if number is equal to 0 and -1 if number is less than 0.\n4-3: User enters a shape and number. Calculate shape value.\n4-4: Print 1912 US flag.\n4-5: Print out a sin(x) function.\n4-6: Rome number calculator.\n4-7: Random number generator.\n4-8: After collecting data about sellers, calculate other data.\n4-9: Binary to HEX calculator. User can choose any system of numbers from 2 to 16.\n");
+	printf("\n5-1: Euclid algorithm.\n5-2: Sieve of Erethosphetes.\n5-3-1: Search for a specific combination of words in a text file. (Var16)\n5-3-2: Search for a substring in a string based on a given condition. (Var25)\n5-3-3: Convert an array of numbers in 5th SON to Binary. (Var25)\n5-3-4: String is given of S length with N characters. Calculate maximum amount of spacebar characters. (Var35)\n5-3-5: Create a file and calculate how many strings of characters go from least to most. (Var25)\n5-3-6: User enters matrix numbers. Calculate summary of columns.(Var50)\n");
+	printf("\n6-1: A[1] < A[i] < A[10] (Var33)\n");
+	script_executed();
+}
+void spinning() {
+	system("Cls");
+	while (true)
+	{
+		std::cout << frame1; Sleep(100); system("Cls");
+		std::cout << frame2; Sleep(100); system("Cls");
+		std::cout << frame3; Sleep(100); system("Cls");
+		std::cout << frame4; Sleep(100); system("Cls");
+		std::cout << frame5; Sleep(100); system("Cls");
+		std::cout << frame6; Sleep(100); system("Cls");
+		std::cout << frame7; Sleep(100); system("Cls");
+		std::cout << frame8; Sleep(100); system("Cls");
+	}
+}
 // дз 1
 void task1_1()
 {
@@ -1568,6 +1587,12 @@ void task4_6()
 		script_executed();
 		return;
 	}
+	if (number_conv(number[0]) < number_conv(number[1]) && number_conv(number[1]) <= number_conv(number[2]))
+	{
+		std::cout << "Number does not exist... (MALFUNCTION 6)\n";
+		script_executed();
+		return;
+	}
 	for (int j = 0; j < number.length(); j++)
 	{
 		if (j + 3 < number.length())
@@ -1584,21 +1609,6 @@ void task4_6()
 			if (number[k] == number[j]) // если след число = текущему
 			{
 				alert = true;
-			}
-			if (number[k] == 'V' || number[k] == 'D' || number[k] == 'L')
-			{
-				if (number_conv(number[j]) < number_conv(number[k]))
-				{
-					std::cout << "Number does not exist... (MALFUNCTION 3)\n";
-					script_executed();
-					return;
-				}
-			}
-			if (alert == true && number_conv(number[k]) > number_conv(number[j])) // против ixx типо
-			{
-				std::cout << "Number does not exist... (MALFUNCTION 2)\n";
-				script_executed();
-				return;
 			}
 		}
 	}
@@ -1709,7 +1719,7 @@ void task4_8()
 		}
 		// конец задания ток вывести осталось
 	}
-
+	
 	std::string userinput;
 	std::cout << "\nPlease enter 0 to print C.\n1: Most/Least money earned.\n2:Most/Least CMM cash.\n3: Overall money earned.\n4:Overall CMM.\n5: Overall cashflow.\n";
 	while (true)
@@ -2063,6 +2073,170 @@ void task5_5_50()
 	script_executed();
 }
 
+// ДЗ закончено
+// начинается База Заданий
+// BZ2 по рофлу сделано
+
+void BZ2() {
+	script_start();
+	float n = 0;
+	float powerof2 = 2;
+	float tempPO2 = 0;
+	std::string c1, c2, c3, c4;
+	printf("Please enter a number\n-> ");
+	std::cin >> n;
+	int n2 = abs(n);
+	if (n < 0)
+	{
+		printf("\nYour number is negative integer\n");
+		c1 = "Yes";
+	}
+	else if (n == 0)
+	{
+		printf("\nYou have entered 0, which is not positive nor negative\n");
+		c1 = "No";
+	}
+	else
+	{
+		printf("\nYour number is a positive integer\n");
+		c1 = "No";
+	}
+	if (n2 % 2 != 0)
+	{
+		printf("\nYour number is an odd integer\n");
+		c2 = "Yes";
+	}
+	else
+	{
+		printf("\nYour number is not an odd integer\n");
+		c2 = "No";
+	}
+	if (n > -3)
+	{
+		printf("\nYour number is over -3\n");
+		c3 = "Yes";
+	}
+	else
+	{
+		printf("\nYour number is less than -3\n");
+		c3 = "No";
+	}
+	int i = 0;
+	if (n > 0)
+	{
+		while (true)
+		{
+			tempPO2 = pow(powerof2, i);
+			if (n == tempPO2)
+			{
+				printf("\nYour number is a power of 2\n");
+				c4 = "Yes";
+				break;
+			}
+			else if (n > 1)
+			{
+				i += 1;
+				if (n < tempPO2)
+				{
+					printf("\nYour number is not a power of 2\n");
+					c4 = "No";
+					break;
+				}
+			}
+			else if (n < 1)
+			{
+				i -= 1;
+				if (n > tempPO2)
+				{
+					printf("\nYour number is not a power of 2\n");
+					c4 = "No";
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		printf("\nYour number is not a power of 2\n");
+		c4 = "No";
+	}
+	printf("\nCritirea met: %s, %s, %s, %s\n",c1.c_str(), c2.c_str(), c3.c_str(), c4.c_str());
+	cin_fixer();
+	script_executed();
+}
+void BZ33() {
+	script_start();
+	float array[10]{ 5, 1, 0.5, 2, 3, 7, 5, 3.5, 8, 9 }; // вывести должно 7, берёт числа от 5 до 9
+	float array2[10]{ 10, 0, 2, 4, 5, 1, 0.2, 4, 5, 20 }; // вевысти должно 0, т.к. не удовлетворяет
+	float userarray[10]{}, input = 0;
+	printf("The program returns first found value of:\nA[1] < A[current_number] < A[10]\nIf it returns 0, then no such number was found.\n\nPlease enter 10 numbers.\n");
+
+	for (int i = 0; i < 10; i++)
+	{
+		std::cin >> input;
+		userarray[i] = input;
+	}
+	int zerocheck = 0;
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (userarray[0] < userarray[i] && userarray[i] < userarray[9])
+		{
+			system("cls");
+			std::cout << "Number " << userarray[i] << " was found!\n";
+			break;
+		}
+		else {
+			zerocheck++;
+		}
+	}
+	if (zerocheck == 10)
+	{
+		system("cls");
+		std::cout << "0";
+	}
+	cin_fixer();
+	script_executed();
+}
+void BZ43()
+{
+	script_start();
+	int input = 0;
+	int array[1000]{};
+	int tr = 0;
+	int buffer = 0, newbuffer = 0;
+	for (int i = 0; i < 1000; i++)
+	{
+		std::cin >> input;
+		if (input == 0)
+		{
+			break;
+		}
+		array[i] = input;
+		tr++;
+	}
+	int* numarray = new int[tr];
+	for (int i = 0; i < tr; i++)
+	{
+		numarray[i] = array[i];
+	}
+	int trd = tr / 2;
+	for (int i = 1; i < trd; i++)
+	{
+		std::swap(numarray[trd-i], numarray[trd + i]);
+		//std::cout << newbuffer << " " << buffer << "\n";
+		//numarray[i-1] = newbuffer;
+		//numarray[tr - i] = buffer;
+	}
+	for (int i = 0; i < tr; i++)
+	{
+		std::cout << numarray[i - 1] << " " << numarray[tr - i] << "\n";
+	}
+
+	delete[] numarray;
+	cin_fixer();
+	script_executed();
+}
 // driver code
 int main()
 {
@@ -2073,11 +2247,19 @@ int main()
 	while (true)
 	{
 		SetConsoleTextAttribute(hConsole, cConsole); std::cout << frame2 << "\n"; 
-		std::cout << ">:/ Enter E into homework selection to shut the program off.\n" << ">:/ Enter the Task number you wanna check out...\n";
+		std::cout << ">:/ Enter E into homework selection to shut the program off.\n>:/ If you want to see task menu, enter 'menu'.\n\n" << ">:/ Enter the Task number you wanna check out...\n";
 		std::cout << ">:/ Entering homework number: "; std::getline(std::cin, key);
+		if (key == "menu")
+		{
+			key = "m";
+		}
 		std::cout << ">:/ Entering task number: "; std::getline(std::cin, key_selector);
 		switch (key[0])
 		{
+		case 'm':
+		case 'M':
+			menu();
+			break;
 		case 'e':
 		case 'E':
 			return 0;
@@ -2235,9 +2417,18 @@ int main()
 			}
 			break;
 		case '6':
-			task5_3_15();
-			task5_4_19();
-			task5_4_28();
+			switch (key_selector[0])
+			{
+			case '1':
+				BZ33();
+				break;
+			case '2':
+				BZ43();
+				break;
+			}
+			break;
+		case '7':
+			spinning();
 			break;
 		default:
 			system("CLS");
@@ -2246,3 +2437,10 @@ int main()
 		}
 	}
 }
+/*
+* 
+* База заданий по одному заданию из 5 разделов, начиная с одномерных массивов (32 номер). пропустить рекурсии
+* 
+* Задача с шариками
+* 
+*/
