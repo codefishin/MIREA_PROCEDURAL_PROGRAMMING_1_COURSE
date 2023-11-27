@@ -612,21 +612,9 @@ void menu() {
 	printf("\n5-1: Euclid algorithm.\n5-2: Sieve of Erethosphetes.\n5-3-1: Search for a specific combination of words in a text file. (Var16)\n5-3-2: Search for a substring in a string based on a given condition. (Var25)\n5-3-3: Convert an array of numbers in 5th SON to Binary. (Var25)\n5-3-4: String is given of S length with N characters. Calculate maximum amount of spacebar characters. (Var35)\n5-3-5: Create a file and calculate how many strings of characters go from least to most. (Var25)\n5-3-6: User enters matrix numbers. Calculate summary of columns.(Var50)\n\n\n");
 	std::cout << "                                            Chapter II\n\n\n";
 	printf("6-1: A[1] < A[i] < A[10] (Var33)\n6-2: Invert array (Var43)\n6-3: Rotate M matrix 270 degrees (Var62)\n6-4: User enters numbers. Program takes max from given rules and calculates an equation (Var69)\n6-5: Print every correct parenthesis equation with length of 10 (Var87)\n");
+	std::cout << "                                            Chapter III\n\n\n";
+	printf("7-any_char: b a l l s\n");
 	script_executed();
-}
-void spinning() {
-	system("Cls");
-	while (true)
-	{
-		std::cout << frame1; Sleep(100); system("Cls");
-		std::cout << frame2; Sleep(100); system("Cls");
-		std::cout << frame3; Sleep(100); system("Cls");
-		std::cout << frame4; Sleep(100); system("Cls");
-		std::cout << frame5; Sleep(100); system("Cls");
-		std::cout << frame6; Sleep(100); system("Cls");
-		std::cout << frame7; Sleep(100); system("Cls");
-		std::cout << frame8; Sleep(100); system("Cls");
-	}
 }
 // дз 1
 void task1_1()
@@ -2324,50 +2312,114 @@ void BZ87() {
 	// проверка 1. является ли первое число 1
 	// проверка 2. является ли последнее число 0
 	// если да, вывести число и идти дальше по перебору
+
+	// должно быть так, что идёт 1111000 но не 1110000
 	script_start();
-	bool* array = new bool[10];
-	bool printnum = false;
-	int check = 0;
-	for (int j = 0; j < 1024; j++)
+	bool* array = new bool[10]; // массив с true/false
+	bool printnum = false; // вывод числа
+	int hello = 0, lastresort = 0, total = 0;
+	for (int j = 0; j < 1024; j++) // 2^10 = 1024
 	{
-		arraywith1and0(array, 10);
-		for (int i = 0; i < 10; i++)
+		arraywith1and0(array, 10); // функция которая создаёт массив из 10 значений true/false, то есть бинарное
+		for (int j = 0; j < 10; j++)
 		{
-			if (array[i] == 1)
+			if (array[j] == true) // если скобка открылась
 			{
-				check++;
+				hello++; // проверка 1 добавляется
+				if (array[0] != 0 && array[9] != 1 && lastresort >= 0) // тут более комплексное, но вкратце это проверка на 1110000 (чтоб такого не было)
+				{
+					lastresort++;
+				}
+			}
+			else if (array[0] != 0 && array[9] != 1 && array[j] == false) // если стоит 0 то отнимает от 2 проверок. почему для lr нету спец. проверки, это потому что в выводе нас волнует только если оно равно 0. если оно меньше 0 то не выводим число
+			{
+				hello--;
+				lastresort--;
 			}
 		}
-		for (int i = 0; i < 10; i++)
+
+		for (int i = 0; i < 10; i++) // вывод
 		{
-			if (array[0] != 0 && array[9] != 1 && check == 5)
+			if (array[0] != 0 && array[9] != 1 && hello == 0 && lastresort == 0) // если всё сработало
 			{
-				printnum = true;
-				std::cout << (array[i] ? "(" : ")");
+				printnum = true; //это рил  для красоты
+				std::cout << (array[i] ? "(" : ")"); // вывод скобок, т.к. array содержит в себе true / false, то true выводит ( и false )
 			}
 		}
 		if (printnum == true)
 		{
 			printnum = false;
-			std::cout << std::endl;
+			total++; // для пользователя, чтоб легче было посчитать результат
+			std::cout << std::endl; // вот тут красота используется
 		}
-		if (check >= 5)
-		{
-			check = 0;
-		}
+	    // это чисто аннулирование всех проверок для следующего числа
+		hello = 0;
+		lastresort = 0;
 	}
-	printf("This script prints out every correct form of parenthesis equations.\n");
+	printf("This script prints out every correct form of parenthesis equations. \nProgram found total of %i equations that met the criteria.\n",total);
+	delete[] array;
 	script_executed();
 }
 
 
 // final boss battle !!
+int checkarrayswag[25]{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 };
+int swag[25]{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 };
+bool printball = false;
+int answertoballs = 0;
+void generate(int t, int n)
+{
+	if (t == n - 1)
+	{
+		for (int i = 0; i < n; i++)
+		{
+			if (swag[i] == checkarrayswag[i])
+			{
+				printball = true;
+			}
+		}
+		if (printball == true)
+		{
+			for (int s = 0; s < n; s++)
+			{
+				std::cout << swag[s] << " ";
+			}
+			std::cout << std::endl;
+			answertoballs++;
+			printball = false;
+		}
+	}
+	else
+	{
+		for (int j = t; j < n; j++)
+		{
+			std::swap(swag[t], swag[j]);
+			t++;
+			generate(t, n);
+			t--;
+			std::swap(swag[t], swag[j]);
+		}
+	}
+}
 void balls() {
-
+	script_start();
+	int num = 0;
+	printf("Please enter how many balls (!) you are willing to give\n"); std::cin >> num;
+	if (num > 0)
+	{
+		generate(0, num);
+		printf("\nTotal of %i balls were moved or smth idek\n",answertoballs);
+	}
+	else
+	{
+		printf("\nReally?\n");
+	}
+	cin_fixer();
+	script_executed();
 }
 
 // driver
-int main()
+int main(int argc, char *argv[])
 {
 	pyramid();
 	std::string key;
@@ -2381,6 +2433,10 @@ int main()
 		if (key == "menu")
 		{
 			key = "m";
+		}
+		else if (key == "color")
+		{
+			key = "c";
 		}
 		std::cout << ">:/ Entering task number: "; std::getline(std::cin, key_selector);
 		switch (key[0])
@@ -2566,7 +2622,12 @@ int main()
 			}
 			break;
 		case '7':
-			spinning();
+			switch (key_selector[0])
+			{
+			default:
+				balls();
+				break;
+			}
 			break;
 		default:
 			system("CLS");
@@ -2575,9 +2636,3 @@ int main()
 		}
 	}
 }
-/*
-* 
-* База заданий по одному заданию из 5 разделов, начиная с одномерных массивов (32 номер). пропустить рекурсии ++_Z++++++++++++
-* 
-* Задача с шариками
-*/
