@@ -164,11 +164,11 @@ void pyramid()
 	SetConsoleTextAttribute(hConsole, 14);
 	for (int i = 0; i < 2; i++)
 	{
-		std::cout << "\n" << frame1; Sleep(75); system("cls"); std::cout << "\n\n" << frame2; Sleep(75); system("cls"); std::cout << "\n" << frame3; Sleep(75); system("cls");  std::cout << frame4; Sleep(75); system("cls");
-		std::cout << "\n" << frame5; Sleep(75); system("cls"); std::cout << "\n\n" << frame6; Sleep(75); system("cls"); std::cout << "\n" << frame7; Sleep(75); system("cls"); std::cout << frame8; Sleep(75); system("cls");
+		std::cout << "\n" << frame1; Sleep(75); system("cls"); std::cout << "\n" << frame2; Sleep(75); system("cls"); std::cout << "\n\n" << frame3; Sleep(75); system("cls");  std::cout << "\n\n" << frame4; Sleep(75); system("cls");
+		std::cout << "\n" << frame5; Sleep(75); system("cls"); std::cout << "\n" << frame6; Sleep(75); system("cls"); std::cout << frame7; Sleep(75); system("cls"); std::cout << frame8; Sleep(75); system("cls");
 	}
 	std::cout << frame1; Sleep(40); system("cls");
-	std::cout << frame2; printf("\nWelcome...\n\n"); Sleep(1000); system("cls");
+	std::cout << frame2; printf("\n@sybaisucks\n\n"); Sleep(1000); system("cls");
 }
 void limbo()
 {
@@ -603,13 +603,15 @@ int int5to2()
 
 void menu() {
 	system("cls");
-	printf("You have chosen menu. Every task is written here.\nTask number is assigned by I-J, where I = homework number and J = task number\n");
-	printf("\n1-1: Print student name.\n1-2: User enters 2 numbers. Program needs to calculate summary, subtraction, multiplication and if possible division \n1-3: User enters b and c. Calculate the equation bx + c = 0\n1-4: User enters a b and c. Calculate the equation ax^2 + bx + c = 0\n1-5: Program asks user some questions. User enters 'yes' or 'no'. Determine if user has light in their room.\n");
+	printf("You have chosen menu. Every task is written here.\nTask number is assigned by I-J, where I = homework number and J = task number\n\n\n");
+	std::cout << "                                            Chapter I\n\n\n";
+	printf("1-1: Print student name.\n1-2: User enters 2 numbers. Program needs to calculate summary, subtraction, multiplication and if possible division \n1-3: User enters b and c. Calculate the equation bx + c = 0\n1-4: User enters a b and c. Calculate the equation ax^2 + bx + c = 0\n1-5: Program asks user some questions. User enters 'yes' or 'no'. Determine if user has light in their room.\n");
 	printf("\n2-1: User enters a number. Calculate cone value.\n2-2: User enters a number. Calculate a complex number with ln and roots.\n2-3: User enters a number. Calculate the following function - z = ln(b-y) root(b-x)\n2-4: User enters a number. Print 10 numbers starting from user number.\n2-5: User enters a number. Print out values for equation from -4 to 4 with a step of 0.5\n");
 	printf("\n3-1: User enters some numbers. Calculate how much he took from bank\n3-2: User enters some numbers. Calculate debt percent using an algorithm.\n3-3: Copy file data from disk.\n3-4: File filtering.\n3-5: Letter sort.\n");
 	printf("\n4-1: User enters 10 numbers. Copy them into a file and print out summary of all numbers.\n4-2: User enters a number. Print out 1 if number is over 0, 0 if number is equal to 0 and -1 if number is less than 0.\n4-3: User enters a shape and number. Calculate shape value.\n4-4: Print 1912 US flag.\n4-5: Print out a sin(x) function.\n4-6: Rome number calculator.\n4-7: Random number generator.\n4-8: After collecting data about sellers, calculate other data.\n4-9: Binary to HEX calculator. User can choose any system of numbers from 2 to 16.\n");
-	printf("\n5-1: Euclid algorithm.\n5-2: Sieve of Erethosphetes.\n5-3-1: Search for a specific combination of words in a text file. (Var16)\n5-3-2: Search for a substring in a string based on a given condition. (Var25)\n5-3-3: Convert an array of numbers in 5th SON to Binary. (Var25)\n5-3-4: String is given of S length with N characters. Calculate maximum amount of spacebar characters. (Var35)\n5-3-5: Create a file and calculate how many strings of characters go from least to most. (Var25)\n5-3-6: User enters matrix numbers. Calculate summary of columns.(Var50)\n");
-	printf("\n6-1: A[1] < A[i] < A[10] (Var33)\n");
+	printf("\n5-1: Euclid algorithm.\n5-2: Sieve of Erethosphetes.\n5-3-1: Search for a specific combination of words in a text file. (Var16)\n5-3-2: Search for a substring in a string based on a given condition. (Var25)\n5-3-3: Convert an array of numbers in 5th SON to Binary. (Var25)\n5-3-4: String is given of S length with N characters. Calculate maximum amount of spacebar characters. (Var35)\n5-3-5: Create a file and calculate how many strings of characters go from least to most. (Var25)\n5-3-6: User enters matrix numbers. Calculate summary of columns.(Var50)\n\n\n");
+	std::cout << "                                            Chapter II\n\n\n";
+	printf("6-1: A[1] < A[i] < A[10] (Var33)\n6-2: Invert array (Var43)\n6-3: Rotate M matrix 270 degrees (Var62)\n6-4: User enters numbers. Program takes max from given rules and calculates an equation (Var69)\n6-5: Print every correct parenthesis equation with length of 10 (Var87)\n");
 	script_executed();
 }
 void spinning() {
@@ -2207,46 +2209,164 @@ void BZ33() {
 	cin_fixer();
 	script_executed();
 }
+// это решение для 43 задания
+// крч для этого задания решено сделать через рекурсию 
+int bigarr[] = { 1,2,3,4,5,10,20,10,5,4,2,1,0,85,123,442,26,20 }; // сам массив
+int arr[] = {0,2,5,10,74,3};
+int size = sizeof(arr) / sizeof(arr[0]); // считает размер массива 
+
+void reverse(int arr[], int num) // забирает значения массива и числа, которое нужно ставить как 0
+{
+	// если число == размерности, то прекратить сортировку  
+	if (num == size)
+	{
+		return;
+	}
+	int arrelement = arr[num]; // экстрация элементов  
+	reverse(arr, num + 1); // сама рекурсия. ну типо сама себя вызывает :>
+	arr[size - num - 1] = arrelement; // расстановка всего дела 
+}
 void BZ43()
 {
 	script_start();
-	int input = 0;
-	int array[1000]{};
-	int tr = 0;
-	int buffer = 0, newbuffer = 0;
-	for (int i = 0; i < 1000; i++)
+	std::cout << "Current array: \n"; // вывод данных о массиве
+	for (int i = 0; i < size; i++)
 	{
-		std::cin >> input;
-		if (input == 0)
-		{
-			break;
-		}
-		array[i] = input;
-		tr++;
+		std::cout << arr[i] << " ";
 	}
-	int* numarray = new int[tr];
-	for (int i = 0; i < tr; i++)
+	reverse(arr, 0); // вызов рекурсии для замены
+	std::cout << " \n Reversed array: \n"; // вывод отсортированного массива
+	for (int i = 0; i < size; i++)
 	{
-		numarray[i] = array[i];
+		std::cout << arr[i] << " ";
 	}
-	int trd = tr / 2;
-	for (int i = 1; i < trd; i++)
-	{
-		std::swap(numarray[trd-i], numarray[trd + i]);
-		//std::cout << newbuffer << " " << buffer << "\n";
-		//numarray[i-1] = newbuffer;
-		//numarray[tr - i] = buffer;
-	}
-	for (int i = 0; i < tr; i++)
-	{
-		std::cout << numarray[i - 1] << " " << numarray[tr - i] << "\n";
-	}
+	script_executed();
+}
 
-	delete[] numarray;
+void BZ62() {
+	/*
+	Типо сделать из матрицы
+	1 1 1
+	2 2 2
+	3 3 3
+	матрицу
+	1 2 3
+	1 2 3
+	1 2 3
+	*/
+	script_start();
+	int arr[3][3]{ {1,2,3},{1,2,3},{1,2,3} };
+	int resultarr[3][3]{ {0,0,0},{0,0,0},{0,0,0} }; // сюда запишется перевёрнутая матрица
+	// для будущего. В УСЛОВИИ НИЧЕГО НЕ НАПИСАНО ПРО ТО ЧТО ЭТО В ОДНОМ МАССИВЕ И Т.Д. 
+	// если я правильно понял, порядок м тут просто математический термин который мне не нужен
+	printf("\nMatrix M\n");
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			std::cout << arr[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			resultarr[2 - i][j] = arr[j][i]; // заполнение перевёрнутого массива
+		}
+	}
+	printf("Matrix M, rotated 270 degrees\n");
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			std::cout << resultarr[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+	script_executed();
+}
+void BZ69() {
+	// крч тут вроде мат. уравнение в котором надо найти максимальное число
+	script_start();
+	float a = 0, b = 0, c = 0, num = 1.15;
+	printf("Please enter some numbers\n"); std::cin >> a >> b >> c;
+	float temp = max(a, b * c);
+	float max1 = max(a, a + b), max2 = max(a, b + c), max3 = max(temp,num);
+	float upper = max1 + max2, lower = 1+max3;
+
+	std::cout << max1 << " + " << max2 << "\n------------------------\n1 + " << max3 << "\n";
+
+	float equation = 0;
+	if (lower != 0)
+	{
+		equation = upper / lower;
+		std::cout << "Result: " << equation;
+	}
 	cin_fixer();
 	script_executed();
 }
-// driver code
+void arraywith1and0(bool* array, int len)
+{
+	for (int i = len - 1; i >= 0; --i)
+	{
+		if (!array[i])
+		{
+			array[i] = true;
+			return;
+		}
+		array[i] = false;
+	}
+}
+void BZ87() {
+	// вывести все скобочные выражения длины 10, должны начаться с (, закончится ), 5 ( и 5 )
+	// есть  идея сделать через правило да/нет, то есть 1 = ( 0 = ). сделать цикл в котором 
+	// проверка 1. является ли первое число 1
+	// проверка 2. является ли последнее число 0
+	// если да, вывести число и идти дальше по перебору
+	script_start();
+	bool* array = new bool[10];
+	bool printnum = false;
+	int check = 0;
+	for (int j = 0; j < 1024; j++)
+	{
+		arraywith1and0(array, 10);
+		for (int i = 0; i < 10; i++)
+		{
+			if (array[i] == 1)
+			{
+				check++;
+			}
+		}
+		for (int i = 0; i < 10; i++)
+		{
+			if (array[0] != 0 && array[9] != 1 && check == 5)
+			{
+				printnum = true;
+				std::cout << (array[i] ? "(" : ")");
+			}
+		}
+		if (printnum == true)
+		{
+			printnum = false;
+			std::cout << std::endl;
+		}
+		if (check >= 5)
+		{
+			check = 0;
+		}
+	}
+	printf("This script prints out every correct form of parenthesis equations.\n");
+	script_executed();
+}
+
+
+// final boss battle !!
+void balls() {
+
+}
+
+// driver
 int main()
 {
 	pyramid();
@@ -2434,6 +2554,15 @@ int main()
 			case '2':
 				BZ43();
 				break;
+			case '3':
+				BZ62();
+				break;
+			case '4':
+				BZ69();
+				break;
+			case '5':
+				BZ87();
+				break;
 			}
 			break;
 		case '7':
@@ -2448,8 +2577,7 @@ int main()
 }
 /*
 * 
-* База заданий по одному заданию из 5 разделов, начиная с одномерных массивов (32 номер). пропустить рекурсии
+* База заданий по одному заданию из 5 разделов, начиная с одномерных массивов (32 номер). пропустить рекурсии ++_Z++++++++++++
 * 
 * Задача с шариками
-* 
 */
