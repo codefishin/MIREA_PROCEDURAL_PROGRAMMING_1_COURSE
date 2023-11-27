@@ -374,6 +374,37 @@ void task4_5()
 
 // ура 5 задание завершено шок...
 
+// ТУТ ВСЁ, 5 НОМЕР ЗАВЕРШЁН. СКОПИРУЙТЕ - СПАЛЯТ
+void task4_5_ver2() {
+    int width = 80; // Ширина консоли
+    int height = 24; // Высота консоли
+    double xMin = -3.14;
+    double xMax = 3.14;
+
+    for (int y = 0; y < height; y++) {//вертикальные позиции
+        double yValue = 2.0 * y / static_cast<double>(height - 1) - 1.0;//приводим y к диапазону
+        double xStep = (xMax - xMin) / (width - 1);//шаг вычилсения между значениями x
+        for (int x = 0; x < width; x++) {
+            double xValue = xMin + x * xStep; //масштабированние x
+            double functionValue = -sin(xValue);//вычисление sinx
+
+            if (fabs(functionValue - yValue) < 0.1) {
+                cout << '*';//сам график
+            }
+            else if (x == width / 2) {
+                cout << '|'; // Вертикальная ось
+            }
+            else if (y == height / 2) {
+                cout << '-'; // Горизонтальная ось
+            }
+            else {
+                cout << ' ';
+            }
+        }
+        cout << '\n';
+    }
+}
+
 int number_conv(char number)
 {
 	// I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
@@ -407,83 +438,70 @@ int number_conv(char number)
 		return 0;
 	}
 }
-
-
-// ТУТ ВСЁ, 5 НОМЕР ЗАВЕРШЁН. СКОПИРУЙТЕ - СПАЛЯТ
-void task4_5_ver2() {
-    int width = 80; // Ширина консоли
-    int height = 24; // Высота консоли
-    double xMin = -3.14;
-    double xMax = 3.14;
-
-    for (int y = 0; y < height; y++) {//вертикальные позиции
-        double yValue = 2.0 * y / static_cast<double>(height - 1) - 1.0;//приводим y к диапазону
-        double xStep = (xMax - xMin) / (width - 1);//шаг вычилсения между значениями x
-        for (int x = 0; x < width; x++) {
-            double xValue = xMin + x * xStep; //масштабированние x
-            double functionValue = -sin(xValue);//вычисление sinx
-
-            if (fabs(functionValue - yValue) < 0.1) {
-                cout << '*';//сам график
-            }
-            else if (x == width / 2) {
-                cout << '|'; // Вертикальная ось
-            }
-            else if (y == height / 2) {
-                cout << '-'; // Горизонтальная ось
-            }
-            else {
-                cout << ' ';
-            }
-        }
-        cout << '\n';
-    }
-}
-/*void task4_6()
+void task4_6()
 {
-	std::cout << "\nError code 1: User number has more than 3 of row numbers.\nError code 2: User number is impossible to calculate.\nError code 3: User number is entered incorrectly.\n\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
+	script_start();
+	std::cout << "\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
-	int buffer = 0;
-	int next = 0;
+	int buffer = 0, warning = 0;
+	int next = 0,warning2=0,warning3=0;
 	bool alert = false;
-		std::string number;
+	std::string number;
 	std::cout << "-> "; std::getline(std::cin, number);
+	for (int i = 0; i < number.length(); i++)
+	{
+		if (number[i] == 'V' || number[i] == 'v')
+		{
+			warning++;
+		}
+		else if (number[i] == 'L' || number[i] == 'l') {
+			warning2++;
+		}
+		else if (number[i] == 'D' || number[i] == 'd') {
+			warning3++;
+		}
+	}
+	if (number[0] < number[1] && warning == 1 || warning2 == 1 || warning3 == 1)
+	{
+		std::cout << "Number does not exist... (MALFUNCTION 3)\n";
+		script_executed();
+		return;
+	}
+	if (number[0] == 'V' && number.length() > 2 && number_conv(number[1]) < 2 && number_conv(number[2]) > 2)
+	{
+		std::cout << "Number does not exist... (MALFUNCTION 5)\n";
+		script_executed();
+		return;
+	}
+	if (warning > 1 || warning2 > 1 || warning3 > 1) // V L D rule
+	{
+		std::cout << "Number does not exist... (MALFUNCTION 4)\n";
+		script_executed();
+		return;
+	}
+	if (number_conv(number[0]) < number_conv(number[1]) && number_conv(number[1]) <= number_conv(number[2]))
+	{
+		std::cout << "Number does not exist... (MALFUNCTION 6)\n";
+		script_executed();
+		return;
+	}
 	for (int j = 0; j < number.length(); j++)
 	{
 		if (j + 3 < number.length())
 		{
-			if (number[j] == number[j + 1] && number[j] == number[j + 2] && number[j] == number[j + 3])
+			if (number[j] == number[j + 1] && number[j] == number[j + 2] && number[j] == number[j + 3]) // больше 3 чисел одинаковых (типо XXXX)
 			{
-				std::cout << "Number does not exist... (error code 1)\n";
+				std::cout << "Number does not exist... (MALFUNCTION 1)\n";
 				script_executed();
 				return;
 			}
 		}
 		for (int k = j + 1; k < number.length(); k++)
 		{
-			if (number[k] == number[j])
+			if (number[k] == number[j]) // если след число = текущему
 			{
 				alert = true;
 			}
-			if (number_conv(number[j]) == number_conv(number[j + 2]) && alert == true && number_conv(number[j]) < number_conv(number[k]))
-			{
-				std::cout << "Number does not exist... (error code 3)\n";
-				script_executed();
-				return;
-			}
-			if (alert == true && number_conv(number[j]) > number_conv(number[k]))
-			{
-				std::cout << "Number does not exist... (error code 2)\n";
-				script_executed();
-				return;
-			}
-			if (number[j] > number[k] && number[j] != number[j + 2])
-			{
-				std::cout << "Number does not exist... (error code 4)\n";
-				script_executed();
-				return;
-			}
-
 		}
 	}
 	for (int i = 0; i < number.length(); i++)
@@ -492,8 +510,12 @@ void task4_5_ver2() {
 		next = i + 1 < number.length() ? number_conv(number[i + 1]) : 0; // ? == if (then), : == else 
 		number_converted = buffer < next ? number_converted - buffer : number_converted + buffer;
 	}
-	std::cout << "Result: " << number_converted << "\n";
-}*/
+	if (number_converted != 0)
+	{
+		std::cout << "Result: " << number_converted << "\n";
+	}
+	script_executed();
+}
 void task4_7() // задание сделано странно, препод просит через рекурсионные функции. Но его приняли
 {
 	int m = 0, c = 0, inputlast;
@@ -651,6 +673,8 @@ std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользоват�
 }
 void task4_9()
 {
+	script_start();
+
 	bool alert = false;
 	char check_ch{}, ch{};
 	std::string number;
@@ -660,32 +684,35 @@ void task4_9()
 	std::cout << "-> "; std::cin >> number; //почему cin а не getline? getline забирает всю строку, а cin до пробела. у мат. чисел не бывает пробела
 	printf("\nEnter your old numeral system and preferable numeral system. (From 2 to 16)\n");
 	std::cout << "-> "; std::cin >> n_sys; std::cout << "-> "; std::cin >> n_new_sys;
-	if ((n_sys <= 1) or (n_sys > 16)) 
+	if ((n_sys <= 1) or (n_sys > 16))
 	{
-		printf("MALFUNCTION");
+		printf("MALFUNCTION 1");
+		script_executed();
 		return;
 	}
-	if (n_sys > 9)
+	for (int i = 0; i < number.size(); i++)
 	{
-		for (int i = 0; i < number.size(); i++)
+		char c0 = number[i];
+		for (int j = 0; j < strfor9.size(); j++)
 		{
-			char c0 = number[i];
-			for (int j = 0; j < strfor9.size(); j++)
+			if (toupper(c0) < '0' || toupper(c0) > 'F')
 			{
-				if (tolower(c0) == (strfor9[j]))
-				{
-					printf("MALFUNCTION");
-					return;
-				}
+				printf("MALFUNCTION 2");
+				script_executed();
+				return;
 			}
 		}
 	}
-	if ((n_new_sys <= 1) or (n_new_sys > 16)) 
+	if ((n_new_sys <= 1) or (n_new_sys > 16))
 	{
-		printf("MALFUNCTION");
+		printf("MALFUNCTION 3");
+		script_executed();
 		return;
 	}
 	int dec = x_to_dec(number, n_sys);
 	std::string s_result = dec_to_new_x(dec, n_new_sys);
 	printf("from %d to %d is ", n_sys, n_new_sys); std::cout << s_result;
+
+	cin_fixer();
+	script_executed();
 }
