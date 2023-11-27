@@ -440,7 +440,7 @@ int number_conv(char number)
 }
 void task4_6()
 {
-	script_start();
+	
 	std::cout << "\nInput ROME NUMBER... It will be converted to the arabic numeral system.\b\n\n";
 	int number_converted = 0;
 	int buffer = 0, warning = 0;
@@ -514,7 +514,7 @@ void task4_6()
 	{
 		std::cout << "Result: " << number_converted << "\n";
 	}
-	script_executed();
+	
 }
 void task4_7() // задание сделано странно, препод просит через рекурсионные функции. Но его приняли
 {
@@ -673,7 +673,6 @@ std::string dec_to_new_x(int x2d_res, int n_new_sys) // от пользоват�
 }
 void task4_9()
 {
-	script_start();
 
 	bool alert = false;
 	char check_ch{}, ch{};
@@ -713,6 +712,4 @@ void task4_9()
 	std::string s_result = dec_to_new_x(dec, n_new_sys);
 	printf("from %d to %d is ", n_sys, n_new_sys); std::cout << s_result;
 
-	cin_fixer();
-	script_executed();
 }
