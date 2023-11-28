@@ -40,7 +40,7 @@ std::string frame2 =
 "@@@@@@@@@@Aaaaaaaaaaa\n"
 "   @@@@@@@Aaaaaaaa\n"
 "        @@Aaa\n"
-"          \"\n";
+"          \n";
 std::string frame3 =
 "          A\n"
 "         @Aa\n"
@@ -54,7 +54,7 @@ std::string frame3 =
 " @@Aaaaaaaaaaaaaaaaa\n"
 "@@Aaaaaaaaaaaaaaaaaaa\n"
 " @Aaaaaaaaaaaaaa\n"
-"  \"\n";
+"  \n";
 std::string frame4 =
 "          A\n"
 "         Aaa\n"
@@ -67,7 +67,7 @@ std::string frame4 =
 "  Aaaaaaaaaaaaaaaaa\n"
 " Aaaaaaaaaaaaaaaaaaa\n"
 "Aaaaaaaaaaaaaaaaaaaaa\n"
-"\"                   \"\n";;
+"                   \n";;
 std::string frame1 =
 "          A\n"
 "         @Aa\n"
@@ -81,7 +81,7 @@ std::string frame1 =
 " @@@@@@@@@@@@@@@@Aaa\n"
 "@@@@@@@@@@@@@@@@@@Aaa\n"
 "     @@@@@@@@@@@@@Aa\n"
-"                  \"\n";
+"                  \n";
 std::string frame5 =
 "          A\n"
 "         aA@\n"
@@ -95,7 +95,7 @@ std::string frame5 =
 " aaaaaaaaaaaaaaaaA@@\n"
 "aaaaaaaaaaaaaaaaaaA@@\n"
 "     aaaaaaaaaaaaaA@\n"
-"                  \"\n";
+"                  \n";
 std::string frame6 =
 "          A\n"
 "         aA@\n"
@@ -110,7 +110,7 @@ std::string frame6 =
 "aaaaaaaaaaA@@@@@@@@@@\n"
 "   aaaaaaaA@@@@@@@\n"
 "        aaA@@\n"
-"          \"\n";
+"          \n";
 std::string frame7 =
 "          A\n"
 "         aA@\n"
@@ -124,7 +124,7 @@ std::string frame7 =
 " aaA@@@@@@@@@@@@@@@@\n"
 "aaA@@@@@@@@@@@@@@@@@@\n"
 " aA@@@@@@@@@@@@@\n"
-"  \"\n";
+"  \n";
 std::string frame8 =
 "          A\n"
 "         A@@\n"
@@ -137,7 +137,7 @@ std::string frame8 =
 "  A@@@@@@@@@@@@@@@@\n"
 " A@@@@@@@@@@@@@@@@@@\n"
 "A@@@@@@@@@@@@@@@@@@@@\n"
-"\"                   \"\n";
+"                   \n";
 void loading()
 {
 	int percent = 0, current = 0;
@@ -535,7 +535,7 @@ int NOD(int a, int b) // нод = GCD на англе
 int SOE(int a) // soe = sieve of erethosphetes, или же просто считает простые числа. как же меня бесит матан
 {
 	// тут рофло-баг, в конце всегда будет написана ерунда
-	bool* prime = new bool[a]; 
+	bool* prime = new bool[a+1]; 
 	memset(prime, true, sizeof(prime)); // memset заполняет ячейки памяти. как расписано: заполняем prime, при условии true, в размере prime
 	for (int p = 2; p * p < a+1; p++)
 	{ // p = 2 потому что это первое праймовое число
@@ -545,7 +545,7 @@ int SOE(int a) // soe = sieve of erethosphetes, или же просто счи�
 				prime[i] = false;
 		}
 	}
-	for (int p = 2; p < a+1; p++) // для вывода числ
+	for (int p = 2; p <= a; p++) // для вывода числ
 		if (prime[p])
 			std::cout << p << " ";
 	delete[] prime;
@@ -993,25 +993,25 @@ void task3_2()
 			while (true)
 			{
 				percent += step;
-				//std::cout << percent << std::endl; 
+				std::cout << percent << std::endl; 
 				//^^^ DEBUG ДЛЯ ВЫВОДА
 				double a = summary * (percent / 100) * (pow(1 + (percent / 100), time));
 				double b = 12 * (pow(1 + (percent / 100), time) - 1);
 				if (percent != 0)
 				{
 					money_sequel = a / b;
-					//std::cout << money_sequel << std::endl; DEBUG!!!!!!!!!!!
+					std::cout << money_sequel << std::endl; //DEBUG!!!!!!!!!!!
 					inter++;
 				}
 				else
 				{
 					money_sequel = summary / 12 / time;
-					//std::cout << money_sequel << std::endl;
+					std::cout << money_sequel << std::endl;
 					inter++;
 				}
 				if (abs(money_sequel - money) < epsilon) // Модуль текущего "денежного состояния" не больше эпсилона денежного состояния заданного пользователем...
 				{
-					//std::cout << money << money_sequel << std::endl;
+					std::cout << money << money_sequel << std::endl;
 					std::cout << "Executed successfully: " << percent << "%\n";
 					std::cout << "Steps taken while calculating: " << inter << std::endl;
 					break;
@@ -2200,7 +2200,7 @@ void BZ33() {
 // это решение для 43 задания
 // крч для этого задания решено сделать через рекурсию 
 int bigarr[] = { 1,2,3,4,5,10,20,10,5,4,2,1,0,85,123,442,26,20 }; // сам массив
-int arr[] = {0,2,5,10,74,3};
+int arr[] = {0,2,5,10,74,3}; // массив поменьше
 int size = sizeof(arr) / sizeof(arr[0]); // считает размер массива 
 
 void reverse(int arr[], int num) // забирает значения массива и числа, которое нужно ставить как 0
@@ -2230,7 +2230,6 @@ void BZ43()
 	}
 	script_executed();
 }
-
 void BZ62() {
 	/*
 	Типо сделать из матрицы
@@ -2414,6 +2413,7 @@ void balls() {
 	{
 		printf("\nReally?\n");
 	}
+	answertoballs = 0; // если не аннулировать то прога начнёт выдавать неправильные ответы после 1 запуска
 	cin_fixer();
 	script_executed();
 }
