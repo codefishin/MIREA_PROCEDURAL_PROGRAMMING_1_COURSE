@@ -1541,7 +1541,9 @@ void task4_5()
 	cin_fixer();
 	script_executed();
 }
+
 // ура 5 задание завершено шок...
+
 void task4_6()
 {
 	script_start();
@@ -1789,6 +1791,7 @@ void task4_9()
 			}
 		}
 	}
+	
 	if ((n_new_sys <= 1) or (n_new_sys > 16))
 	{
 		printf("MALFUNCTION 3");
@@ -2199,8 +2202,8 @@ void BZ33() {
 }
 // это решение для 43 задания
 // крч для этого задания решено сделать через рекурсию 
-int bigarr[] = { 1,2,3,4,5,10,20,10,5,4,2,1,0,85,123,442,26,20 }; // сам массив
-int arr[] = {0,2,5,10,74,3}; // массив поменьше
+int arr[] = { 1,2,3,4,5,10,20,10,5,4,2,1,0,85,123,442,26,20 }; // сам массив
+int aarr[] = {0,2,5,10,74,3}; // массив поменьше
 int size = sizeof(arr) / sizeof(arr[0]); // считает размер массива 
 
 void reverse(int arr[], int num) // забирает значения массива и числа, которое нужно ставить как 0
@@ -2404,7 +2407,7 @@ void balls() {
 	script_start();
 	int num = 0;
 	printf("Please enter how many balls (!) you are willing to give\n"); std::cin >> num;
-	if (num > 0)
+	if (num > 0 && num < 25)
 	{
 		generate(0, num);
 		printf("\nTotal of %i balls were moved or smth idek\n",answertoballs);
@@ -2636,3 +2639,6 @@ int main(int argc, char *argv[])
 		}
 	}
 }
+// int a = 1
+/*
+*/
