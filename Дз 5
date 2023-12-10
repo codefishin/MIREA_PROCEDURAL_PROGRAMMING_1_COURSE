@@ -11,6 +11,7 @@
 #include <cmath>
 #include <algorithm>
 #include <Windows.h>
+#include <sstream>
 #include <stdlib.h>
 
 void createfile(std::string str)
