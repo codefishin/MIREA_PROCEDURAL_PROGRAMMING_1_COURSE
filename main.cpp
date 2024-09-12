@@ -168,7 +168,7 @@ void pyramid()
 		std::cout << "\n" << frame5; Sleep(75); system("cls"); std::cout << "\n" << frame6; Sleep(75); system("cls"); std::cout << frame7; Sleep(75); system("cls"); std::cout << frame8; Sleep(75); system("cls");
 	}
 	std::cout << frame1; Sleep(40); system("cls");
-	std::cout << frame2; printf("\n@sybaisucks\n\n"); Sleep(1000); system("cls");
+	std::cout << frame2; printf("\n@stomp666\n\n"); Sleep(1000); system("cls");
 }
 void limbo()
 {
